@@ -1,0 +1,19 @@
+@startuml
+!define LIGHTBLUE
+'!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+'__Title
+title
+PERSONAL FINANCE MANAGEMENT
+
+<u>PersonID</u>  Sequence Diagram
+
+end title
+
+hide footbox
+
+participant "PersonID"
+                    activate "PersonID" #34b7eb
+"PersonID" [#blue]--> "personID:PersonID" **: createPersonID (email)
+
+@enduml

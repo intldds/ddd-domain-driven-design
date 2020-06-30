@@ -1,0 +1,22 @@
+@startuml
+
+
+hide footbox
+'__Title
+title <b>"Personal Finance Management"</b>\nSequence Diagram of BooleanDTOAssembler\n
+
+'Add booleanDTOAssembler participant
+
+
+participant "checkIfSiblingsDTOAssembler \n:CheckIfSiblingsDTOAssembler"
+
+activate "checkIfSiblingsDTOAssembler \n:CheckIfSiblingsDTOAssembler" #34b7eb
+
+'Create a BooleanDTO
+
+create "checkIfSiblingsDTO \n:CheckIfSiblingsDTO"
+"checkIfSiblingsDTOAssembler \n:CheckIfSiblingsDTOAssembler" [#blue]-->  "checkIfSiblingsDTO \n:CheckIfSiblingsDTO" : createDTOFromPrimitiveTypes(<b>personA_Email</b>, \n<b>personB_Email</b>)
+return <b>checkIfSiblingsDTO</b>
+
+deactivate "checkIfSiblingsDTOAssembler \n:CheckIfSiblingsDTOAssembler"
+@enduml

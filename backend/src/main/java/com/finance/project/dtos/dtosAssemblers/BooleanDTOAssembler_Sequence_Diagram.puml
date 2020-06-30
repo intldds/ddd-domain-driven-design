@@ -1,0 +1,22 @@
+1@startuml
+
+
+hide footbox
+'__Title
+title <b>"Personal Finance Management"</b>\nSequence Diagram of BooleanDTOAssembler\n
+
+'Add booleanDTOAssembler participant
+
+
+participant "booleanDTOAssembler : \nBooleanDTOAssembler"
+
+activate "booleanDTOAssembler : \nBooleanDTOAssembler" #34b7eb
+
+'Create a BooleanDTO
+
+create "booleanDTO : \nBooleanDTO"
+"booleanDTOAssembler : \nBooleanDTOAssembler" [#blue]-->  "booleanDTO : \nBooleanDTO" : createDTOFromPrimitiveTypes(<b>result</b>, \n<b>msg</b>)
+return <b>booleanDTO</b>
+
+deactivate "booleanDTOAssembler : \nBooleanDTOAssembler"
+@enduml

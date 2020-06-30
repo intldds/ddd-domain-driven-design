@@ -1,0 +1,211 @@
+body, html {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f2f2f2;
+  height: 92%;
+}
+
+code {
+  font-family: Lucida Console; /*Monaco5, monospace;*/
+}
+
+
+/*button {*/
+/*  right: 0;*/
+/*  border: 0;*/
+/*  border-radius: 18px;*/
+/*  color: dimgray;*/
+/*  font-family: sans-serif, "Roboto Condensed";*/
+/*  font-size: 23px;*/
+/*  font-weight: 500;*/
+/*  justify-content: center;*/
+/*  margin-top: 20px;*/
+/*  outline: none;*/
+/*  padding: 5px;*/
+/*  text-transform: uppercase;*/
+/*  width: 20%;*/
+/*}*/
+
+ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline
+}
+
+li {
+  margin-bottom: .5rem
+}
+
+
+table {
+  /*border-collapse: collapse;*/
+  /*border-spacing: 1.5px;*/
+  /*margin: 1.5px;*/
+  /*padding: 1.5px;*/
+  /*border: 2px;*/
+  /*font-family: sans-serif, 'Helvetica Neue';*/
+  /*vertical-align: baseline;*/
+  /*margin: 40px;*/
+  /*line-height: 200%;*/
+  /*width: 15%*/
+  border: none;
+}
+
+thead {
+  font-size: x-large;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  /*border-collapse: collapse;*/
+  /*border: 3px solid #ddd;*/
+  border: none;
+  width: 100%;
+  text-align: left ;
+}
+
+tbody {
+
+  font-family: arial, sans-serif;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  color: black;
+  text-align: left ;
+
+}
+.homeNavBar li {
+  padding:10px;
+  display: inline;
+}
+
+
+
+.loginTitle {
+  text-align: center;
+  padding-bottom: 8px;
+  font-size: 20px;
+  font-family: 'Staatliches', cursive;
+}
+
+.secTitle {
+  padding-bottom: 40px;
+}
+#userConfig {
+  text-transform: capitalize;
+  color: black;
+  margin-right: 2%;
+}
+
+.innerDiv {
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  width: 40%;
+  padding: 60px;
+  box-shadow: 1px 1px 30px  grey;
+}
+
+.outerDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 7%;
+
+}
+
+a {
+  color: black;
+
+}
+
+.btn-primary{
+
+}
+
+.btn-primary:hover {
+
+}
+
+.navBar {
+  display: block;
+}
+
+
+a:hover {
+
+  color: blue;
+  text-decoration: none ;
+}
+
+.Tables {
+  width: 90%;
+  bordered: false;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Forms {
+  /*position: absolute;*/
+  /*margin-top:15px;*/
+  margin-left: 5%;
+  margin-right: 5%;
+  /*width: 50%;*/
+  /*border:2px red solid;*/
+  display: flex;
+  /*margin:10px;*/
+}
+#label{
+  margin: 10px;
+}
+
+::placeholder {
+  font-size: medium;
+  color:black;
+}
+
+/*.SelectAppearance{*/
+/*-webkit-appearance:     none;*/
+/*-moz-appearance:        none;*/
+/*-ms-appearance:         none;*/
+/*-o-appearance:          none;*/
+/*appearance: none;*/
+/*}*/
+
+.GroupDenomination {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.GroupDenomination:hover {
+  color: #616161;
+}
+#FormDiv {
+  /*border: 2px red solid;*/
+  /*display: flex;*/
+  /*flex-wrap: wrap;*/
+  /*position:absolute;*/
+}
+#SearchButton {
+  position:absolute;
+  left:52.5%;
+  /*top:10.1em;*/
+  top:161px;
+  /*border: 2px red solid;*/
+  /*display: flex;*/
+  flex-wrap: wrap;
+  height:44px;
+  width: 73px;
+}
+#ResetButton {
+  position:absolute;
+  left:56.5%;
+  /*top:10.1em;*/
+  top:161px;
+  /*border: 2px red solid;*/
+  /*display: flex;*/
+  flex-wrap: wrap;
+  height:44px;
+  width: 65px;
+}
+#GroupIdentification {
+  display:inline;
+}
+

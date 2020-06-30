@@ -1,0 +1,26 @@
+@startuml
+!define LIGHTBLUE
+'!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+'__Title
+title
+PERSONAL FINANCE MANAGEMENT
+
+<u>Ledger</u>  Sequence Diagram
+
+end title
+
+hide footbox
+
+participant "Ledger"
+participant "LedgerID"
+
+                    activate "Ledger" #34b7eb
+"Ledger" [#blue]--> "LedgerID": createLedgerID ()
+activate "LedgerID" #34b7eb
+"LedgerID" [#blue]--> "ledgerID:LedgerID"**: createLedgerID ()
+return ledgerID
+
+"Ledger" [#blue]--> "records: List<transaction>"**: new()
+
+@enduml

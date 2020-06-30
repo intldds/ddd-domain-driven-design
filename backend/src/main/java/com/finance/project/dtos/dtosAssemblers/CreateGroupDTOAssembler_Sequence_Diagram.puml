@@ -1,0 +1,20 @@
+@startuml
+!define LIGHTBLUE
+'!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+'__Title
+title
+PERSONAL FINANCE MANAGEMENT
+
+<u>GroupID</u>  Sequence Diagram
+
+end title
+
+hide footbox
+
+participant "groupID: GroupID"
+activate "groupID: GroupID" #34b7eb
+"groupID: GroupID" [#blue]--> "createGroupDTO : CreateGroupDTO" **: createGroupID (denomination)
+                    return <b>groupID</b>
+
+@enduml

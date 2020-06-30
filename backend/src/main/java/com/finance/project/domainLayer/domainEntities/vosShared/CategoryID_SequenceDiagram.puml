@@ -1,0 +1,19 @@
+@startuml
+!define LIGHTBLUE
+'!includeurl https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+'__Title
+title
+PERSONAL FINANCE MANAGEMENT
+
+<u>CategoryID</u>  Sequence Diagram
+
+end title
+
+hide footbox
+
+participant "CategoryID"
+                    activate "CategoryID" #34b7eb
+"CategoryID" [#blue]--> "categoryID:CategoryID" **: createCategoryID (categoryDenomination, ownerID)
+
+@enduml

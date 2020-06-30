@@ -1,0 +1,51 @@
+Requirements / User Stories (US)
+
+[1] Requirements
+
+Web App for Personal Finance Management
+
+Person has a name, an address, a birthdate, a birthplace, a mother, a father and siblings.
+
+People can gather in Groups (e.g. families) and each Group has admins, a description, a date of criation and
+a Ledger.
+
+It's mandatory to register the financial transactions of each Person or Group in a Ledger.
+
+Each Transaction is ether credit or debit. It must also have a description, a value and a Category (as much as each
+Person wants).
+
+At last, there's still the option to schedule transactions, and each Scheduling includes categories,
+periodicity, type (credit or debit), value and Accounts (debit or credit).
+
+
+***
+
+
+[2] User Stories (US)
+
+The functionalities implemented in this Web Application are the following:
+
+US001 - As a system manager, I want to know if a Person is sibling from another one.
+
+US002 – As a system manager, I want to create a group.
+US002.1 – As a user, I want to create a group, becoming a group administrator.
+
+US003 – As system manager, I want to add persons to a group.
+
+US004 - As a system manager, I want to know which groups are family.
+
+US005 - As a user, I want to add a category to my list of categories.
+US005.1 - As a group administrator, I want to create a category and associate it with the group.
+
+US006 - As a user, I want to create an account for myself, giving it a denomination and a description so that it can
+later be used in my transactions.
+
+US007 - As a group administrator I want to create a group account, giving it a denomination and a description, so that
+it can later be used in the group's transactions.
+
+US008.1 - As a group  member, I want to create a transaction, assigning it a value, the date (current, by default),
+a description, a category, a credit account and a debit account.
+
+US010 - As a user / group member, I want to obtain the transactions of a certain account in a given period.
+
+US099 -  As a registered user, I want to have access to the features that correspond to me in the web application.
