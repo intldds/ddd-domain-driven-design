@@ -191,7 +191,7 @@ In software engineering, a **software development process** (SDP) is the process
 work into distinct phases to improve design, product management, and project management. It is also 
 known as software development life cycle (SDLC), and it is represented in the picture below.                                                                                                 
 
-![SDP](diagrams/SDP.png)
+![SDP](diagrams/sdp.png)
 
 Most modern development processes can be vaguely described as *Agile*. The term was coined in the year 2001 when the 
 *Agile Manifesto* was formulated. **Agile  is a software development methodology** that 
