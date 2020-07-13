@@ -14,22 +14,20 @@ import com.finance.project.dtos.dtosAssemblers.UpdatePersonTransactionDTOAssembl
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class CreatePersonTransactionControllerREST {
 
     @Autowired
     private CreatePersonTransactionService service;
 
-    //US08 - Como utilizador, quero criar
-    // um movimento, atribuindo-lhe
-    // um valor, a data (atual, por omissão), uma descrição, uma categoria, uma conta de crédito e outra de débito.
-
+    // Create transaction
     @PostMapping("/persons/{personEmail}/ledgers/records")
     public ResponseEntity<Object> createPersonTransaction(@RequestBody NewPersonTransactionInfoDTO info, @PathVariable final String personEmail) {
 
         CreatePersonTransactionDTO createPersonTransactionDTO = CreatePersonTransactionDTOAssembler.createDTOFromPrimitiveTypes(personEmail, info.getDenominationCategory(), info.getType(), info.getDescription(), info.getAmount(), info.getDenominationAccountDeb(), info.getDenominationAccountCred(), info.getDate());
 
-        PersonDTO result = service.createTransactionAsPerson(createPersonTransactionDTO);
+        PersonDTO result = service.createTransaction(createPersonTransactionDTO);
 
         Link link_to_siblings = linkTo(methodOn(CreatePersonControllerREST.class).getPersonSiblings(personEmail)).withRel("siblings");
         Link link_to_personLedger = linkTo(methodOn(PersonSearchAccountRecordsControllerREST.class).searchPersonRecords("", "", "", personEmail)).withRel("records");
@@ -44,12 +42,13 @@ public class CreatePersonTransactionControllerREST {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+    // Update transaction
     @PutMapping("/persons/{personEmail}/ledgers/records/{transactionNumber}")
     public ResponseEntity<Object> updatePersonTransaction(@RequestBody NewPersonTransactionInfoDTO info, @PathVariable final String personEmail, @PathVariable final int transactionNumber) {
 
         UpdatePersonTransactionDTO updatePersonTransactionDTO = UpdatePersonTransactionDTOAssembler.createDTOFromPrimitiveTypes(transactionNumber, personEmail, info.getDenominationCategory(), info.getType(), info.getDescription(), info.getAmount(), info.getDenominationAccountDeb(), info.getDenominationAccountCred());
 
-        PersonDTO result = service.updatePersonTransaction(updatePersonTransactionDTO);
+        PersonDTO result = service.updateTransaction(updatePersonTransactionDTO);
 
         Link link_to_siblings = linkTo(methodOn(CreatePersonControllerREST.class).getPersonSiblings(personEmail)).withRel("siblings");
         Link link_to_personLedger = linkTo(methodOn(PersonSearchAccountRecordsControllerREST.class).searchPersonRecords("", "", "", personEmail)).withRel("records");
@@ -65,12 +64,13 @@ public class CreatePersonTransactionControllerREST {
 
     }
 
+    // Delete transaction
     @DeleteMapping("/persons/{personEmail}/ledgers/records/{transactionNumber}")
-    public ResponseEntity<Object> deletePersonTransaction(@RequestBody NewPersonTransactionInfoDTO info, @PathVariable final String personEmail, @PathVariable final int transactionNumber) {
+    public ResponseEntity<Object> deletePersonTransaction(@PathVariable final String personEmail, @PathVariable final int transactionNumber) {
 
         DeletePersonTransactionDTO deletePersonTransactionDTO = DeletePersonTransactionDTOAssembler.createDTOFromPrimitiveTypes(transactionNumber, personEmail);
 
-        PersonDTO result = service.deletePersonTransaction(deletePersonTransactionDTO);
+        PersonDTO result = service.deleteTransaction(deletePersonTransactionDTO);
 
         Link link_to_siblings = linkTo(methodOn(CreatePersonControllerREST.class).getPersonSiblings(personEmail)).withRel("siblings");
         Link link_to_personLedger = linkTo(methodOn(PersonSearchAccountRecordsControllerREST.class).searchPersonRecords("", "", "", personEmail)).withRel("records");
@@ -83,7 +83,6 @@ public class CreatePersonTransactionControllerREST {
         result.add(link_to_personCategories);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
-
     }
 
 }

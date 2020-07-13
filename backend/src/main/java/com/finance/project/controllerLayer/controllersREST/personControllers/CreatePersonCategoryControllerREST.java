@@ -20,13 +20,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 public class CreatePersonCategoryControllerREST {
 
-   @Autowired
-   private CreatePersonCategoryService service;
+    @Autowired
+    private CreatePersonCategoryService service;
 
-    /*
-    US 05. Como utilizador, quero adicionar uma categoria à minha lista de categorias,
-           para depois a poder atribuir a um movimento.
-     */
 
     @PostMapping("/persons/{personEmail}/categories")
     public ResponseEntity<Object> createPersonCategory(@RequestBody NewPersonCategoryInfoDTO info,

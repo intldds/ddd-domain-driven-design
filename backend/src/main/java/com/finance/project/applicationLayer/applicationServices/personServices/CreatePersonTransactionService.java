@@ -35,11 +35,10 @@ public class CreatePersonTransactionService {
     @Autowired
     private ICategoryRepository categoryRepository;
 
-    /**
-     * The constant SUCCESS.
-     */
-    //Return messages
+
+    // Return messages
     public final static String SUCCESS = "Transaction created and added";
+
     /**
      * The constant CATEGORY_DOES_NOT_EXIST.
      */
@@ -57,14 +56,7 @@ public class CreatePersonTransactionService {
      */
     public final static String PERSON_DOES_NOT_EXIST = "Person doesn't exist";
 
-    /**
-     * Instantiates a new Us 008 create person transaction service.
-     *
-     * @param personRepository   the person repository
-     * @param accountRepository  the account repository
-     * @param ledgerRepository   the ledger repository
-     * @param categoryRepository the category repository
-     */
+
     public CreatePersonTransactionService(IPersonRepository personRepository, IAccountRepository accountRepository, ILedgerRepository ledgerRepository, ICategoryRepository categoryRepository) {
         this.personRepository = personRepository;
         this.accountRepository = accountRepository;
@@ -72,42 +64,34 @@ public class CreatePersonTransactionService {
         this.categoryRepository = categoryRepository;
     }
 
-    /**
-     * Create transaction as person boolean dto.
-     *
-     * @param createPersonTransactionDTO the create person transaction dto
-     * @return the boolean dto
-     */
-    public PersonDTO createTransactionAsPerson(CreatePersonTransactionDTO createPersonTransactionDTO) {
+
+    public PersonDTO createTransaction(CreatePersonTransactionDTO createPersonTransactionDTO) {
+
         Person person;
 
-        //Person
         PersonID personID = PersonID.createPersonID(createPersonTransactionDTO.getEmail());
         Optional<Person> optPerson = personRepository.findById(personID);
 
-        //If person does not exist, transaction will not be created
+        // If person does not exist, transaction will not be created
         if (optPerson.isPresent()) {
             person = optPerson.get();
-
         } else {
-
             throw new NotFoundArgumentsBusinessException(PERSON_DOES_NOT_EXIST);
-
         }
 
-        //Category
+        // Category
         CategoryID categoryID = CategoryID.createCategoryID(createPersonTransactionDTO.getDenominationCategory(), personID);
         boolean categoryExistsInRepo = categoryRepository.existsById(categoryID);
 
-        //Debit Account
+        // Debit Account
         AccountID debitAccountID = AccountID.createAccountID(createPersonTransactionDTO.getDenominationAccountDeb(), personID);
         boolean accountToDebitExistsInRepo = accountRepository.existsById(debitAccountID);
 
-        //Credit Account
+        // Credit Account
         AccountID creditAccountID = AccountID.createAccountID(createPersonTransactionDTO.getDenominationAccountCred(), personID);
         boolean accountToCreditExistsInRepo = accountRepository.existsById(creditAccountID);
 
-        //Ledger
+        // Ledger
         LedgerID ledgerID = person.getLedgerID();
         Optional<Ledger> optLedger = ledgerRepository.findById(ledgerID);
 
@@ -116,121 +100,124 @@ public class CreatePersonTransactionService {
         double amount = createPersonTransactionDTO.getAmount();
 
         if (!(categoryExistsInRepo)) {
-
-            //"Category does not exist"
             throw new NotFoundArgumentsBusinessException(CATEGORY_DOES_NOT_EXIST);
 
-
         } else if (!(accountToDebitExistsInRepo)) {
-
-            //"Debit Account does not exist"
             throw new NotFoundArgumentsBusinessException(ACCOUNT_DEB_DOES_NOT_EXIST);
 
-
         } else if (!(accountToCreditExistsInRepo)) {
-
-            //"Credit Account does not exist"
             throw new NotFoundArgumentsBusinessException(ACCOUNT_CRED_DOES_NOT_EXIST);
 
         } else {
-
             LocalDate date = LocalDate.parse(createPersonTransactionDTO.getDate());
 
             Ledger ledger = optLedger.get();
             ledger.createAndAddTransactionWithDate(categoryID, type, description, amount, date, debitAccountID, creditAccountID);
             ledgerRepository.addAndSaveTransaction(ledger);
-
         }
 
-        return PersonDTOAssembler.createDTOFromDomainObject(person.getPersonID().getEmail(), person.getLedgerID(), person.getName(), person.getBirthdate(), person.getBirthplace(), person.getFather(), person.getMother());
+        return PersonDTOAssembler.createDTOFromDomainObject(
+                person.getPersonID().getEmail(),
+                person.getLedgerID(), person.getName(),
+                person.getBirthdate(),
+                person.getBirthplace(),
+                person.getFather(),
+                person.getMother());
     }
 
-    public PersonDTO updatePersonTransaction(UpdatePersonTransactionDTO updatePersonTransactionDTO){
+
+    // Update Transaction
+
+    public PersonDTO updateTransaction(UpdatePersonTransactionDTO updatePersonTransactionDTO) {
 
         Person person;
 
-        //Person
+        // Person
         PersonID personID = PersonID.createPersonID(updatePersonTransactionDTO.getEmail());
         Optional<Person> optPerson = personRepository.findById(personID);
 
-        //If person does not exist, transaction will not be created
+        // If person does not exist, transaction will not be created
         if (optPerson.isPresent()) {
             person = optPerson.get();
 
         } else {
 
             throw new NotFoundArgumentsBusinessException(PERSON_DOES_NOT_EXIST);
-
         }
 
-        //Category
+        // Category
         CategoryID categoryID = CategoryID.createCategoryID(updatePersonTransactionDTO.getDenominationCategory(), personID);
         boolean categoryExistsInRepo = categoryRepository.existsById(categoryID);
 
-        //Debit Account
+        // Debit Account
         AccountID debitAccountID = AccountID.createAccountID(updatePersonTransactionDTO.getDenominationAccountDeb(), personID);
         boolean accountToDebitExistsInRepo = accountRepository.existsById(debitAccountID);
 
-        //Credit Account
+        // Credit Account
         AccountID creditAccountID = AccountID.createAccountID(updatePersonTransactionDTO.getDenominationAccountCred(), personID);
         boolean accountToCreditExistsInRepo = accountRepository.existsById(creditAccountID);
 
-        //Ledger
+        // Ledger
         LedgerID ledgerID = person.getLedgerID();
         Optional<Ledger> optLedger = ledgerRepository.findById(ledgerID);
 
         if (!(categoryExistsInRepo)) {
-
-            //"Category does not exist"
             throw new NotFoundArgumentsBusinessException(CATEGORY_DOES_NOT_EXIST);
 
-
         } else if (!(accountToDebitExistsInRepo)) {
-
-            //"Debit Account does not exist"
             throw new NotFoundArgumentsBusinessException(ACCOUNT_DEB_DOES_NOT_EXIST);
 
 
         } else if (!(accountToCreditExistsInRepo)) {
-
-            //"Credit Account does not exist"
             throw new NotFoundArgumentsBusinessException(ACCOUNT_CRED_DOES_NOT_EXIST);
 
         } else {
-
             Ledger ledger = optLedger.get();
             ledgerRepository.updatePersonTransaction(ledger, updatePersonTransactionDTO);
-
         }
 
-        return PersonDTOAssembler.createDTOFromDomainObject(person.getPersonID().getEmail(), person.getLedgerID(), person.getName(), person.getBirthdate(), person.getBirthplace(), person.getFather(), person.getMother());
+        return PersonDTOAssembler.createDTOFromDomainObject(
+                person.getPersonID().getEmail(),
+                person.getLedgerID(),
+                person.getName(),
+                person.getBirthdate(),
+                person.getBirthplace(),
+                person.getFather(),
+                person.getMother());
     }
 
-    public PersonDTO deletePersonTransaction(DeletePersonTransactionDTO deletePersonTransactionDTO){
+
+    // Delete Transaction
+
+    public PersonDTO deleteTransaction(DeletePersonTransactionDTO deletePersonTransactionDTO) {
 
         Person person;
 
         PersonID personID = PersonID.createPersonID(deletePersonTransactionDTO.getEmail());
         Optional<Person> optPerson = personRepository.findById(personID);
 
-        //If person does not exist, transaction will not be created
+        // If person does not exist, transaction will not be created
         if (optPerson.isPresent()) {
             person = optPerson.get();
 
         } else {
-
             throw new NotFoundArgumentsBusinessException(PERSON_DOES_NOT_EXIST);
-
         }
 
-        //Ledger
         LedgerID ledgerID = person.getLedgerID();
         Optional<Ledger> optLedger = ledgerRepository.findById(ledgerID);
 
         Ledger ledger = optLedger.get();
         ledgerRepository.deletePersonTransaction(ledger, deletePersonTransactionDTO);
 
-        return PersonDTOAssembler.createDTOFromDomainObject(person.getPersonID().getEmail(), person.getLedgerID(), person.getName(), person.getBirthdate(), person.getBirthplace(), person.getFather(), person.getMother());
+        return PersonDTOAssembler.createDTOFromDomainObject(
+                person.getPersonID().getEmail(),
+                person.getLedgerID(),
+                person.getName(),
+                person.getBirthdate(),
+                person.getBirthplace(),
+                person.getFather(),
+                person.getMother());
     }
 
 }

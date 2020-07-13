@@ -31,7 +31,7 @@ all details relevant to this context with high accuracy and omits all the rest.
 
 [2] **Encapsulation**
 
-Encapsulation is the ability of an object to hide parts of its stte and behaviors from
+Encapsulation is the ability of an object to **hide** parts of its state and behaviors from
 other objects, exposing only a limited **interface** to the rest of the program.
 
 To encapsulate something means to make it private (only accessible from within the methods
@@ -46,7 +46,7 @@ of abstraction and encapsulation.
 
 [3] **Inheritance**
 
-Inheritance is the ability to build new classes on top of exist- ing ones. The main benefit of inheritance is code reuse. 
+Inheritance is the ability to **build new classes on top of existing ones**. The main benefit of inheritance is code reuse. 
 If you want to create a class that’s slightly different from an existing one, there’s no need to 
 duplicate code. Instead, you extend the existing class and put the extra functionality into a 
 resulting subclass, which inherits fields and methods of the superclass.
@@ -93,8 +93,8 @@ contains the collection gets deleted.
 
 
 
-- Aggregation (less strict relationship 1:*) - one object merely contains a reference to another. 
-The contain- er doesn’t control the life cycle of the component. The component can exist without the container 
+* Aggregation (less strict relationship 1:*) - one object merely contains a reference to another. 
+The container doesn’t control the life cycle of the component. The component can exist without the container 
 and can be linked to several containers at the same time.
 
 ![aggregation](diagrams/uml/aggregation.png)

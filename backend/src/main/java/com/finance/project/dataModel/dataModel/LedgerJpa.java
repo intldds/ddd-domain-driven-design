@@ -17,7 +17,6 @@ public class LedgerJpa {
 
     @OneToMany(mappedBy = "ledger", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-
     List<TransactionJpa> transactions;
 
     // CONSTRUCTOR

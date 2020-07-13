@@ -32,7 +32,6 @@ class CreateGroupCategoryServiceTest extends AbstractTest {
     private ICategoryRepository categoryRepository;
 
     private CreateGroupCategoryService createGroupCategoryService;
-
     private Group fontesFamily;
     private GroupID fontesFamilyID;
 
@@ -42,7 +41,6 @@ class CreateGroupCategoryServiceTest extends AbstractTest {
         //Manuel
         String manuelEmail = "manuel@gmail.com";
         PersonID manuelPersonID = PersonID.createPersonID(manuelEmail);
-
 
         //Ilda
         String ildaEmail = "ilda@gmail.com";
@@ -56,11 +54,7 @@ class CreateGroupCategoryServiceTest extends AbstractTest {
         String helderEmail = "helder@gmail.com";
         PersonID helderPersonID = PersonID.createPersonID(helderEmail);
 
-
-        //Family Fontes
-        //Categories ->          Salary / Draw Money / IRS / Food / Water Bill / Netflix
-
-
+        // Group
         String dateOfCreation = "2020-06-01";
         String fontesFamilyDenomination = "Fontes Family";
         String fontesFamilyDescription = "All members from Fontes family";
@@ -72,54 +66,44 @@ class CreateGroupCategoryServiceTest extends AbstractTest {
         fontesFamily.addMember(helderPersonID);
 
         //Salary
-
         String salaryDenomination = "Salary";
         CategoryID salaryID = CategoryID.createCategoryID(salaryDenomination, fontesFamilyID);
         fontesFamily.addCategory(salaryID);
 
         //Draw Money
-
         String drawMoneyDenomination = "Draw Money";
         CategoryID drawMoneyID = CategoryID.createCategoryID(drawMoneyDenomination, fontesFamilyID);
         fontesFamily.addCategory(drawMoneyID);
 
         //IRS
-
         String irsDenomination = "IRS";
         CategoryID irsID = CategoryID.createCategoryID(irsDenomination, fontesFamilyID);
         fontesFamily.addCategory(irsID);
 
         //Food
-
         String foodDenomination = "Food";
         CategoryID foodID = CategoryID.createCategoryID(foodDenomination, fontesFamilyID);
         fontesFamily.addCategory(foodID);
 
-
         //Water Bill
-
         String waterBillDenomination = "Water Bill";
         CategoryID waterBillID = CategoryID.createCategoryID(waterBillDenomination, fontesFamilyID);
         fontesFamily.addCategory(waterBillID);
 
-
         //Netflix
-
         String netflixDenomination = "Netflix";
         CategoryID netflixID = CategoryID.createCategoryID(netflixDenomination, fontesFamilyID);
         fontesFamily.addCategory(netflixID);
 
     }
 
-    //Tests
+    // Sucess
 
     @Test
     @DisplayName("Test For createCategoryAsPeopleInCharge() | Fontes Family | Equipment | Success")
     void createCategoryAsPeopleInCharge_FontesFamily_Success() {
 
         // Arrange
-
-
         String personEmail = "manuel@gmail.com";
         String groupDenomination = "Fontes Family";
         String groupDescription = "All members from Fontes family";
@@ -127,98 +111,90 @@ class CreateGroupCategoryServiceTest extends AbstractTest {
 
         String categoryDenomination = "Equipment";
 
-        //To Search
+        // To Search
         CategoryID categoryID = CategoryID.createCategoryID(categoryDenomination, fontesFamilyID);
 
-        //Returning an Optional<Group> Fontes Family
+        // Returning an Optional<Group> Fontes Family
         Mockito.when(groupRepository.findById(fontesFamilyID)).thenReturn(Optional.of(fontesFamily));
 
-        //Returning False
+        // Returning False
         Mockito.when(categoryRepository.existsById(categoryID)).thenReturn(false);
 
-        //DTO
+        // DTO
         CreateGroupCategoryDTO createGroupCategoryDTO = CreateGroupCategoryDTOAssembler.createDTOFromPrimitiveTypes(personEmail, groupDenomination, categoryDenomination);
 
-        //Expected GroupDTO
+        // Expected GroupDTO
         GroupDTO expectedGroupDTO = GroupDTOAssembler.createDTOFromDomainObject(Denomination.createDenomination(groupDenomination), Description.createDescription(groupDescription), DateOfCreation.createDateOfCreation(dateOfCreation));
 
-        //Service
+        // Service
         createGroupCategoryService = new CreateGroupCategoryService(groupRepository, categoryRepository);
 
-
         // Act
-
         GroupDTO result = createGroupCategoryService.createCategoryAsPeopleInCharge(createGroupCategoryDTO);
 
-
         // Assert
-
         assertEquals(expectedGroupDTO, result);
     }
+
+
+    // Person is not in charge
 
     @Test
     @DisplayName("Test For createCategoryAsPeopleInCharge() | Fontes Family | Equipment | Fail | Person Not In Charge")
     void createCategoryAsPeopleInCharge_Runners_Fail_PeopleNotInCharge() {
 
         // Arrange
-
         String personEmail = "paulo@gmail.com";
         String groupDenomination = "Fontes Family";
         String categoryDenomination = "Equipment";
 
-        //Returning an Optional<Group> Fontes Family
+        // Returning an Optional<Group> Fontes Family
         Mockito.when(groupRepository.findById(fontesFamilyID)).thenReturn(Optional.of(fontesFamily));
 
-        //DTO
+        // DTO
         CreateGroupCategoryDTO createGroupCategoryDTO = CreateGroupCategoryDTOAssembler.createDTOFromPrimitiveTypes(personEmail, groupDenomination, categoryDenomination);
 
-        //Service
+        // Service
         createGroupCategoryService = new CreateGroupCategoryService(groupRepository, categoryRepository);
 
-
         // Act
-
         Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> createGroupCategoryService.createCategoryAsPeopleInCharge(createGroupCategoryDTO));
 
-
-        //Assert
-
+        // Assert
         assertEquals(thrown.getMessage(), CreateGroupCategoryService.PERSON_NOT_IN_CHARGE);
     }
+
+
+    // Category already exists - throw exception
 
     @Test
     @DisplayName("Test For createCategoryAsPeopleInCharge() | Fontes Family | Salary | Fail | Category Already Exists")
     void createCategoryAsPeopleInCharge_House_Fail_PeopleNotInCharge() {
 
         // Arrange
-
         String personEmail = "manuel@gmail.com";
         String groupDenomination = "Fontes Family";
         String categoryDenomination = "Salary";
 
-        //To Search
+        // To Search
         CategoryID categoryID = CategoryID.createCategoryID(categoryDenomination, fontesFamilyID);
 
-        //Returning an Optional<Group> Fontes Family
+        // Returning an Optional<Group> Fontes Family
         Mockito.when(groupRepository.findById(fontesFamilyID)).thenReturn(Optional.of(fontesFamily));
 
-        //Returning False
+        // Returning False
         Mockito.when(categoryRepository.existsById(categoryID)).thenReturn(true);
 
-        //DTO
+        // DTO
         CreateGroupCategoryDTO createGroupCategoryDTO = CreateGroupCategoryDTOAssembler.createDTOFromPrimitiveTypes(personEmail, groupDenomination, categoryDenomination);
 
-        //Service
+        // Service
         createGroupCategoryService = new CreateGroupCategoryService(groupRepository, categoryRepository);
 
-
         // Act
-
         Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> createGroupCategoryService.createCategoryAsPeopleInCharge(createGroupCategoryDTO));
 
-
-        //Assert
-
+        // Assert
         assertEquals(thrown.getMessage(), CreateGroupCategoryService.CATEGORY_ALREADY_EXIST);
     }
 
@@ -227,28 +203,23 @@ class CreateGroupCategoryServiceTest extends AbstractTest {
     void createCategoryAsPeopleInCharge_Runners_Fail_GroupDoesNotExist() {
 
         // Arrange
-
         String personEmail = "paulo@gmail.com";
         String groupDenomination = "Friends";
         String categoryDenomination = "Equipment";
 
-        //Returning an Optional<Group> Fontes Family
+        // Returning an Optional<Group> Fontes Family
         Mockito.when(groupRepository.findById(fontesFamilyID)).thenReturn(Optional.empty());
 
-        //DTO
+        // DTO
         CreateGroupCategoryDTO createGroupCategoryDTO = CreateGroupCategoryDTOAssembler.createDTOFromPrimitiveTypes(personEmail, groupDenomination, categoryDenomination);
 
-        //Service
+        // Service
         createGroupCategoryService = new CreateGroupCategoryService(groupRepository, categoryRepository);
 
-
         // Act
-
         Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> createGroupCategoryService.createCategoryAsPeopleInCharge(createGroupCategoryDTO));
 
-
-        //Assert
-
+        // Assert
         assertEquals(thrown.getMessage(), CreateGroupCategoryService.GROUP_DOES_NOT_EXIST);
     }
 

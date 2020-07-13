@@ -6,11 +6,11 @@ import {
     fetch_ledgers_error,
     fetchCategoriesError,
     fetchCategoriesSuccess,
-    fetchAccountsSuccess
+    fetchAccountsSuccess, searchTransactionForm, fetch_ledgers_success
 } from "../../context/Actions";
 import Button from "react-bootstrap/Button";
 
-const LedgerForm = () => {
+const LedgerForm = (props) => {
 
         useEffect(() => {
             if (isLogged == true && myPage && !myGroups) {
@@ -66,10 +66,25 @@ const LedgerForm = () => {
 
                 console.log(JSON.stringify(request));
                 //dispach loading a true
-                let data = Api.post('/persons/' + user + '/ledgers/records',
+                Api.post(props.url,
                     request
+                ).then(async () => {
+
+                        const url = '/persons/' + user + '/ledgers/records';
+
+                        const res = await Api.get(url);
+                        const {data} = await res;
+
+                        dispatch(fetch_ledgers_success(data));
+                        if (res.data._links.searchTransaction != null) {
+                            dispatch(searchTransactionForm(true));
+                        } else {
+                            dispatch(searchTransactionForm(false));
+                        }
+
+                    }
                 ).catch(err => alert(err.response.data.message + ';' + JSON.stringify(request)));
-                dispatch(updateLedgers([...transactionsData, {
+                /*dispatch(updateLedgers([...transactionsData, {
                     category,
                     type,
                     description,
@@ -77,7 +92,9 @@ const LedgerForm = () => {
                     date,
                     debitAccount,
                     creditAccount
-                }]));
+                }]));*/
+                dispatch(searchTransactionForm(true));
+
 
                 setCategory('');
                 setType('');
@@ -95,8 +112,23 @@ const LedgerForm = () => {
                 //dispach loading a true
                 let data = Api.post('/persons/' + user + '/groups/' + groupDenomination + '/ledgers/records',
                     request
+                ).then(async () => {
+
+                        const url = '/persons/' + user + '/groups/' + groupDenomination + '/ledgers/records';
+
+                        const res = await Api.get(url);
+                        const {data} = await res;
+
+                        dispatch(fetch_ledgers_success(data));
+                        if (res.data._links.searchTransaction != null) {
+                            dispatch(searchTransactionForm(true));
+                        } else {
+                            dispatch(searchTransactionForm(false));
+                        }
+
+                    }
                 ).catch(err => alert(err.response.data.message + ';' + JSON.stringify(request)));
-                dispatch(updateLedgers([...transactionsData, {
+                /*dispatch(updateLedgers([...transactionsData, {
                     category,
                     type,
                     description,
@@ -104,7 +136,8 @@ const LedgerForm = () => {
                     date,
                     debitAccount,
                     creditAccount
-                }]));
+                }]));*/
+                dispatch(searchTransactionForm(true));
 
                 setCategory('');
                 setType('');
@@ -114,13 +147,13 @@ const LedgerForm = () => {
                 setDebitAccount('');
                 setCreditAccount('');
 
-        }
+            }
 
-        document.getElementById("myCategories").selectedIndex = "0";
-        document.getElementById("myType").selectedIndex = "0";
-        document.getElementById("myDebitAccount").selectedIndex = "0";
-        document.getElementById("myCreditAccount").selectedIndex = "0";
-    }
+            document.getElementById("myCategories").selectedIndex = "0";
+            document.getElementById("myType").selectedIndex = "0";
+            document.getElementById("myDebitAccount").selectedIndex = "0";
+            document.getElementById("myCreditAccount").selectedIndex = "0";
+        }
 
         const getCategories = async () => {
 
@@ -128,15 +161,15 @@ const LedgerForm = () => {
 
             const url = '/persons/' + user + '/categories';
 
-        try {
-            const res = await Api.get(url);
-            const {data} = await res;
-            dispatch(fetchCategoriesSuccess(data.categories));
-        } catch (err) {
-            dispatch(fetchCategoriesError(err.message));
-        }
+            try {
+                const res = await Api.get(url);
+                const {data} = await res;
+                dispatch(fetchCategoriesSuccess(data.categories));
+            } catch (err) {
+                dispatch(fetchCategoriesError(err.message));
+            }
 
-    }
+        }
 
         const getAccounts = async () => {
 

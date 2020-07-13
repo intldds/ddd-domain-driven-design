@@ -11,6 +11,7 @@ import com.finance.project.domainLayer.domainEntities.vosShared.PersonID;
 
 public class PersonDTOAssembler {
 
+    // without ledger
     public static PersonDTO createDTOFromDomainObject(Email email, Name name, Birthdate birthdate, Birthplace birthplace, PersonID father, PersonID mother) {
         String personEmail = email.getEmail();
         String personName = name.getName();
@@ -38,7 +39,9 @@ public class PersonDTOAssembler {
 
     }
 
-    public static PersonDTO createDTOFromDomainObject(Email email, LedgerID ledgerID, Name name, Birthdate birthdate, Birthplace birthplace, PersonID father, PersonID mother) {
+    // with ledger
+    public static PersonDTO createDTOFromDomainObject(Email email, LedgerID ledgerID, Name name, Birthdate birthdate,
+                                                      Birthplace birthplace, PersonID father, PersonID mother) {
         String personEmail = email.getEmail();
         String personLedgerID = ledgerID.getLedgerID();
         String personName = name.getName();
@@ -63,8 +66,8 @@ public class PersonDTOAssembler {
 
         PersonDTO personDTO = new PersonDTO(personEmail, personLedgerID, personName, personBirthdate, personBirthplace, fatherEmail, motherEmail);
         return personDTO;
-
     }
+
 
     public static PersonDTO createDTOFromPrimitiveTypes(String email, String name, String birthdate, String birthplace) {
 

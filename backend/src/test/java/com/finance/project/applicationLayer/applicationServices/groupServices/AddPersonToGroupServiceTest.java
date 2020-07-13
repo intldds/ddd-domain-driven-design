@@ -28,16 +28,15 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
 
     @Mock
     private IGroupRepository groupRepository;
-
     @Mock
     private IPersonRepository personRepository;
 
 
     private AddPersonToGroupService addPersonToGroupService;
 
-    //Tests
+    // Tests
 
-    //Sucess Case
+    // Success
 
     @Test
     @DisplayName("Test Service_US03 -HappyCase - Person Exist, Group Exist, Person is not already a Member")
@@ -47,7 +46,6 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
         addPersonToGroupService = new AddPersonToGroupService(personRepository, groupRepository);
 
         //Arrange persons
-
         String personEmailAlexandre = "alexandre@gmail.com";
 
         PersonID personIDAlexandre = PersonID.createPersonID(personEmailAlexandre);
@@ -57,7 +55,6 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
         PersonID personIDJoana = PersonID.createPersonID(personEmailJoana);
 
         // Arrange group and groupID
-
         String groupDenomination = "Sunday Runners";
         String groupDescription = "All members from Sunday Runners group";
         LocalDate groupDateOfCreation = LocalDate.of(2020, 05, 28);
@@ -68,7 +65,6 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
         Group groupSundayRunner = Group.createGroupAsPersonInCharge(groupDenomination, personIDJoana, groupDescription, groupDateOfCreation, groupLedgerID);
 
         //Arrange DTO in
-
         AddPersonToGroupDTO addPersonToGroupDTO = AddPersonToGroupDTOAssembler.createDataTransferObject_Primitives(personEmailAlexandre, groupDenomination);
 
 //        Act
@@ -86,28 +82,24 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
                 .thenReturn(true);
 
         //Expected GroupDTO
-
         GroupDTO expectedGroupDTO = GroupDTOAssembler.createDTOFromDomainObject(groupSundayRunner.getGroupID().getDenomination(), groupSundayRunner.getDescription(), groupSundayRunner.getDateOfCreation());
 
         //Assert
-
         GroupDTO groupDTO = addPersonToGroupService.addPersonToGroup(addPersonToGroupDTO);
 
         assertEquals(expectedGroupDTO, groupDTO);
     }
 
-    // Group does not exist
-
+    // Group does not exist - throw exception
 
     @Test
     @DisplayName("Test Service_US03 -SadCase - Group does not exist")
     void service_US03_false_GroupDoesNotExist() {
 
-
-//      Instantiating an us003AddPersonToGroupService with personRepository and groupRepository as parameter
+        //      Instantiating an us003AddPersonToGroupService with personRepository and groupRepository as parameter
         addPersonToGroupService = new AddPersonToGroupService(personRepository, groupRepository);
 
-        //Arrange persons
+        // Arrange persons
 
         String personEmailAlexandre = "alexandre@gmail.com";
 
@@ -126,21 +118,15 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
 
         GroupID groupSundayRunnerID = GroupID.createGroupID(groupDenomination);
 
-        Group groupSundayRunner = Group.createGroupAsPersonInCharge(groupDenomination, personIDJoana, groupDescription, groupDateOfCreation, groupLedgerID);
-
         //Arrange DTO in
-
         AddPersonToGroupDTO addPersonToGroupDTO = AddPersonToGroupDTOAssembler.createDataTransferObject_Primitives(personEmailAlexandre, groupDenomination);
 
-//        Act
-//        Mock the behaviour of personRepository
-//        Returning a boolean response true - personIDAlexandre exists
-        Mockito.when(personRepository.exists(personIDAlexandre))
-                .thenReturn(true);
+
+//        Mock the behaviour of personRepository returning a boolean response true - personIDAlexandre exists
+        Mockito.when(personRepository.exists(personIDAlexandre)).thenReturn(true);
 
 //        Returning an Optional<Group> groupSunday
-        Mockito.when(groupRepository.findById(groupSundayRunnerID))
-                .thenReturn(Optional.empty());
+        Mockito.when(groupRepository.findById(groupSundayRunnerID)).thenReturn(Optional.empty());
 
         Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> addPersonToGroupService.addPersonToGroup(addPersonToGroupDTO));
 
@@ -148,13 +134,14 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
         assertEquals(thrown.getMessage(), AddPersonToGroupService.GROUP_DOES_NOT_EXIST);
     }
 
-    // Person does not Exist
+
+    // Person does not Exist - throw exception
 
     @Test
     @DisplayName("Test Service_US03- PersonID doesn't exist")
     void service_US03_false_PersonNotExist() {
 
-//      Instantiating an us003AddPersonToGroupService with personRepository and groupRepository as parameter
+        //      Instantiating an us003AddPersonToGroupService with personRepository and groupRepository as parameter
         addPersonToGroupService = new AddPersonToGroupService(personRepository, groupRepository);
 
         //Arrange persons
@@ -179,25 +166,21 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
         Group groupSundayRunners = Group.createGroupAsPersonInCharge(groupDenomination, personIDJoana, groupDescription, groupDateOfCreation, groupLedgerID);
 
         //Arrange DTO in
-
         AddPersonToGroupDTO addPersonToGroupDTO = AddPersonToGroupDTOAssembler.createDataTransferObject_Primitives(personEmailPedro, groupDenomination);
 
-//        Act
-//        Mock the behaviour of personRepository
-//        Returning a boolean response true - personIDPedro exists
-        Mockito.when(personRepository.exists(personIDAlexandre))
-                .thenReturn(false);
 
-//        Returning an Optional<Group> groupSundayRunners
-        Mockito.when(groupRepository.findById(groupSundayRunnersID))
-                .thenReturn(Optional.of(groupSundayRunners));
+        //        Mock the behaviour of personRepository, returning a boolean response true - personIDPedro exists
+        Mockito.when(personRepository.exists(personIDAlexandre)).thenReturn(false);
+
+        //        Returning an Optional<Group> groupSundayRunners
+        Mockito.when(groupRepository.findById(groupSundayRunnersID)).thenReturn(Optional.of(groupSundayRunners));
 
         Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> addPersonToGroupService.addPersonToGroup(addPersonToGroupDTO));
-
 
         //Assert
         assertEquals(thrown.getMessage(), AddPersonToGroupService.PERSON_DOES_NOT_EXIST);
     }
+
 
     // Person is already a group member
 
@@ -208,8 +191,7 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
         //      Instantiating an us003AddPersonToGroupService with personRepository and groupRepository as parameter
         addPersonToGroupService = new AddPersonToGroupService(personRepository, groupRepository);
 
-        //Arrange persons
-
+        // Arrange persons
         String personEmailAlexandre = "alexandre@gmail.com";
 
         PersonID personIDAlexandre = PersonID.createPersonID(personEmailAlexandre);
@@ -219,7 +201,6 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
         PersonID personIDJoana = PersonID.createPersonID(personEmailJoana);
 
         // Arrange group and groupID
-
         String groupDenomination = "Sunday Runners";
         String groupDescription = "All members from Sunday Runners group";
         LocalDate groupDateOfCreation = LocalDate.of(2020, 05, 28);
@@ -229,27 +210,20 @@ public class AddPersonToGroupServiceTest extends AbstractTest {
 
         Group groupSundayRunner = Group.createGroupAsPersonInCharge(groupDenomination, personIDJoana, groupDescription, groupDateOfCreation, groupLedgerID);
 
-        //Arrange DTO in
-
+        // Arrange DTO in
         AddPersonToGroupDTO addPersonToGroupDTO = AddPersonToGroupDTOAssembler.createDataTransferObject_Primitives(personEmailJoana, groupDenomination);
 
-//        Act
-//          Mock the behaviour of personRepository
-//        Returning a boolean response true - personIDAlexandre exists
-        Mockito.when(personRepository.exists(personIDJoana))
-                .thenReturn(true);
 
-//        Returning an Optional<Group> groupSundayRunner
-        Mockito.when(groupRepository.findById(groupSundayRunnerID))
-                .thenReturn(Optional.of(groupSundayRunner));
+        //          Mock the behaviour of personRepository, returning a boolean response true - personIDAlexandre exists
+        Mockito.when(personRepository.exists(personIDJoana)).thenReturn(true);
 
-//        Returning a boolean response false, person is already a member
-        Mockito.when(groupRepository.addAndSaveMember(groupSundayRunner, personIDAlexandre))
-                .thenReturn(false);
+        //        Returning an Optional<Group> groupSundayRunner
+        Mockito.when(groupRepository.findById(groupSundayRunnerID)).thenReturn(Optional.of(groupSundayRunner));
 
+        //        Returning a boolean response false, person is already a member
+        Mockito.when(groupRepository.addAndSaveMember(groupSundayRunner, personIDAlexandre)).thenReturn(false);
 
         // Act expected object
-
         Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> addPersonToGroupService.addPersonToGroup(addPersonToGroupDTO));
 
         //Assert

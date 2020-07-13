@@ -33,29 +33,27 @@ class CreateGroupAccountServiceTest extends AbstractTest {
     private IAccountRepository accountRepository;
 
     private CreateGroupAccountService createGroupAccountService;
-
     private Group group;
-
     private GroupID groupID;
 
     @BeforeEach
     public void init() {
 
-        //Fontes Family
+        // Fontes Family
 
-        //Manuel
+        // Manuel
         String manuelEmail = "manuel@gmail.com";
         PersonID manuelPersonID = PersonID.createPersonID(manuelEmail);
 
-        //Ilda
+        // Ilda
         String ildaEmail = "ilda@gmail.com";
         PersonID ildaPersonID = PersonID.createPersonID(ildaEmail);
 
-        //Paulo
+        // Paulo
         String pauloEmail = "paulo@gmail.com";
         PersonID pauloPersonID = PersonID.createPersonID(pauloEmail);
 
-        //Helder
+        // Helder
         String helderEmail = "helder@gmail.com";
         PersonID helderPersonID = PersonID.createPersonID(helderEmail);
 
@@ -108,7 +106,8 @@ class CreateGroupAccountServiceTest extends AbstractTest {
         group.addAccount(streamingServicesID);
     }
 
-    //Tests
+
+    // Success
 
     @Test
     @DisplayName("Test For createAccountAsPeopleInCharge() | Success")
@@ -152,6 +151,9 @@ class CreateGroupAccountServiceTest extends AbstractTest {
         assertEquals(expectedGroupDTO, result);
     }
 
+
+    // Person is not admin
+
     @Test
     @DisplayName("Test For createAccountAsPeopleInCharge() | Fail | Person Not In Charge")
     void createAccountAsPeopleInCharge_Fail_PeopleNotInCharge() {
@@ -178,6 +180,9 @@ class CreateGroupAccountServiceTest extends AbstractTest {
         // Assert
         assertEquals(thrown.getMessage(), CreateGroupAccountService.PERSON_NOT_IN_CHARGE);
     }
+
+
+    // Account already exists - throw exception
 
     @Test
     @DisplayName("Test For createAccountAsPeopleInCharge() | Fail | Account Already Exists")
@@ -211,6 +216,8 @@ class CreateGroupAccountServiceTest extends AbstractTest {
         //Assert
         assertEquals(thrown.getMessage(), CreateGroupAccountService.ACCOUNT_ALREADY_EXIST);
     }
+
+    // Group doesn't exist - throw exception
 
     @Test
     @DisplayName("Test For createAccountAsPeopleInCharge() | Fail | Group Does Not Exist")

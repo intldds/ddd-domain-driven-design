@@ -10,15 +10,11 @@ import com.finance.project.domainLayer.domainEntities.vosShared.LedgerID;
 
 import java.util.Optional;
 
-/**
- * The interface Ledger repository.
- */
+
 @Repository
 public interface ILedgerRepository {
 
-    //-------------------------- NOVO  -----------------//
-
-    Ledger save(Ledger ledger );
+    Ledger save(Ledger ledger);
 
     Optional<Ledger> findById(LedgerID id);
 

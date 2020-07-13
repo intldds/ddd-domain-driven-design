@@ -1,6 +1,6 @@
 package com.finance.project.dtos.dtosAssemblers;
 
-import com.finance.project.dtos.dtos.SearchAccountRecordsOutDTO;
+import com.finance.project.dtos.dtos.PersonSearchAccountRecordsOutDTO;
 import com.finance.project.dtos.dtos.TransactionDTOout;
 import com.finance.project.domainLayer.domainEntities.aggregates.ledger.Transaction;
 
@@ -21,14 +21,14 @@ public class SearchAccountRecordsOutDTOAssembler {
      * @param transactions           the list of transactions
      * @return Assembles the DTO (out) for delivering a person's transactions, for a given account, within a given period
      */
-    public static SearchAccountRecordsOutDTO accountTransactionsOutDTO(ArrayList<Transaction> transactions) {
+    public static PersonSearchAccountRecordsOutDTO accountTransactionsOutDTO(ArrayList<Transaction> transactions) {
 
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO = new SearchAccountRecordsOutDTO();
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO = new PersonSearchAccountRecordsOutDTO();
 
         for (Transaction transaction : transactions) {
             TransactionDTOout transactionDTOout = TransactionDTOoutAssembler.createTransactionDTOout(transaction);
-            searchAccountRecordsOutDTO.getTransactions().add(transactionDTOout);
+            personSearchAccountRecordsOutDTO.getTransactions().add(transactionDTOout);
         }
-        return searchAccountRecordsOutDTO;
+        return personSearchAccountRecordsOutDTO;
     }
 }

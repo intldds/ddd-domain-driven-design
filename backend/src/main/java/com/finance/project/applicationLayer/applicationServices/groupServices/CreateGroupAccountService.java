@@ -25,12 +25,6 @@ public class CreateGroupAccountService {
     @Autowired
     private IAccountRepository accountRepository;
 
-    /**
-     * Instantiates a new Us 007 create group account service.
-     *
-     * @param groupRepository   the group repository
-     * @param accountRepository the account repository
-     */
     public CreateGroupAccountService(IGroupRepository groupRepository, IAccountRepository accountRepository) {
         this.accountRepository = accountRepository;
         this.groupRepository = groupRepository;
@@ -39,7 +33,6 @@ public class CreateGroupAccountService {
     /**
      * The constant SUCCESS.
      */
-//Return messages
     public final static String SUCCESS = "Account created and added";
     /**
      * The constant ACCOUNT_ALREADY_EXIST.
@@ -54,12 +47,7 @@ public class CreateGroupAccountService {
      */
     public final static String GROUP_DOES_NOT_EXIST = "Group does not exist";
 
-    /**
-     * Create account as people in charge boolean dto.
-     *
-     * @param createGroupAccountDTO the create group account dto
-     * @return the boolean dto
-     */
+
     public GroupDTO createAccountAsPeopleInCharge(CreateGroupAccountDTO createGroupAccountDTO) {
 
         Group group;
@@ -68,14 +56,12 @@ public class CreateGroupAccountService {
         Optional<Group> optGroup = groupRepository.findById(groupID);
 
         if (!optGroup.isPresent()) {
-
             throw new NotFoundArgumentsBusinessException(GROUP_DOES_NOT_EXIST);
 
         } else {
-
             group = optGroup.get();
 
-            //If Person is PeopleInCharge of a group, he/she already exists in personRepository
+            // If Person is PeopleInCharge of a group, he/she already exists in personRepository
             PersonID personID = PersonID.createPersonID(createGroupAccountDTO.getPersonEmail());
             boolean isPeopleInCharge = group.isPersonPeopleInCharge(personID);
 
@@ -83,21 +69,22 @@ public class CreateGroupAccountService {
             boolean accountExistsInRepo = accountRepository.existsById(accountID);
 
             if (!isPeopleInCharge) {
-
                 throw new InvalidArgumentsBusinessException(PERSON_NOT_IN_CHARGE);
 
             } else if (accountExistsInRepo) {
-
                 throw new InvalidArgumentsBusinessException(ACCOUNT_ALREADY_EXIST);
 
             } else {
-
                 group.addAccount(AccountID.createAccountID(createGroupAccountDTO.getAccountDenomination(), groupID));
                 groupRepository.addAndSaveAccount(group, createGroupAccountDTO.getAccountDescription());
-
             }
         }
-        return GroupDTOAssembler.createDTOFromDomainObject(group.getGroupID().getDenomination(),group.getDescription(),group.getDateOfCreation());
+        GroupDTO groupDTO = GroupDTOAssembler.createDTOFromDomainObject(
+                group.getGroupID().getDenomination(),
+                group.getDescription(),
+                group.getDateOfCreation());
+
+        return groupDTO;
     }
 }
 

@@ -16,9 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The type Category repository.
- */
+
 @Repository
 public class CategoryRepository implements ICategoryRepository {
 
@@ -27,12 +25,11 @@ public class CategoryRepository implements ICategoryRepository {
     @Autowired
     CategoryDomainDataAssembler categoryAssembler;
 
-    //Constructor
+    // Constructor
 
     public CategoryRepository() {
     }
 
-    //-------------------- NOVO --------------------------//
 
     public Category save(Category category) {
         CategoryJpa categoryJpa = categoryAssembler.toData(category);

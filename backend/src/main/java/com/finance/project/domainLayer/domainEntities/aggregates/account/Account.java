@@ -7,25 +7,14 @@ import com.finance.project.domainLayer.entitiesInterfaces.OwnerID;
 
 import java.util.Objects;
 
-/**
- * Change Account to root
- */
-//root
+
 public class Account implements Entity {
     private final AccountID accountID;
     private final Description description;
 
 
-    //Constructor
+    // Constructor
 
-    /**
-     * Create account account.
-     *
-     * @param description  the description
-     * @param denomination the denomination
-     * @param ownerID      the owner id
-     * @return the account
-     */
     public static Account createAccount(String description, String denomination, OwnerID ownerID) {
         return new Account(description, denomination, ownerID);
     }
@@ -42,44 +31,21 @@ public class Account implements Entity {
         this.accountID = AccountID.createAccountID(denomination, ownerID);
         this.description = Description.createDescription(description);
     }
-/*
-    //AccountID of Account
-    public boolean checkAccountID(AccountID accountID) {
-        return this.accountID.equals(accountID);
-    }
 
- */
 
-    //Get AccountID
+    // Getters
 
-    /**
-     * Gets account id.
-     *
-     * @return the account id
-     */
     public AccountID getAccountID() {
         return accountID;
     }
 
-    //Get Description
-
-    /**
-     * Gets description.
-     *
-     * @return the description
-     */
     public Description getDescription() {
         return description;
     }
 
-    //Equals
 
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
+    // Equals & hashCode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,14 +58,6 @@ public class Account implements Entity {
         return true;
     }
 
-
-    //hashcode
-
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
     @Override
     public int hashCode() {
         return Objects.hash(accountID);

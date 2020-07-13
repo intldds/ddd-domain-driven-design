@@ -5,21 +5,13 @@ import com.finance.project.domainLayer.entitiesInterfaces.ValueObject;
 import java.time.LocalDate;
 import java.util.Objects;
 
-/**
- * The type Birthdate.
- */
+
 public class Birthdate implements ValueObject {
 
     private LocalDate birthdate;
 
-    //Constructor
+    // Constructor
 
-    /**
-     * Create birthdate birthdate.
-     *
-     * @param birthdate the birthdate
-     * @return the birthdate
-     */
     public static Birthdate createBirthdate(LocalDate birthdate) {
         return new Birthdate(birthdate);
     }
@@ -31,25 +23,15 @@ public class Birthdate implements ValueObject {
         this.birthdate = birthdate;
     }
 
-    //get Birthdate
+    // Getters
 
-    /**
-     * Gets birthdate.
-     *
-     * @return the birthdate
-     */
     public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    //Equals
 
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
+    // Equals & hashCode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,13 +40,6 @@ public class Birthdate implements ValueObject {
         return Objects.equals(birthdate, birthdate1.birthdate);
     }
 
-    //HashCode
-
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
     @Override
     public int hashCode() {
         return Objects.hash(birthdate);

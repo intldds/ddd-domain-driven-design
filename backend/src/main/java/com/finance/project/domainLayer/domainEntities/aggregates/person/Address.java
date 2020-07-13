@@ -4,9 +4,7 @@ import com.finance.project.domainLayer.entitiesInterfaces.ValueObject;
 
 import java.util.Objects;
 
-/**
- * The type Address.
- */
+
 public class Address implements ValueObject {
 
     private String street;
@@ -16,25 +14,14 @@ public class Address implements ValueObject {
     private String country;
 
 
-    //constructor with all attributes
+    // Constructor
 
-    /**
-     * Create address address.
-     *
-     * @param street     the street
-     * @param doorNumber the door number
-     * @param postCode   the post code
-     * @param city       the city
-     * @param country    the country
-     * @return the address
-     */
     public static Address createAddress(String street, String doorNumber, String postCode, String city, String country) {
         return new Address(street, doorNumber, postCode, city, country);
     }
 
 
     private Address(String street, String doorNumber, String postCode, String city, String country) {
-
         if (street != null && doorNumber != null && postCode != null && city != null && country != null) {
             this.street = street;
             this.doorNumber = doorNumber;
@@ -55,13 +42,8 @@ public class Address implements ValueObject {
 
     }
 
-    //make an address
+    // make an address
 
-    /**
-     * Instantiates a new Address.
-     *
-     * @param p the p
-     */
     public Address(Address p) {
         this.street = p.street;
         this.doorNumber = p.doorNumber;
@@ -71,72 +53,35 @@ public class Address implements ValueObject {
     }
 
 
-    /**
-     * Gets street.
-     *
-     * @return the street
-     */
+    // Getters
+
     public String getStreet() {
         return street;
     }
 
-    /**
-     * Gets door number.
-     *
-     * @return the door number
-     */
     public String getDoorNumber() {
         return doorNumber;
     }
 
-    /**
-     * Gets post code.
-     *
-     * @return the post code
-     */
     public String getPostCode() {
         return postCode;
     }
 
-    /**
-     * Gets city.
-     *
-     * @return the city
-     */
     public String getCity() {
         return city;
     }
 
-    /**
-     * Gets country.
-     *
-     * @return the country
-     */
     public String getCountry() {
         return country;
     }
 
-    //hashCode
+    // hashCode & equals
 
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
     @Override
     public int hashCode() {
         return Objects.hash(street, doorNumber, postCode, city, country);
     }
 
-
-    //address equals
-
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

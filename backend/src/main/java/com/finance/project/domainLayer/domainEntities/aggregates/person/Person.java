@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * The type Person.
- */
+
 public class Person implements Entity, Owner {
 
     private PersonID personID;
@@ -27,21 +25,8 @@ public class Person implements Entity, Owner {
     private List<CategoryID> listOfCategories;
     private LedgerID ledgerID;
     private List<ScheduleID> listOfSchedulings;
-    private List<GroupID> listOfGroups;
 
     // Constructor
-
-    /**
-     * Create person without parents person.
-     *
-     * @param email      the email
-     * @param name       the name
-     * @param birthdate  the birthdate
-     * @param birthplace the birthplace
-     * @param address    the address
-     * @param ledgerID   the ledger id
-     * @return the person
-     */
 
     public static Person createPersonWithoutParents(String email, String name, LocalDate birthdate, String birthplace, Address address, LedgerID ledgerID) {
         return new Person(email, name, birthdate, birthplace, address, ledgerID);
@@ -49,33 +34,11 @@ public class Person implements Entity, Owner {
 
     // New Constructor - create person without parents, address and ledger
 
-    /**
-     * Create person.
-     *
-     * @param email      the email
-     * @param name       the name
-     * @param birthdate  the birthdate
-     * @param birthplace the birthplace
-     * @return the person
-     */
-
     public static Person createPerson(String email, String name, LocalDate birthdate, String birthplace) {
         return new Person(email, name, birthdate, birthplace);
     }
 
-    /**
-     * Create person with parents person.
-     *
-     * @param email      the email
-     * @param name       the name
-     * @param birthdate  the birthdate
-     * @param mother     the mother
-     * @param father     the father
-     * @param birthplace the birthplace
-     * @param address    the address
-     * @param ledgerID   the ledger id
-     * @return the person
-     */
+    // Create person with parents person.
 
     public static Person createPersonWithParents(String email, String name, LocalDate birthdate, PersonID mother, PersonID father, String birthplace, Address address, LedgerID ledgerID) {
         return new Person(email, name, birthdate, mother, father, birthplace, address, ledgerID);
@@ -151,119 +114,44 @@ public class Person implements Entity, Owner {
         this.listOfSchedulings = new ArrayList<>();
     }
 
-    //Name
-
-    /**
-     * Gets name.
-     *
-     * @return the name
-     */
+    // Getters
 
     public Name getName() {
         return name;
     }
 
-
-    //Email
-
-    /**
-     * Gets email.
-     *
-     * @return the email
-     */
-
     public Email getEmail() {
         return email;
     }
-
-    //Birthdate
-
-    /**
-     * Gets birthdate.
-     *
-     * @return the birthdate
-     */
 
     public Birthdate getBirthdate() {
         return birthdate;
     }
 
-    //Birthplace
-
-    /**
-     * Gets birthplace.
-     *
-     * @return the birthplace
-     */
-
     public Birthplace getBirthplace() {
         return birthplace;
     }
-
-    //Address
-
-    /**
-     * Gets address.
-     *
-     * @return the address
-     */
 
     public Address getAddress() {
         return address;
     }
 
-    /**
-     * Sets address.
-     *
-     * @param address the address
-     */
-
     public void setAddress(Address address) {
         this.address = address;
     }
-
-    //PersonID
-
-    /**
-     * Gets person id.
-     *
-     * @return the person id
-     */
 
     public PersonID getPersonID() {
         return personID;
     }
 
-    /**
-     * Check person id boolean.
-     *
-     * @param personID the person id
-     * @return the boolean
-     */
-
     public boolean checkPersonID(PersonID personID) {
         return this.personID.equals(personID);
     }
-
-    //Siblings
-
-    /**
-     * Gets list of siblings.
-     *
-     * @return the list of siblings
-     */
 
     public List<PersonID> getListOfSiblings() {
         List<PersonID> copyList = new ArrayList<>(listOfSiblings);
         return copyList;
     }
-
-    /**
-     * Add sibling boolean.
-     *
-     * @param personID the person id
-     * @return the boolean
-     */
 
     public boolean addSibling(PersonID personID) {
         if (!listOfSiblings.contains(personID)) {
@@ -272,12 +160,7 @@ public class Person implements Entity, Owner {
         return false;
     }
 
-    /**
-     * Verify siblings or half siblings boolean.
-     *
-     * @param personP the person p
-     * @return the boolean
-     */
+    // Verify siblings or half siblings boolean.
 
     public boolean verifySiblingsOrHalfSiblings(Person personP) {
         if (this == personP) {
@@ -286,23 +169,16 @@ public class Person implements Entity, Owner {
         if (this.mother != null && personP.mother != null && this.mother.equals(personP.mother)) {
             return true;
         }
-
         if (this.father != null && personP.father != null && this.father.equals(personP.father)) {
             return true;
         }
-
         if (this.listOfSiblings.contains(personP.personID) || personP.listOfSiblings.contains(this.personID)) {
             return true;
         }
         return false;
     }
 
-    /**
-     * Verify same siblings boolean.
-     *
-     * @param personP the person p
-     * @return the boolean
-     */
+    // Verify same siblings boolean.
 
     public boolean verifySameSiblings(Person personP) {
 
@@ -319,48 +195,24 @@ public class Person implements Entity, Owner {
         if (this.listOfSiblings.equals(personP.listOfSiblings)) {
             return true;
         }
-
         personCopyPersonP.remove(this.personID);
         personCopyThis.remove(personP.personID);
-
 
         if (personCopyThis.equals(personCopyPersonP)) {
             return true;
         }
-
         return false;
     }
 
-    //Mother
-
-    /**
-     * Gets mother.
-     *
-     * @return the mother
-     */
+    // Getters - Mother, Father, Catgories, Accounts
 
     public PersonID getMother() {
         return mother;
     }
 
-    //Father
-
-    /**
-     * Gets father.
-     *
-     * @return the father
-     */
     public PersonID getFather() {
         return father;
     }
-
-    //Categories
-
-    /**
-     * Gets list of categories.
-     *
-     * @return the list of categories
-     */
 
     public List<CategoryID> getListOfCategories() {
         List<CategoryID> copyList = new ArrayList<>(listOfCategories);
@@ -374,14 +226,6 @@ public class Person implements Entity, Owner {
         return false;
     }
 
-    //Accounts
-
-    /**
-     * Gets list of accounts.
-     *
-     * @return the list of accounts
-     */
-
     public List<AccountID> getListOfAccounts() {
         List<AccountID> copyList = new ArrayList<>(listOfAccounts);
         return copyList;
@@ -394,26 +238,9 @@ public class Person implements Entity, Owner {
         return false;
     }
 
-    //Ledger
-
-    /**
-     * Gets ledger id.
-     *
-     * @return the ledger id
-     */
-
     public LedgerID getLedgerID() {
         return ledgerID;
     }
-
-    //Schedule
-
-    /**
-     * Add schedule boolean.
-     *
-     * @param scheduleID the schedule id
-     * @return the boolean
-     */
 
     public boolean addSchedule(ScheduleID scheduleID) {
         if (!listOfSchedulings.contains(scheduleID)) {
@@ -422,38 +249,18 @@ public class Person implements Entity, Owner {
         return false;
     }
 
-    /**
-     * Gets list of schedulings.
-     *
-     * @return the list of schedulings
-     */
-
     public List<ScheduleID> getListOfSchedulings() {
         List<ScheduleID> copyList = new ArrayList<>(listOfSchedulings);
         return copyList;
     }
 
-    //HashCode
-
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
+    // hashCode & equals
 
     @Override
     public int hashCode() {
         return Objects.hash(personID);
     }
 
-    //Equals
-
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
 
     @Override
     public boolean equals(Object o) {
@@ -473,14 +280,8 @@ public class Person implements Entity, Owner {
     }
 
 
-    //Check if Person has AccountID
+    // Check if Person has AccountID
 
-    /**
-     * Check if person has account boolean.
-     *
-     * @param accountID the account id
-     * @return the boolean
-     */
     public boolean checkIfPersonHasAccount(AccountID accountID) {
         for (int i = 0; i < listOfAccounts.size(); i++) {
             if (listOfAccounts.get(i).equals(accountID))
@@ -488,15 +289,6 @@ public class Person implements Entity, Owner {
         }
         return false;
     }
-
-    //Check if Person has CategoryID
-
-    /**
-     * Check if person has category boolean.
-     *
-     * @param categoryID the category id
-     * @return the boolean
-     */
 
     public boolean checkIfPersonHasCategory(CategoryID categoryID) {
         for (int i = 0; i < listOfCategories.size(); i++) {
@@ -507,7 +299,7 @@ public class Person implements Entity, Owner {
     }
 
 
-    //--------------------------------------------   NOVO   ----------------------------------------//
+    // Adders
 
     public boolean addAddress(String street, String doorNumber, String postCode, String city, String country) {
         if (this.address == null) {
@@ -541,74 +333,3 @@ public class Person implements Entity, Owner {
     }
 
 }
-
-
-/*  PARA JONAS VER
-
-
-    //Create Scheduling
-
-    public boolean createScheduling(String transactionType, double amount, Account creditAccount, Account debitAccount, Category category, String description, LocalDate triggerDate, String periodicity) {
-        return listOfSchedulings.createScheduling(this.ledgerID, transactionType, amount, creditAccount, debitAccount, category, description, triggerDate, periodicity);
-    }
-
-    //Check if schedulingList has a specific Scheduling
-
-    public boolean hasScheduling(Scheduling scheduling) {
-        return listOfSchedulings.hasScheduling(scheduling);
-    }
-
-    //Check schedulingList size
-
-    public int schedulingListSize() {
-        return listOfSchedulings.schedulingListSize();
-    }
- */
-
-
-
-/* COISAS A APAGAR!
-
-    //create group
-
-    public boolean createGroupAsPeopleInCharge(GroupID groupID, Person personIncharge, Description description, DateOfCreation dateOfCreation) {
-        return listOfMyGroups.createGroupAsPeopleInCharge(groupID, personIncharge, description, dateOfCreation);
-    }
-
-    //create account
-
-    public void createAccount( Description description, Denomination denomination) {
-        Boolean account = listOfAccounts.createAccount(description,denomination);
-        //listOfAccounts.addAccount(account);
-    }
-
-    //create transaction
-
-    public boolean createAndAddTransaction(Category category, String type, String description, double amount, Account debitAccount, Account creditAccount) {
-        return ledger.createAndAddTransaction(category, type, description, amount, debitAccount, creditAccount);
-    }
-
-    public boolean createAndAddTransactionWithDate(Category category, String type, String description, double amount, LocalDate date, Account debitAccount, Account creditAccount) {
-        return ledger.createAndAddTransactionWithDate(category, type, description, amount, date, debitAccount, creditAccount);
-    }
-
-    //make a person
-
-    public Person(Person p) {
-        this.name = p.name;
-        this.birthdate = p.birthdate;
-        this.birthplace = p.birthplace;
-        this.address = p.address;
-
-        if (p.mother != null && p.father != null) {
-            this.mother = new Person(p.mother);
-            this.father = new Person(p.father);
-        } else if (p.mother != null) {
-            this.mother = new Person(p.mother);
-        } else if (p.father != null) {
-            this.father = new Person(p.father);
-        }
-
-    }
-
- */

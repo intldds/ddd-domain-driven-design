@@ -7,15 +7,11 @@ import com.finance.project.domainLayer.domainEntities.vosShared.AccountID;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The interface Account repository.
- */
+
 @Repository
 public interface IAccountRepository {
 
-    //----------------------- NOVO ----------------------//
-
-    Account save(Account account );
+    Account save(Account account);
 
     List<Account> findAll();
 
@@ -27,5 +23,5 @@ public interface IAccountRepository {
 
     void delete(Account account);
 
-    List<Account> findAllById(String description, String denomination,String id);
+    List<Account> findAllById(String description, String denomination, String id);
 }

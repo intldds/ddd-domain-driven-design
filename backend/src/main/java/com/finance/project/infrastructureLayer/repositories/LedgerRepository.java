@@ -20,9 +20,7 @@ import com.finance.project.domainLayer.domainEntities.vosShared.LedgerID;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The type Ledger repository.
- */
+
 @Repository
 public class LedgerRepository implements ILedgerRepository {
 
@@ -39,7 +37,6 @@ public class LedgerRepository implements ILedgerRepository {
     public LedgerRepository() {
     }
 
-    //----------------------------------  NOVO  -----------------------------------//
 
     public Ledger save(Ledger ledger) {
         LedgerJpa ledgerJpa = ledgerAssembler.toData(ledger);

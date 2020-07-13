@@ -46,9 +46,9 @@ const initialState = {
 
     // Categories
     categories: {
-      isLoading: false,
-      error: "",
-      categoriesData: [],
+        isLoading: false,
+        error: "",
+        categoriesData: [],
     },
 
     // Accounts
@@ -57,6 +57,9 @@ const initialState = {
         error: "",
         accountsData: [],
     },
+
+    // Search Transaction
+    searchTransaction: false,
 
 };
 

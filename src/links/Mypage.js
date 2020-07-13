@@ -6,8 +6,12 @@ import {myPageHandleOnClicks, myGroupsHandleOnClicks, myHomePageHandleOnClicks} 
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Logout from "./Logout";
+import {useHistory} from "react-router-dom";
 
 function MyPage() {
+
+    const history = useHistory();
+    const currentRoute = history.location.pathname;
 
     const {state, dispatch} = useContext(AppContext);
 
@@ -24,6 +28,12 @@ function MyPage() {
         dispatch(myHomePageHandleOnClicks());
     };
 
+    const links = {
+        accounts: '/mypage/accounts',
+        categories: '/mypage/categories',
+        ledger: '/mypage/ledger'
+    };
+
 
     if (!myPage && !myGroups || !myPage && myGroups) {
         return (
@@ -33,11 +43,11 @@ function MyPage() {
                         <Link to="/mypage" onClick={() => myHomePageHandleOnClick()}>G3</Link>
                     </Navbar.Brand>
                     <Nav>
-                        <Nav.Link>
+                        <Nav.Link className={currentRoute.startsWith("/mypage") ? "activeNavLink" : undefined}>
                             <Link to="/mypage" onClick={() => myPageHandleOnClick()}>My Page</Link>
                         </Nav.Link>
 
-                        <Nav.Link>
+                        <Nav.Link className={currentRoute.startsWith("/myGroups") ? "activeNavLink" : undefined}>
                             <Link to="/myGroups" onClick={() => myGroupsHandleOnClick()}>My Groups</Link>
                         </Nav.Link>
 
@@ -51,9 +61,8 @@ function MyPage() {
                 </Navbar>
                 <br/>
             </div>
-
-
         );
+
     } else if (myPage && !myGroups) {
         return (
             <div>
@@ -62,11 +71,11 @@ function MyPage() {
                         <Link to="/mypage" onClick={() => myHomePageHandleOnClick()}>G3</Link>
                     </Navbar.Brand>
                     <Nav>
-                        <Nav.Link>
+                        <Nav.Link className={currentRoute.startsWith("/mypage") ? "activeNavLink" : undefined}>
                             <Link to="/mypage" onClick={() => myPageHandleOnClick()}>My Page</Link>
                         </Nav.Link>
 
-                        <Nav.Link>
+                        <Nav.Link className={currentRoute.startsWith("/myGroups") ? "activeNavLink" : undefined}>
                             <Link to="/myGroups" onClick={() => myGroupsHandleOnClick()}>My Groups</Link>
                         </Nav.Link>
 
@@ -81,9 +90,15 @@ function MyPage() {
                 <br/>
                 <nav>
                     <ul className="homeNavBar">
-                        <li style={{display: "inline"}}><Link to="/ledger">Ledger</Link></li>
-                        <li style={{display: "inline"}}><Link to="/accounts">Accounts</Link></li>
-                        <li style={{display: "inline"}}><Link to="/categories">Categories</Link></li>
+                        <li style={{display: "inline"}} className={currentRoute.startsWith("/mypage/ledger") ? "activeNavLink" : undefined}>
+                            <Link to={links.ledger}>Ledger</Link>
+                        </li>
+                        <li style={{display: "inline"}} className={currentRoute.startsWith("/mypage/accounts") ? "activeNavLink" : undefined}>
+                            <Link to={links.accounts}>Accounts</Link>
+                        </li>
+                        <li style={{display: "inline"}} className={currentRoute.startsWith("/mypage/categories") ? "activeNavLink" : undefined}>
+                            <Link to={links.categories}>Categories</Link>
+                        </li>
                     </ul>
                     <hr/>
                 </nav>

@@ -27,9 +27,9 @@ public class CreatePersonControllerTest extends AbstractTest {
 
     //-----------------------------Structure---------------------------//
 
-    //Create Person
+    // Create Person
 
-    //Sucess
+    // Sucess
 
     @Test
     @DisplayName("Create Person - Sucess")
@@ -55,78 +55,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         // Assert
         final int status = mvcResult.getResponse().getStatus();
         assertEquals(HttpStatus.CREATED.value(), status);
-
-        final String content = mvcResult.getResponse().getContentAsString();
-        JSONObject obj = new JSONObject(content);
-
-        // Structure
-        assertTrue(obj.has("email"));
-        assertTrue(obj.has("name"));
-        assertTrue(obj.has("birthdate"));
-        assertTrue(obj.has("birthplace"));
-        assertTrue(obj.has("_links"));
-    }
-
-
-    @Test
-    @DisplayName("Test postMapping | False | Person already Exists")
-    public void createPerson_PersonAlreadyExist_() throws Exception {
-
-        final String personEmail = "paulo@gmail.com";
-        final String name = "Paulo Fontes";
-        final String birthdate = "1993-03-15";
-        final String birthplace = "Vila Nova de Gaia";
-
-        final String uri = "/persons";
-
-
-        // Input JSON
-        NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
-        String inputJson = super.mapToJson(newCreatePersonInfoDTO);
-
-        // Act
-        final MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
-        //Assert
-
-        final int status = mvcResult.getResponse().getStatus();
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(), status);
-
-        final String content = mvcResult.getResponse().getContentAsString();
-        JSONObject obj = new JSONObject(content);
-
-        assertTrue(obj.has("status"));
-        assertTrue(obj.has("message"));
-        assertTrue(obj.has("errors"));
-    }
-
-
-    //Get PersonEmail
-
-
-    @Test
-    @DisplayName("GetPerson - Sucess")
-    public void GetPersonByEmail() throws Exception {
-
-        // Arrange
-
-        final String personEmail = "paulo@gmail.com";
-        final String name = "Paulo Fontes";
-        final String birthdate = "1993-03-15";
-        final String birthplace = "Vila Nova de Gaia";
-
-        final String uri = "/persons/" + personEmail;
-
-
-        // Input JSON
-        NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
-        String inputJson = super.mapToJson(newCreatePersonInfoDTO);
-
-        // Act
-        final MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
-
-        // Assert
-        final int status = mvcResult.getResponse().getStatus();
-        assertEquals(HttpStatus.OK.value(), status);
 
         final String content = mvcResult.getResponse().getContentAsString();
         JSONObject obj = new JSONObject(content);
@@ -313,7 +241,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         final String birthplace = "Vila Nova de Gaia";
 
         final String uri = "/persons/" + personEmail + "/categories";
-        ;
 
 
         // Input JSON
@@ -325,14 +252,13 @@ public class CreatePersonControllerTest extends AbstractTest {
 
         // Assert
         final int status = mvcResult.getResponse().getStatus();
-//        assertEquals(HttpStatus.OK.value(), status);
+        // assertEquals(HttpStatus.OK.value(), status);
 
         final String content = mvcResult.getResponse().getContentAsString();
         JSONObject obj = new JSONObject(content);
 
         // Structure
-//        assertTrue(obj.has("categories"));
-
+        // assertTrue(obj.has("categories"));
     }
 
 
@@ -348,8 +274,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         final String birthplace = "Vila Nova de Gaia";
 
         final String uri = "/persons/" + personEmail + "/categories";
-        ;
-
 
         // Input JSON
         NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
@@ -367,14 +291,13 @@ public class CreatePersonControllerTest extends AbstractTest {
 
         // Structure
         assertTrue(obj.has("errors"));
-
     }
 
 
-    //Get Person Siblings
+    // Get Person Siblings
 
     @Test
-    @DisplayName("GetPerson Siblings- Sucess")
+    @DisplayName("GetPerson Siblings- Success")
     public void GetPersonSiblings() throws Exception {
 
         // Arrange
@@ -397,13 +320,13 @@ public class CreatePersonControllerTest extends AbstractTest {
 
         // Assert
         final int status = mvcResult.getResponse().getStatus();
-//        assertEquals(HttpStatus.OK.value(), status);
+        // assertEquals(HttpStatus.OK.value(), status);
 
         final String content = mvcResult.getResponse().getContentAsString();
         JSONObject obj = new JSONObject(content);
 
         // Structure
-//        assertTrue(obj.has("siblings"));
+        // assertTrue(obj.has("siblings"));
 
     }
 
@@ -420,8 +343,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         final String birthplace = "Vila Nova de Gaia";
 
         final String uri = "/persons/" + personEmail + "/siblings";
-        ;
-
 
         // Input JSON
         NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
@@ -459,7 +380,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         final String birthdate = "1973-07-25";
         String birthplace = "Porto";
 
-
         // Input JSON
         NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
         String inputJson = super.mapToJson(newCreatePersonInfoDTO);
@@ -483,82 +403,6 @@ public class CreatePersonControllerTest extends AbstractTest {
 
 
     @Test
-    @DisplayName("Test postMapping | False | Person already Exist")
-    public void createPerson_PersonAlreadyExist_Content() throws Exception {
-
-        final String personEmail = "paulo@gmail.com";
-        final String name = "Paulo Fontes";
-        final String birthdate = "1993-03-15";
-        final String birthplace = "Vila Nova de Gaia";
-
-        final String uri = "/persons";
-
-
-        // Input JSON
-        NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
-        String inputJson = super.mapToJson(newCreatePersonInfoDTO);
-
-        // Act
-        final MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
-
-        //Assert
-
-        final int status = mvcResult.getResponse().getStatus();
-//        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(), status);
-
-        final String content = mvcResult.getResponse().getContentAsString();
-        JSONObject obj = new JSONObject(content);
-
-//        assertEquals("UNPROCESSABLE_ENTITY", obj.get("status"));
-  //      Assertions.assertEquals(CreatePersonService.PERSON_ALREADY_EXIST, obj.get("message"));
-    //    assertEquals("[\"Status Code: " + HttpStatus.UNPROCESSABLE_ENTITY.value() + ", Exception: InvalidArgumentsBusinessException\"]", obj.get("errors").toString());
-    }
-
-
-    /*
-
-    //Get PersonEmail
-
-    @Test
-    @DisplayName("Get Person - Sucess")
-    public void GetPersonByEmail_Content() throws Exception {
-
-        // Arrange
-
-        final String personEmail = "paulo@gmail.com";
-        final String name = "Paulo Fontes";
-        final String birthdate = "1993-03-15";
-        final String birthplace = "Vila Nova de Gaia";
-
-        final String uri = "/persons/" + personEmail;
-
-
-        // Input JSON
-        NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
-        String inputJson = super.mapToJson(newCreatePersonInfoDTO);
-
-        // Act
-        final MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
-
-        // Assert
-        final int status = mvcResult.getResponse().getStatus();
-//        assertEquals(HttpStatus.OK.value(), status);
-
-        final String content = mvcResult.getResponse().getContentAsString();
-        JSONObject obj = new JSONObject(content);
-
-        //Content
-//        assertEquals(personEmail, obj.get("email"));
-        assertEquals(name, obj.get("name"));
-        assertEquals(birthdate, obj.get("birthdate"));
-        assertEquals(birthplace, obj.get("birthplace"));
-
-    }
-
-     */
-
-
-    @Test
     @DisplayName("Get Person - Fail - Person Does Not Exist")
     public void GetPersonByEmail_Content_PersonDoesNotExist() throws Exception {
 
@@ -571,7 +415,6 @@ public class CreatePersonControllerTest extends AbstractTest {
 
         final String uri = "/persons/" + personEmail;
 
-
         // Input JSON
         NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
         String inputJson = super.mapToJson(newCreatePersonInfoDTO);
@@ -580,7 +423,7 @@ public class CreatePersonControllerTest extends AbstractTest {
         final MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri).contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
 
 
-        //Assert
+        // Assert
 
         final int status = mvcResult.getResponse().getStatus();
         assertEquals(HttpStatus.NOT_FOUND.value(), status);
@@ -597,7 +440,7 @@ public class CreatePersonControllerTest extends AbstractTest {
     // Get Person Ledger
 
     @Test
-    @DisplayName("GetPerson Ledger- Fail - Person does not exist")
+    @DisplayName("GetPerson Ledger - Fail - Person does not exist")
     public void GetPersonLedger_Content() throws Exception {
 
         // Arrange
@@ -608,8 +451,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         final String birthplace = "Vila Nova de Gaia";
 
         final String uri = "/persons/" + personEmail + "/ledgers/records";
-        ;
-
 
         // Input JSON
         NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
@@ -627,8 +468,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         assertEquals("NOT_FOUND", obj.get("status"));
         assertEquals(CreatePersonService.PERSON_DOES_NOT_EXIST, obj.get("message"));
         assertEquals("[\"Status Code: " + HttpStatus.NOT_FOUND.value() + ", Exception: NotFoundArgumentsBusinessException\"]", obj.get("errors").toString());
-
-
     }
 
     // Get Person Accounts
@@ -645,8 +484,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         final String birthplace = "Vila Nova de Gaia";
 
         final String uri = "/persons/" + personEmail + "/accounts";
-        ;
-
 
         // Input JSON
         NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
@@ -664,8 +501,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         assertEquals("NOT_FOUND", obj.get("status"));
         assertEquals(CreatePersonService.PERSON_DOES_NOT_EXIST, obj.get("message"));
         assertEquals("[\"Status Code: " + HttpStatus.NOT_FOUND.value() + ", Exception: NotFoundArgumentsBusinessException\"]", obj.get("errors").toString());
-
-
     }
 
 
@@ -683,8 +518,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         final String birthplace = "Vila Nova de Gaia";
 
         final String uri = "/persons/" + personEmail + "/categories";
-        ;
-
 
         // Input JSON
         NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
@@ -702,9 +535,8 @@ public class CreatePersonControllerTest extends AbstractTest {
         assertEquals("NOT_FOUND", obj.get("status"));
         assertEquals(CreatePersonService.PERSON_DOES_NOT_EXIST, obj.get("message"));
         assertEquals("[\"Status Code: " + HttpStatus.NOT_FOUND.value() + ", Exception: NotFoundArgumentsBusinessException\"]", obj.get("errors").toString());
-
-
     }
+
 
     // Get Person Siblings
 
@@ -720,8 +552,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         final String birthplace = "Vila Nova de Gaia";
 
         final String uri = "/persons/" + personEmail + "/siblings";
-        ;
-
 
         // Input JSON
         NewCreatePersonInfoDTO newCreatePersonInfoDTO = new NewCreatePersonInfoDTO(personEmail, name, birthdate, birthplace);
@@ -739,8 +569,6 @@ public class CreatePersonControllerTest extends AbstractTest {
         assertEquals("NOT_FOUND", obj.get("status"));
         assertEquals(CreatePersonService.PERSON_DOES_NOT_EXIST, obj.get("message"));
         assertEquals("[\"Status Code: " + HttpStatus.NOT_FOUND.value() + ", Exception: NotFoundArgumentsBusinessException\"]", obj.get("errors").toString());
-
-
     }
 
 }

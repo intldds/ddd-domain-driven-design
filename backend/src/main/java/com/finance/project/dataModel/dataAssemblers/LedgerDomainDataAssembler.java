@@ -101,7 +101,6 @@ public class LedgerDomainDataAssembler {
             String description = transactionJpa.getDescription();
             ledger.createAndAddTransactionWithDate(categoryID, type, description, amount, date, debAccountID, credAccountID);
         }
-
         return ledger;
     }
 }

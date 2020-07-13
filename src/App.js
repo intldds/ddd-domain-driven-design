@@ -39,17 +39,18 @@ const App = () => {
                         {/*localhost:8080//persons/paulo@gmail.com/ledgers/records?accountName=Company&startDate=2020-01-01&endDate=2020-05-18*/}
 
 
-                        <PrivateRoute exact path="/ledger" component={Ledger}/>
-                        <PrivateRoute exact path="/ledger/group" component={LedgerGroup}/>
+                        <PrivateRoute exact path="/mypage/ledger" component={Ledger}/>
+                        <PrivateRoute exact path="/myGroups/:groupDenomination/ledger" component={LedgerGroup}/>
 
-                        <PrivateRoute exact path="/accounts" component={Accounts}/>
+                        <PrivateRoute exact path="/mypage/accounts" component={Accounts}/>
                         <PrivateRoute exact path="/myGroups/:groupDenomination/accounts" component={Accounts}/>
 
-                        <PrivateRoute exact path="/categories" component={Categories}/>
+                        <PrivateRoute exact path="/mypage/categories" component={Categories}/>
                         <PrivateRoute exact path="/myGroups/:groupDenomination/categories" component={Categories}/>
 
                         <PrivateRoute exact path="/admins/group" component={AdminsGroup}/>
-                        <PrivateRoute exact path="/members/group" component={MembersGroup}/>
+                        <PrivateRoute exact path="/myGroups/:groupDenomination/members" component={MembersGroup}/>
+
 
 
                         {/*If the URL typed isn't correct it will redirect to the component Login*/}
@@ -69,3 +70,4 @@ const App = () => {
 }
 
 export default App;
+

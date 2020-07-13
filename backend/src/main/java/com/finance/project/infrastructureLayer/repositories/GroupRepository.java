@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The type Group repository.
- */
+
 @Repository
 public class GroupRepository implements IGroupRepository {
 
@@ -30,10 +28,10 @@ public class GroupRepository implements IGroupRepository {
     @Autowired
     GroupDomainDataAssembler groupAssembler;
 
-    //Constructor
+    // Constructor
     public GroupRepository() {
     }
-    //------------------------------------   NOVO   ------------------------------------//
+
 
 @Transactional
     public Group save( Group group ) {

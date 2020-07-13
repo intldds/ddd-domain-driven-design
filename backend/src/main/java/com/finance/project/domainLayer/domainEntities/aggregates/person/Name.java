@@ -4,21 +4,13 @@ import com.finance.project.domainLayer.entitiesInterfaces.ValueObject;
 
 import java.util.Objects;
 
-/**
- * The type Name.
- */
+
 public class Name implements ValueObject {
 
     private String name;
 
-    //Constructor
+    // Constructor
 
-    /**
-     * Create name name.
-     *
-     * @param name the name
-     * @return the name
-     */
     public static Name createName(String name){
         return new Name(name);
     }
@@ -31,25 +23,15 @@ public class Name implements ValueObject {
         }
     }
 
-    //get name
+    // Getters
 
-    /**
-     * Gets name.
-     *
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    //Equals
 
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
+    // Equals & hashCode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,13 +40,6 @@ public class Name implements ValueObject {
         return Objects.equals(name.toUpperCase(), name1.name.toUpperCase());
     }
 
-    //Hashcode
-
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
     @Override
     public int hashCode() {
         return Objects.hash(name);

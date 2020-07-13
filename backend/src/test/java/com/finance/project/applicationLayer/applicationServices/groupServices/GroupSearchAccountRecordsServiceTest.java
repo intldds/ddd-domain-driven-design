@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import com.finance.project.dtos.dtos.GroupSearchAccountRecordsInDTO;
-import com.finance.project.dtos.dtos.SearchAccountRecordsOutDTO;
+import com.finance.project.dtos.dtos.PersonSearchAccountRecordsOutDTO;
 import com.finance.project.dtos.dtosAssemblers.GroupSearchAccountRecordsInDTOAssembler;
 
 import java.time.LocalDate;
@@ -35,7 +35,7 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
     @Mock
     private ILedgerRepository ledgerRepository;
 
-    private GroupSearchAccountRecordsService us010GroupSearchService;
+    private GroupSearchAccountRecordsService groupSearchService;
 
     private Group group;
     private GroupID groupID;
@@ -142,7 +142,6 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         double amountTransaction5 = 45.00;
         Transaction transaction5 = Transaction.createTransaction(categoryWaterID, typeTransaction5, descriptionTransaction5, amountTransaction5, dateTransaction5, walletAccountID, waterAccountID);
         ledger.addTransaction(transaction5);
-
     }
 
 
@@ -193,7 +192,7 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         expectedTransactions.add(transaction2);
         expectedTransactions.add(transaction4);
 
-        SearchAccountRecordsOutDTO expectedOutDTO = SearchAccountRecordsOutDTOAssembler.accountTransactionsOutDTO(expectedTransactions);
+        PersonSearchAccountRecordsOutDTO expectedOutDTO = SearchAccountRecordsOutDTOAssembler.accountTransactionsOutDTO(expectedTransactions);
 
         //Mock the behaviour of groupRepository, returning group
         Mockito.when(groupRepository.findById(groupID)).thenReturn(Optional.of(group));
@@ -205,10 +204,10 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(ledgerRepository.findById(ledgerID)).thenReturn(Optional.of(ledger));
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //ACT
-        SearchAccountRecordsOutDTO result = us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn);
+        PersonSearchAccountRecordsOutDTO result = groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn);
 
         //ASSERT
         assertEquals(expectedOutDTO, result);
@@ -236,10 +235,10 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(groupRepository.findById(GroupID.createGroupID(groupDenomination))).thenReturn(Optional.empty());
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //ACT
-        Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
@@ -267,10 +266,10 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(groupRepository.findById(groupID)).thenReturn(Optional.of(group));
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //ACT
-        Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
@@ -302,10 +301,10 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(accountRepository.existsById(AccountID.createAccountID(accountDenomination, groupID))).thenReturn(false);
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //ACT
-        Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
@@ -337,13 +336,13 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(ledgerRepository.findById(ledgerID)).thenReturn(Optional.of(ledger));
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //Expected message
         String expectedMessage = "Check the start and end dates for the period, since start date cannot be later than end date";
 
         //ACT
-        Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
@@ -375,13 +374,13 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(ledgerRepository.findById(ledgerID)).thenReturn(Optional.of(ledger));
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //Expected message
         String expectedMessage = "The time period provided falls outside the range of the ledger records";
 
         //ACT
-        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
@@ -413,13 +412,13 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(ledgerRepository.findById(ledgerID)).thenReturn(Optional.of(ledger));
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //Expected message
         String expectedMessage = "The time period provided falls outside the range of the ledger records";
 
         //ACT
-        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
@@ -439,7 +438,8 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         String endDate = "2020-04-02";
 
         //DTO in
-        GroupSearchAccountRecordsInDTO dtoIn = GroupSearchAccountRecordsInDTOAssembler.groupSearchAccountRecordsInDTO(personEmail, groupDenomination, accountDenomination, startDate, endDate);
+        GroupSearchAccountRecordsInDTO dtoIn = GroupSearchAccountRecordsInDTOAssembler.groupSearchAccountRecordsInDTO(
+                personEmail, groupDenomination, accountDenomination, startDate, endDate);
 
         //Mock the behaviour of groupRepository, returning group
         Mockito.when(groupRepository.findById(groupID)).thenReturn(Optional.of(group));
@@ -451,13 +451,13 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(ledgerRepository.findById(ledgerID)).thenReturn(Optional.of(ledger));
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //Expected message
         String expectedMessage = "Ledger has no transactions within the searched period";
 
         //ACT
-        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
@@ -489,13 +489,13 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(ledgerRepository.findById(ledgerID)).thenReturn(Optional.of(Ledger.createLedger()));
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //Expected message
         String expectedMessage = "Ledger is empty";
 
         //ACT
-        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
@@ -524,13 +524,13 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(ledgerRepository.findById(ledgerID)).thenReturn(Optional.of(Ledger.createLedger()));
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //Expected message
         String expectedMessage = "Search results cannot be displayed: account name is missing";
 
         //ACT
-        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
@@ -562,13 +562,13 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(ledgerRepository.findById(ledgerID)).thenReturn(Optional.of(ledger));
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //Expected message
         String expectedMessage = "Search results cannot be displayed: start date is missing";
 
         //ACT
-        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
@@ -601,17 +601,16 @@ class GroupSearchAccountRecordsServiceTest extends AbstractTest {
         Mockito.when(ledgerRepository.findById(ledgerID)).thenReturn(Optional.of(ledger));
 
         //Instantiate service
-        us010GroupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
+        groupSearchService = new GroupSearchAccountRecordsService(groupRepository, accountRepository, ledgerRepository);
 
         //Expected message
         String expectedMessage = "Search results cannot be displayed: end date is missing";
 
         //ACT
-        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> us010GroupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
+        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> groupSearchService.getGroupAccountTransactionsWithinPeriod(dtoIn));
 
         //ASSERT
         assertEquals(expectedMessage, thrown.getMessage());
-
     }
 
 

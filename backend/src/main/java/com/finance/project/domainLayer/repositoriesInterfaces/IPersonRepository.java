@@ -7,12 +7,10 @@ import com.finance.project.domainLayer.domainEntities.vosShared.PersonID;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The interface Person repository.
- */
+
 @Repository
 public interface IPersonRepository {
-    //--------------------------------- NOVO   -------------------------------//
+
 
     Person save(Person person);
 

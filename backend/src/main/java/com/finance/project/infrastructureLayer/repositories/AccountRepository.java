@@ -16,9 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Create AccountRepository
- */
+
 @Repository
 public class AccountRepository implements IAccountRepository {
 
@@ -27,12 +25,11 @@ public class AccountRepository implements IAccountRepository {
     @Autowired
     AccountJpaRepository accountJpaRepository;
 
-    //Constructor
+    // Constructor
 
     public AccountRepository() {
     }
 
-    //-------------------- NOVO --------------------------//
 
     public Account save(Account account) {
         AccountJpa accountJpa = accountAssembler.toData(account);

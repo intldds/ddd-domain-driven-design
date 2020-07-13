@@ -26,8 +26,9 @@ public class GroupDTO extends RepresentationModel<GroupDTO> {
     }
 
     public GroupDTO() {
-
     }
+
+    // Getters & Setters
 
     public String getDenomination() {
         return denomination;
@@ -60,6 +61,9 @@ public class GroupDTO extends RepresentationModel<GroupDTO> {
     public void setLedger(String ledgerID) {
         this.ledger = ledgerID;
     }
+
+
+    // Equals & hashCode
 
     @Override
     public boolean equals(Object o) {

@@ -28,17 +28,7 @@ class LedgerRepositoryTest extends AbstractTest {
     @Autowired
     LedgerRepository ledgerRepository;
 
-    @Mock
-    CategoryRepository categoryRepository;
-
-    @Mock
-    AccountRepository accountRepository;
-
-    @Mock
-    PersonRepository personRepository;
-
-
-    //Save
+    // Save
 
     @Test
     @DisplayName("Test for save")

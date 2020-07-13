@@ -15,7 +15,7 @@ import com.finance.project.domainLayer.repositoriesInterfaces.IAccountRepository
 import com.finance.project.domainLayer.repositoriesInterfaces.ILedgerRepository;
 import com.finance.project.domainLayer.repositoriesInterfaces.IPersonRepository;
 import com.finance.project.dtos.dtos.PersonSearchAccountRecordsInDTO;
-import com.finance.project.dtos.dtos.SearchAccountRecordsOutDTO;
+import com.finance.project.dtos.dtos.PersonSearchAccountRecordsOutDTO;
 import com.finance.project.dtos.dtosAssemblers.PersonSearchAccountRecordsInDTOAssembler;
 import com.finance.project.dtos.dtosAssemblers.SearchAccountRecordsOutDTOAssembler;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,11 +52,11 @@ class PersonSearchAccountRecordsServiceTest extends AbstractTest {
     @BeforeEach
     public void init() {
 
-        //Ledger
+        // Ledger
         ledger = Ledger.createLedger();
         ledgerID = ledger.getLedgerID();
 
-        //Person
+        // Person
         String personEmail = "joaquina@gmail.com";
         String personName = "Joaquina Maria";
         LocalDate personBirthdate = LocalDate.of(1980, 05, 25);
@@ -142,11 +142,12 @@ class PersonSearchAccountRecordsServiceTest extends AbstractTest {
     }
 
 
-    //TESTS
+    // Tests
 
     @Test
     @DisplayName("Test for service method getPersonAccountTransactionsWithinPeriod() - Success")
     void getAccountTransactionsWithinPeriod_success() {
+
         //ARRANGE
         //Person to search
         String personEmail = "joaquina@gmail.com";
@@ -193,7 +194,7 @@ class PersonSearchAccountRecordsServiceTest extends AbstractTest {
         expectedTransactions.add(transaction2);
         expectedTransactions.add(transaction3);
 
-        SearchAccountRecordsOutDTO expectedDTOout = SearchAccountRecordsOutDTOAssembler.accountTransactionsOutDTO(expectedTransactions);
+        PersonSearchAccountRecordsOutDTO expectedDTOout = SearchAccountRecordsOutDTOAssembler.accountTransactionsOutDTO(expectedTransactions);
 
         //Mock the behaviour of personRepository, returning person
         Mockito.when(personRepository.findById(personID)).thenReturn(Optional.of(person));
@@ -207,7 +208,7 @@ class PersonSearchAccountRecordsServiceTest extends AbstractTest {
 
         //ACT
         personSearchAccountRecordsService = new PersonSearchAccountRecordsService(personRepository, accountRepository, ledgerRepository);
-        SearchAccountRecordsOutDTO result = personSearchAccountRecordsService.getPersonAccountTransactionsWithinPeriod(dtoIn);
+        PersonSearchAccountRecordsOutDTO result = personSearchAccountRecordsService.getPersonAccountTransactionsWithinPeriod(dtoIn);
 
 
         //ASSERT

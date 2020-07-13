@@ -32,9 +32,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Miguel Pereira
- */
 
 public class CreatePersonServiceTest extends AbstractTest {
 
@@ -130,17 +127,19 @@ public class CreatePersonServiceTest extends AbstractTest {
         Person personMaria = Person.createPerson(emailMaria, nameMaria, birthdateMaria, birthplaceMaria);
 
         // DTO
-
         PersonEmailDTO personEmailDTOMaria = new PersonEmailDTO(personMaria.getEmail().getEmail());
 
-        //Act
-
-        // Act
         // Mock the behaviour of the service's personRepository findPersonByID method, so it does not depend on other parts (e.g. DB)
         Mockito.when(personRepository.findById(personMaria.getPersonID())).thenReturn(Optional.of(personMaria));
 
         // Act
-        PersonDTO expectedPersonDTO = PersonDTOAssembler.createDTOFromDomainObject(personMaria.getPersonID().getEmail(), personMaria.getName(), personMaria.getBirthdate(), personMaria.getBirthplace(), personMaria.getFather(), personMaria.getMother());
+        PersonDTO expectedPersonDTO = PersonDTOAssembler.createDTOFromDomainObject
+                        (personMaria.getPersonID().getEmail(),
+                        personMaria.getName(),
+                        personMaria.getBirthdate(),
+                        personMaria.getBirthplace(),
+                        personMaria.getFather(),
+                        personMaria.getMother());
 
         PersonDTO personDTO = createPersonService.getPersonByEmail(personEmailDTOMaria);
 
@@ -173,7 +172,7 @@ public class CreatePersonServiceTest extends AbstractTest {
 
         Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> createPersonService.getPersonByEmail(personEmailDTO));
 
-        //Assert
+        // Assert
         assertEquals(thrown.getMessage(), CreatePersonService.PERSON_DOES_NOT_EXIST);
     }
 
@@ -198,7 +197,7 @@ public class CreatePersonServiceTest extends AbstractTest {
 
         Ledger ledgerMaria = new Ledger(ledgerIDMaria);
 
-        //Arrange CategoryID
+        // Arrange CategoryID
         String denominationCat = "HairStylist";
         CategoryID categoryID = CategoryID.createCategoryID(denominationCat, personMaria.getPersonID());
 
@@ -207,21 +206,16 @@ public class CreatePersonServiceTest extends AbstractTest {
         double amount = 150.0;
         LocalDate date = LocalDate.of(2010, 12, 25);
 
-
-        //Arrange CreditAccountID
-
+        // Arrange CreditAccountID
         String denominationAccountC = "hairdresserCredit";
         AccountID creditAccountID = AccountID.createAccountID(denominationAccountC, personMaria.getPersonID());
 
-        //Arrange DebitAccountID
-
+        // Arrange DebitAccountID
         String denominationAccountD = "DebitAccountMaria";
         AccountID debitAccountID = AccountID.createAccountID(denominationAccountD, personMaria.getPersonID());
 
-        //Act
-
+        // Act
         Transaction transaction = Transaction.createTransaction(categoryID, type, description, amount, date, debitAccountID, creditAccountID);
-
         ledgerMaria.addTransaction(transaction);
 
         // Mock the behaviour of the service's personRepository findPersonByID method, so it does not depend on other parts (e.g. DB)
@@ -230,12 +224,10 @@ public class CreatePersonServiceTest extends AbstractTest {
         // Mock the behaviour of the service's personRepository findPersonByID method, so it does not depend on other parts (e.g. DB)
         Mockito.when(ledgerRepository.findById(ledgerIDMaria)).thenReturn(Optional.of(ledgerMaria));
 
-        //Expected
-
+        // Expected
         TransactionDTOout expectedTransactionDTOout = new TransactionDTOout(denominationCat, type, description, amount, date.toString(), denominationAccountD, denominationAccountC);
 
-        //Act
-
+        // Act
         List<TransactionDTOout> expectedListTransactionDTO = new ArrayList<>();
         expectedListTransactionDTO.add(expectedTransactionDTOout);
         TransactionsDTO expectedTransactionsDTO = TransactionsDTOAssembler.createDTOFromPrimitiveTypes(expectedListTransactionDTO);
@@ -401,7 +393,7 @@ public class CreatePersonServiceTest extends AbstractTest {
     }
 
     @Test
-    @DisplayName("getPersonACategories | | Person Does Not Exist")
+    @DisplayName("getPersonACategories || Person Does Not Exist")
     public void getPersonCategories_PersonDoesNotExist() {
 
         CreatePersonService createPersonService = new CreatePersonService(personRepository, ledgerRepository, categoryRepository, accountRepository);
@@ -1898,84 +1890,6 @@ public class CreatePersonServiceTest extends AbstractTest {
         assertEquals(thrown.getMessage(), createPersonService.LEDGER_DOES_NOT_EXIST);
     }
 
-//    @Test
-//    @DisplayName("AddTransactionToPerson | Transaction already exist")
-//    public void addTransactionToPerson_TransactionAlreadyExist() {
-//
-//        CreatePersonService createPersonService = new CreatePersonService(personRepository, ledgerRepository,categoryRepository,accountRepository);
-//
-//        // Arrange
-//        String emailMaria = "maria@gmail.com";
-//        String nameMaria = "Maria";
-//        LocalDate birthdateMaria = LocalDate.of(1000, 10, 5);
-//        String birthplaceMaria = "Gaia";
-//
-//        Person personMaria = Person.createPerson(emailMaria, nameMaria, birthdateMaria, birthplaceMaria);
-//
-//        //Arrange DTO
-//
-//        String denominationCategory = "HairStylist";
-//        String type = "debit";
-//        String description = "Pente0";
-//        double amount = 150.0;
-//        String denominationAccountDeb = "DebitAccountMaria";
-//        String denominationAccountCred = "CredditAccountHairStyle";
-//        LocalDate date = LocalDate.now();
-//
-//        //Arrange Category
-//
-//        Category hairStyleCategory = Category.createCategory(denominationCategory, personMaria.getPersonID());
-//
-//        //Arrange DebitAccount
-//
-//        String descriptionDebit = "Hairstyle builds";
-//        Account debitAccount = Account.createAccount(descriptionDebit,denominationAccountDeb,personMaria.getPersonID());
-//
-//        //Arrange CreditAccount
-//
-//        String descriptionCredit = "HairStyle Account";
-//        Account creditAccount = Account.createAccount(descriptionCredit,denominationAccountCred,personMaria.getPersonID());
-//
-//        //Arrange Ledger Maria
-//
-//        LedgerID mariaLedgerID = personMaria.getLedgerID();
-//        Ledger mariaLedger = new Ledger(mariaLedgerID);
-//
-//        // Act DTO
-//
-//        CreatePersonTransactionDTO createPersonTransactionDTO = CreatePersonTransactionDTOAssembler.createDTOFromPrimitiveTypes(personMaria.getPersonID().getEmail().getEmail(), denominationCategory, type, description, amount, denominationAccountDeb, denominationAccountCred, date.toString());
-//
-//        //Act transaction and add to Person
-//
-//        Transaction transaction = Transaction.createTransaction(hairStyleCategory.getCategoryID(),type,description,amount,date,debitAccount.getAccountID(),creditAccount.getAccountID());
-//        mariaLedger.addTransaction(transaction);
-//
-//        //Act
-//
-//        // Mock the behaviour of the service's personRepository findPersonByID method, so it does not depend on other parts (e.g. DB)
-//        Mockito.when(personRepository.findById(personMaria.getPersonID())).thenReturn(Optional.of(personMaria));
-//
-//        // Mock the behaviour of the service's categoryRepository findCategoryByID method, so it does not depend on other parts (e.g. DB)
-//        Mockito.when(categoryRepository.findById(personMaria.getPersonID().getEmail().getEmail(),denominationCategory)).thenReturn(Optional.of(hairStyleCategory));
-//
-//        // Mock the behaviour of the service's accountRepository , so it does not depend on other parts (e.g. DB)
-//        Mockito.when(accountRepository.findById(personMaria.getPersonID().getEmail().getEmail(),denominationAccountDeb)).thenReturn(Optional.of(debitAccount));
-//
-//        // Mock the behaviour of the service's accountRepository , so it does not depend on other parts (e.g. DB)
-//        Mockito.when(accountRepository.findById(personMaria.getPersonID().getEmail().getEmail(),denominationAccountCred)).thenReturn(Optional.of(creditAccount));
-//
-//        // Mock the behaviour of the service's ledgerRepository , so it does not depend on other parts (e.g. DB)
-//        Mockito.when(ledgerRepository.findById(personMaria.getLedgerID())).thenReturn(Optional.of(mariaLedger));
-//
-//        // Mock the behaviour of the service's ledgerRepository , so it does not depend on other parts (e.g. DB)
-//        Mockito.when(ledgerRepository.addAndSaveTransaction(mariaLedger)).thenReturn(false);
-//
-//        // Act expected object
-//        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> createPersonService.addPersonTransaction(createPersonTransactionDTO));
-//
-//        //Assert
-//        assertEquals(thrown.getMessage(), createPersonService.TRANSACTION_ALREADY_EXIST);
-//    }
 
 }
 

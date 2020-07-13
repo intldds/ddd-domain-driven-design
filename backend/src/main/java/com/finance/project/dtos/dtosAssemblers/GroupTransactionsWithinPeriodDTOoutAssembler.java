@@ -6,20 +6,13 @@ import com.finance.project.domainLayer.domainEntities.aggregates.ledger.Transact
 
 import java.util.ArrayList;
 
-/**
- * The type Group transactions within period dt oout assembler.
- */
+
 public final class GroupTransactionsWithinPeriodDTOoutAssembler {
 
     private GroupTransactionsWithinPeriodDTOoutAssembler() {
     }
 
-    /**
-     * Gets group transactions within period dt oout.
-     *
-     * @param transactions           the transactions
-     * @return the group transactions within period dt oout
-     */
+
     public static GroupTransactionsWithinPeriodDTOout getGroupTransactionsWithinPeriodDTOout(ArrayList<Transaction> transactions) {
 
         GroupTransactionsWithinPeriodDTOout groupTransactionsWithinPeriodDTOout = new GroupTransactionsWithinPeriodDTOout();

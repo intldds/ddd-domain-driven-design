@@ -78,20 +78,17 @@ public class CreatePersonAccountControllerRestTest extends AbstractTest {
         //       Expected results
         Object isAccountCreatedStatusCodeValue = isAccountCreated.getStatusCodeValue();
         Object isAccountCreatedHeaders = isAccountCreated.getHeaders().toString();
-        Object isAccountCreatedResponseBody = isAccountCreated.getBody().toString();
         Object expectedStatusCodeValue = expectedResponse.getStatusCodeValue();
         Object expectedHeaders = expectedResponse.getHeaders().toString();
-        Object expectedResponseBody = expectedResponse.getBody().toString();
 
-        //Assert
+        // Assert
         assertEquals(expectedStatusCodeValue,isAccountCreatedStatusCodeValue);
         assertEquals(expectedHeaders,isAccountCreatedHeaders);
-//        assertEquals(expectedResponseBody,isAccountCreatedResponseBody);
     }
 
 
 
-    // ACCOUNT_ALREADY_EXIST - using account denomination & description from "Bootstrapping"
+    // ACCOUNT_ALREADY_EXIST exception - using account denomination & description from "Bootstrapping"
 
     @Test
     public void whenPersonAccountIsCreated_thenRetrievedMsgIsAccountAlreadyExists() {
@@ -118,7 +115,7 @@ public class CreatePersonAccountControllerRestTest extends AbstractTest {
     }
 
 
-    // PERSON_DOES_NOT_EXIST
+    // PERSON_DOES_NOT_EXIST exception
 
     @Test
     public void whenPersonAccountIsCreated_thenRetrievedMsgIsPersonDoesNotExists() {

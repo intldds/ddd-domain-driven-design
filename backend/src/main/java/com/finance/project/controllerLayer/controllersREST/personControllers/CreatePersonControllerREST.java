@@ -24,14 +24,6 @@ public class CreatePersonControllerREST {
     @Autowired
     private CreatePersonService service;
 
-    /**
-     * PostMapping of create person
-     *
-     * @param info The info that compose the dto to create the person
-     * @return The response entity of object Person creation
-     */
-
-
     // Information related to URL for persons
     @PostMapping("/persons")
     public ResponseEntity<Object> createPerson(@RequestBody NewCreatePersonInfoDTO info) {
@@ -67,17 +59,6 @@ public class CreatePersonControllerREST {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
-//    @GetMapping("/persons/{personEmail}/ledgers/records")
-//    public ResponseEntity<Object> getPersonLedger(@PathVariable final String personEmail) {
-//
-//        PersonEmailDTO personEmailDTO = new PersonEmailDTO(personEmail);
-//
-//        TransactionsDTO result = service.getPersonLedger(personEmailDTO);
-//
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
 
 
     @GetMapping("/persons/{personEmail}/accounts")

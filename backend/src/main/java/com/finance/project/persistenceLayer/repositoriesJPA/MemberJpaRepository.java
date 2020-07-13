@@ -9,6 +9,6 @@ import java.util.List;
 public interface MemberJpaRepository extends CrudRepository<MemberJpa, Long> {
 
     MemberJpa findById(long id);
-    //List<MemberJpa> findAllByGroupId( GroupId id);
+
     List<MemberJpa> findAll();
 }

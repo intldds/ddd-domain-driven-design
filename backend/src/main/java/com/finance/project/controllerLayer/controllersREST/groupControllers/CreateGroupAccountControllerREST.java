@@ -22,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class CreateGroupAccountControllerREST {
 
     @Autowired
-    private CreateGroupAccountService service;
+    private CreateGroupAccountService createGroupAccountService;
 
     @PostMapping("/persons/{personEmail}/groups/{groupDenomination}/accounts")
     public ResponseEntity<Object> createGroupAccount(@RequestBody NewGroupAccountInfoDTO info,
@@ -32,13 +32,13 @@ public class CreateGroupAccountControllerREST {
         CreateGroupAccountDTO createGroupAccountDTO = CreateGroupAccountDTOAssembler.createDTOFromPrimitiveTypes(
                 personEmail, groupDenomination, info.getAccountDescription(), info.getAccountDenomination());
 
-        GroupDTO result = service.createAccountAsPeopleInCharge(createGroupAccountDTO);
+        GroupDTO result = createGroupAccountService.createAccountAsPeopleInCharge(createGroupAccountDTO);
 
         Link link_to_admins = linkTo(methodOn(CreateGroupControllerREST.class).getGroupAdmins(groupDenomination)).withRel("admins");
         Link link_to_members = linkTo(methodOn(CreateGroupControllerREST.class).getGroupMembers(groupDenomination)).withRel("members");
         Link link_to_ledger = linkTo(methodOn(CreateGroupControllerREST.class).getGroupLedger(groupDenomination)).withRel("ledger");
         Link link_to_accounts = linkTo(methodOn(CreateGroupControllerREST.class).getGroupAccounts(personEmail, groupDenomination)).withRel("accounts");
-        Link link_to_categories = linkTo(methodOn(CreateGroupControllerREST.class).getGroupCategories(personEmail,groupDenomination)).withRel("categories");
+        Link link_to_categories = linkTo(methodOn(CreateGroupControllerREST.class).getGroupCategories(personEmail, groupDenomination)).withRel("categories");
 
         result.add(link_to_admins);
         result.add(link_to_members);

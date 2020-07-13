@@ -25,10 +25,7 @@ public class CreateGroupCategoryService {
     @Autowired
     private ICategoryRepository categoryRepository;
 
-    /**
-     * The constant SUCCESS.
-     */
-//Return messages
+
     /**
      * The constant SUCCESS.
      */
@@ -46,42 +43,26 @@ public class CreateGroupCategoryService {
      */
     public final static String GROUP_DOES_NOT_EXIST = "Group does not exist";
 
-    //US005.1 Como responsável de grupo, quero criar categoria e associá-la ao grupo.
 
-    /**
-     * Instantiates a new Us 005 1 create group category service.
-     *
-     * @param groupRepository    the group repository
-     * @param categoryRepository the category repository
-     */
     public CreateGroupCategoryService(IGroupRepository groupRepository, ICategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
         this.groupRepository = groupRepository;
     }
 
-    /**
-     * Create category as people in charge boolean dto.
-     *
-     * @param createGroupCategoryDTO the create group category dto
-     * @return the boolean dto
-     */
+
     public GroupDTO createCategoryAsPeopleInCharge(CreateGroupCategoryDTO createGroupCategoryDTO) {
 
         Group group;
-
         GroupID groupID = GroupID.createGroupID(createGroupCategoryDTO.getGroupDenomination());
-
         Optional<Group> opGroup = groupRepository.findById(groupID);
 
         if (!opGroup.isPresent()) {
-
             throw new NotFoundArgumentsBusinessException(GROUP_DOES_NOT_EXIST);
 
         } else {
-
             group = opGroup.get();
 
-            //If Person is PeopleInCharge of a group, he/she already exists in personRepository
+            // If Person is PeopleInCharge of a group, he/she already exists in personRepository
 
             PersonID personID = PersonID.createPersonID(createGroupCategoryDTO.getPersonEmail());
             boolean isPeopleInCharge = group.isPersonPeopleInCharge(personID);
@@ -90,21 +71,22 @@ public class CreateGroupCategoryService {
             boolean categoryExistsInRepo = categoryRepository.existsById(categoryID);
 
             if (!isPeopleInCharge) {
-
                 throw new InvalidArgumentsBusinessException(PERSON_NOT_IN_CHARGE);
 
             } else if (categoryExistsInRepo) {
-
                 throw new InvalidArgumentsBusinessException(CATEGORY_ALREADY_EXIST);
 
             } else {
-
                 group.addCategory(CategoryID.createCategoryID(createGroupCategoryDTO.getCategoryDenomination(), groupID));
                 groupRepository.addAndSaveCategory(group);
-
             }
         }
 
-        return GroupDTOAssembler.createDTOFromDomainObject(group.getGroupID().getDenomination(), group.getDescription(), group.getDateOfCreation());
+        GroupDTO groupDTO = GroupDTOAssembler.createDTOFromDomainObject(
+                group.getGroupID().getDenomination(),
+                group.getDescription(),
+                group.getDateOfCreation());
+
+        return groupDTO;
     }
 }

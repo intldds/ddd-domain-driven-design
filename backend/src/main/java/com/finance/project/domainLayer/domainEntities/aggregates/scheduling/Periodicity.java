@@ -4,21 +4,13 @@ import com.finance.project.domainLayer.entitiesInterfaces.ValueObject;
 
 import java.util.Objects;
 
-/**
- * The type Periodicity.
- */
+
 public class Periodicity implements ValueObject {
 
     private String periodicity;
 
-    //Constructor
+    // Constructor
 
-    /**
-     * Create periodicity periodicity.
-     *
-     * @param periodicity the periodicity
-     * @return the periodicity
-     */
     public static Periodicity createPeriodicity(String periodicity){
         return new Periodicity(periodicity);
     }
@@ -27,25 +19,16 @@ public class Periodicity implements ValueObject {
         this.periodicity= periodicity;
     }
 
-    //get periodicity
 
-    /**
-     * Gets periodicity.
-     *
-     * @return the periodicity
-     */
+    // Getters
+
     public String getPeriodicity() {
         return periodicity;
     }
 
-    //Equals
 
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
+    // Equals & hashCode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,13 +37,7 @@ public class Periodicity implements ValueObject {
         return Objects.equals(periodicity, that.periodicity);
     }
 
-    //Hashcode
 
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
     @Override
     public int hashCode() {
         return Objects.hash(periodicity);

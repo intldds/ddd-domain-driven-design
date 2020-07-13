@@ -9,27 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author Ala Matos
- */
-/*
- * Ala Matos created on 16/03/2020
- * inside the PACKAGE switch2019.project.repositories
- */
 
-/**
- * Constructor of ScheduleRepository
- */
 @Repository
 public class ScheduleRepository implements IScheduleRepository {
 
     private List<Scheduling> schedulings;
 
-    /**
-     * Create schedule repository schedule repository.
-     *
-     * @return the schedule repository
-     */
     public static ScheduleRepository createScheduleRepository() {
         return new ScheduleRepository();
     }
@@ -78,12 +63,6 @@ public class ScheduleRepository implements IScheduleRepository {
         return schedulings;
     }
 
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,12 +85,6 @@ public class ScheduleRepository implements IScheduleRepository {
         return true;
     }
 
-
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
     @Override
     public int hashCode () {
         return Objects.hash(schedulings);

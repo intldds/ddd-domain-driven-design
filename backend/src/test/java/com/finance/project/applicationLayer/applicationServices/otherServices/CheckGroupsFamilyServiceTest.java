@@ -34,12 +34,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-/**
- * @author Fernando Silva
- *//*
- * Fernando Silva created on 20/03/2020
- * inside the PACKAGE switch2019.project.Services
- */
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 class CheckGroupsFamilyServiceTest extends AbstractTest {
@@ -52,60 +46,60 @@ class CheckGroupsFamilyServiceTest extends AbstractTest {
     private CheckGroupsFamilyService checkGroupsFamilyService;
 
     @Test
-    @DisplayName("Test Controller_US04 - GroupsThatAreFamily - 1 group")
+    @DisplayName("Test - GroupsThatAreFamily - 1 group")
     void controller_US04_OneGroupFamily() {
-//      Instantiating an us004GroupsThatAreFamilyService with groupRepository and personRepository
-        checkGroupsFamilyService = new CheckGroupsFamilyService(groupRepository,personRepository);
 
-//        Arrange address
+        checkGroupsFamilyService = new CheckGroupsFamilyService(groupRepository, personRepository);
+
+        //        Arrange address
         String street = "Rua do molhe";
         String doorNumber = "2265";
         String postCode = "4569";
         String city = "Póvoa";
         String country = "Portugal";
-        Address address = Address.createAddress(street,doorNumber,postCode,city,country);
+        Address address = Address.createAddress(street, doorNumber, postCode, city, country);
 
-//        Arrange person Manuel
+        //        Arrange person Manuel
         String manuelEmail = "manuel@gmail.com";
         String manuelName = "Manuel Fontes";
         LocalDate manuelBirthdateLD = LocalDate.of(1964, 1, 16);
         String manuelBirthplace = "Vila Nova de Gaia";
-        Person manuel = Person.createPerson(manuelEmail,manuelName,manuelBirthdateLD,manuelBirthplace);
+        Person manuel = Person.createPerson(manuelEmail, manuelName, manuelBirthdateLD, manuelBirthplace);
 
-//        Arrange person Ilda
+        //        Arrange person Ilda
         String ildaEmail = "ilda@gmail.com";
         String ildaName = "Ilda Fontes";
         LocalDate ildaBirthdateLD = LocalDate.of(1963, 1, 9);
         String ildaBirthplace = "Vila Nova de Gaia";
-        Person ilda = Person.createPerson(ildaEmail,ildaName,ildaBirthdateLD,ildaBirthplace);
+        Person ilda = Person.createPerson(ildaEmail, ildaName, ildaBirthdateLD, ildaBirthplace);
 
-//        Arrange person Paulo
+        //        Arrange person Paulo
         String pauloEmail = "paulo@gmail.com";
         String pauloName = "Paulo Fontes";
         LocalDate pauloBirthdateLD = LocalDate.of(1993, 3, 15);
         String pauloBirthplace = "Vila Nova de Gaia";
         LedgerID pauloLedgerID = LedgerID.createLedgerID();
-        Person paulo = Person.createPersonWithParents(pauloEmail,pauloName,pauloBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),pauloBirthplace,address,pauloLedgerID);
+        Person paulo = Person.createPersonWithParents(pauloEmail, pauloName, pauloBirthdateLD, ilda.getPersonID(), manuel.getPersonID(), pauloBirthplace, address, pauloLedgerID);
 
-//        Arrange person Helder
+        //        Arrange person Helder
         String helderEmail = "helder@gmail.com";
         String helderName = "Helder Fontes";
         LocalDate helderBirthdateLD = LocalDate.of(1983, 1, 30);
         String helderBirthplace = "Vila Nova de Gaia";
         LedgerID helderLedgerID = LedgerID.createLedgerID();
-        Person helder = Person.createPersonWithParents(helderEmail,helderName,helderBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),helderBirthplace,address,helderLedgerID);
+        Person helder = Person.createPersonWithParents(helderEmail, helderName, helderBirthdateLD, ilda.getPersonID(), manuel.getPersonID(), helderBirthplace, address, helderLedgerID);
 
-//        Add Helder to Paulo list of siblings
+        //        Add Helder to Paulo list of siblings
         paulo.addSibling(helder.getPersonID());
 
-//        Arrange Group
+        //        Arrange Group
 
         String groupDenomination = "Fontes Family";
-        LocalDate groupDateOfCreation = LocalDate.of(2020,05,27);
+        LocalDate groupDateOfCreation = LocalDate.of(2020, 05, 27);
         String groupDescription = "All members from Fontes family";
         LedgerID groupLedgerID = LedgerID.createLedgerID();
 
-        Group fontesFamily = Group.createGroupAsPersonInCharge(groupDenomination,ilda.getPersonID(),groupDescription,groupDateOfCreation,groupLedgerID);
+        Group fontesFamily = Group.createGroupAsPersonInCharge(groupDenomination, ilda.getPersonID(), groupDescription, groupDateOfCreation, groupLedgerID);
         fontesFamily.addPersonInCharge(manuel.getPersonID());
         fontesFamily.addMember(paulo.getPersonID());
         fontesFamily.addMember(helder.getPersonID());
@@ -114,33 +108,22 @@ class CheckGroupsFamilyServiceTest extends AbstractTest {
         listOfGroups.add(fontesFamily);
 
         //        Act
-//          Mock the behaviour of groupRepository
-//        Returning an Optional<Group> pauloFamily
-        Mockito.when(groupRepository.findAll())
-                .thenReturn(listOfGroups);
+        //          Mock the behaviour of groupRepository, returning an Optional<Group> pauloFamily
+        Mockito.when(groupRepository.findAll()).thenReturn(listOfGroups);
 
-        //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> ilda
-        Mockito.when(personRepository.findById(ilda.getPersonID()))
-                .thenReturn(Optional.of(ilda));
+        //          Mock the behaviour of personRepository, returning an Optional<Person> ilda
+        Mockito.when(personRepository.findById(ilda.getPersonID())).thenReturn(Optional.of(ilda));
 
-        //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> manuel
-        Mockito.when(personRepository.findById(manuel.getPersonID()))
-                .thenReturn(Optional.of(manuel));
+        //          Mock the behaviour of personRepository, returning an Optional<Person> manuel
+        Mockito.when(personRepository.findById(manuel.getPersonID())).thenReturn(Optional.of(manuel));
 
-        //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> paulo
-        Mockito.when(personRepository.findById(paulo.getPersonID()))
-                .thenReturn(Optional.of(paulo));
+        //          Mock the behaviour of personRepository, returning an Optional<Person> paulo
+        Mockito.when(personRepository.findById(paulo.getPersonID())).thenReturn(Optional.of(paulo));
 
-        //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> helder
-        Mockito.when(personRepository.findById(helder.getPersonID()))
-                .thenReturn(Optional.of(helder));
+        //          Mock the behaviour of personRepository, returning an Optional<Person> helder
+        Mockito.when(personRepository.findById(helder.getPersonID())).thenReturn(Optional.of(helder));
 
-//        Expected GroupsThatAreFamily
-
+        //        Expected GroupsThatAreFamily
         GroupIDDTO groupIDDTOFontesFamily = new GroupIDDTO(fontesFamily.getGroupID().getDenomination().getDenomination());
         List<GroupIDDTO> listOfGroupIDDTO = new ArrayList<>();
         listOfGroupIDDTO.add(groupIDDTOFontesFamily);
@@ -148,150 +131,144 @@ class CheckGroupsFamilyServiceTest extends AbstractTest {
         GroupsThatAreFamilyDTO expectedGroupsThatAreFamily = GroupsThatAreFamilyDTOAssembler.createDTOFromDomainObject(listOfGroupIDDTO);
 
 //      Assert
-
         GroupsThatAreFamilyDTO groupsThatAreFamilyDTO = checkGroupsFamilyService.groupsThatAreFamily();
 
-        assertEquals(expectedGroupsThatAreFamily,groupsThatAreFamilyDTO);
+        assertEquals(expectedGroupsThatAreFamily, groupsThatAreFamilyDTO);
     }
 
-    @Test
-    @DisplayName("Test Controller_US04 - GroupsThatAreFamily - no groups - mother and father null")
-    void controller_US04_NoGroupFamily() {
-//      Instantiating an us004GroupsThatAreFamilyService with groupRepository and personRepository
-        checkGroupsFamilyService = new CheckGroupsFamilyService(groupRepository,personRepository);
 
-//        Arrange address
+    // No groups are family
+
+    @Test
+    @DisplayName("Test GroupsThatAreFamily - no groups - mother and father null")
+    void controller_US04_NoGroupFamily() {
+
+        checkGroupsFamilyService = new CheckGroupsFamilyService(groupRepository, personRepository);
+
+        //        Arrange address
         String street = "Rua do molhe";
         String doorNumber = "2265";
         String postCode = "4569";
         String city = "Póvoa";
         String country = "Portugal";
-        Address address = Address.createAddress(street,doorNumber,postCode,city,country);
+        Address address = Address.createAddress(street, doorNumber, postCode, city, country);
 
-//        Arrange person Paulo
+        //        Arrange person Paulo
         String pauloEmail = "paulo@gmail.com";
         String pauloName = "Paulo Fontes";
         LocalDate pauloBirthdateLD = LocalDate.of(1993, 3, 15);
         String pauloBirthplace = "Vila Nova de Gaia";
         LedgerID pauloLedgerID = LedgerID.createLedgerID();
-        Person paulo = Person.createPersonWithoutParents(pauloEmail,pauloName,pauloBirthdateLD,pauloBirthplace,address,pauloLedgerID);
+        Person paulo = Person.createPersonWithoutParents(pauloEmail, pauloName, pauloBirthdateLD, pauloBirthplace, address, pauloLedgerID);
 
-//        Arrange person Helder
+        //        Arrange person Helder
         String helderEmail = "helder@gmail.com";
         String helderName = "Helder Fontes";
         LocalDate helderBirthdateLD = LocalDate.of(1983, 1, 30);
         String helderBirthplace = "Vila Nova de Gaia";
         LedgerID helderLedgerID = LedgerID.createLedgerID();
-        Person helder = Person.createPersonWithoutParents(helderEmail,helderName,helderBirthdateLD,helderBirthplace,address,helderLedgerID);
+        Person helder = Person.createPersonWithoutParents(helderEmail, helderName, helderBirthdateLD, helderBirthplace, address, helderLedgerID);
 
-//        Add Helder to Paulo list of siblings
+        //        Add Helder to Paulo list of siblings
         paulo.addSibling(helder.getPersonID());
 
-//        Arrange Group
-
+        //        Arrange Group
         String groupDenomination = "Fontes Group";
-        LocalDate groupDateOfCreation = LocalDate.of(2020,05,27);
+        LocalDate groupDateOfCreation = LocalDate.of(2020, 05, 27);
         String groupDescription = "All members from Fontes Group";
         LedgerID groupLedgerID = LedgerID.createLedgerID();
 
-        Group fontesGroup = Group.createGroupAsPersonInCharge(groupDenomination,paulo.getPersonID(),groupDescription,groupDateOfCreation,groupLedgerID);
+        Group fontesGroup = Group.createGroupAsPersonInCharge(groupDenomination, paulo.getPersonID(), groupDescription, groupDateOfCreation, groupLedgerID);
         fontesGroup.addMember(helder.getPersonID());
 
         List<Group> listOfGroups = new ArrayList<>();
         listOfGroups.add(fontesGroup);
 
         //        Act
-//          Mock the behaviour of groupRepository
-//        Returning an Optional<Group> pauloFamily
-        Mockito.when(groupRepository.findAll())
-                .thenReturn(listOfGroups);
+        //        Mock the behaviour of groupRepository, returning an Optional<Group> pauloFamily
+        Mockito.when(groupRepository.findAll()).thenReturn(listOfGroups);
 
-        //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> paulo
-        Mockito.when(personRepository.findById(paulo.getPersonID()))
-                .thenReturn(Optional.of(paulo));
+        //          Mock the behaviour of personRepository, returning an Optional<Person> paulo
+        Mockito.when(personRepository.findById(paulo.getPersonID())).thenReturn(Optional.of(paulo));
 
-        //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> helder
-        Mockito.when(personRepository.findById(helder.getPersonID()))
-                .thenReturn(Optional.of(helder));
+        //          Mock the behaviour of personRepository, returning an Optional<Person> helder
+        Mockito.when(personRepository.findById(helder.getPersonID())).thenReturn(Optional.of(helder));
 
-//        Expected GroupsThatAreFamily
-
+        //        Expected GroupsThatAreFamily
         List<GroupIDDTO> listOfGroupIDDTO = new ArrayList<>();
 
         GroupsThatAreFamilyDTO expectedGroupsThatAreFamily = GroupsThatAreFamilyDTOAssembler.createDTOFromDomainObject(listOfGroupIDDTO);
 
-//      Assert
-
+        //      Assert
         GroupsThatAreFamilyDTO groupsThatAreFamilyDTO = checkGroupsFamilyService.groupsThatAreFamily();
 
-        assertEquals(expectedGroupsThatAreFamily,groupsThatAreFamilyDTO);
+        assertEquals(expectedGroupsThatAreFamily, groupsThatAreFamilyDTO);
     }
 
-    @Test
-    @DisplayName("Test Controller_US04 - GroupsThatAreFamily - 0 group")
-    void controller_US04_NoGroupFamilyDifferentList() {
-//      Instantiating an us004GroupsThatAreFamilyService with groupRepository and personRepository
-        checkGroupsFamilyService = new CheckGroupsFamilyService(groupRepository,personRepository);
+    // no group
 
-//        Arrange address
+    @Test
+    @DisplayName("Test - GroupsThatAreFamily - 0 group")
+    void controller_US04_NoGroupFamilyDifferentList() {
+
+        checkGroupsFamilyService = new CheckGroupsFamilyService(groupRepository, personRepository);
+
+        //        Arrange address
         String street = "Rua do molhe";
         String doorNumber = "2265";
         String postCode = "4569";
         String city = "Póvoa";
         String country = "Portugal";
-        Address address = Address.createAddress(street,doorNumber,postCode,city,country);
+        Address address = Address.createAddress(street, doorNumber, postCode, city, country);
 
-//        Arrange person Manuel
+        //        Arrange person Manuel
         String manuelEmail = "manuel@gmail.com";
         String manuelName = "Manuel Fontes";
         LocalDate manuelBirthdateLD = LocalDate.of(1964, 1, 16);
         String manuelBirthplace = "Vila Nova de Gaia";
-        Person manuel = Person.createPerson(manuelEmail,manuelName,manuelBirthdateLD,manuelBirthplace);
+        Person manuel = Person.createPerson(manuelEmail, manuelName, manuelBirthdateLD, manuelBirthplace);
 
-//        Arrange person Ilda
+        //        Arrange person Ilda
         String ildaEmail = "ilda@gmail.com";
         String ildaName = "Ilda Fontes";
         LocalDate ildaBirthdateLD = LocalDate.of(1963, 1, 9);
         String ildaBirthplace = "Vila Nova de Gaia";
-        Person ilda = Person.createPerson(ildaEmail,ildaName,ildaBirthdateLD,ildaBirthplace);
+        Person ilda = Person.createPerson(ildaEmail, ildaName, ildaBirthdateLD, ildaBirthplace);
 
-//        Arrange person Paulo
+        //        Arrange person Paulo
         String pauloEmail = "paulo@gmail.com";
         String pauloName = "Paulo Fontes";
         LocalDate pauloBirthdateLD = LocalDate.of(1993, 3, 15);
         String pauloBirthplace = "Vila Nova de Gaia";
         LedgerID pauloLedgerID = LedgerID.createLedgerID();
-        Person paulo = Person.createPersonWithParents(pauloEmail,pauloName,pauloBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),pauloBirthplace,address,pauloLedgerID);
+        Person paulo = Person.createPersonWithParents(pauloEmail, pauloName, pauloBirthdateLD, ilda.getPersonID(), manuel.getPersonID(), pauloBirthplace, address, pauloLedgerID);
 
-//        Arrange person Helder
+        //        Arrange person Helder
         String helderEmail = "helder@gmail.com";
         String helderName = "Helder Fontes";
         LocalDate helderBirthdateLD = LocalDate.of(1983, 1, 30);
         String helderBirthplace = "Vila Nova de Gaia";
         LedgerID helderLedgerID = LedgerID.createLedgerID();
-        Person helder = Person.createPersonWithParents(helderEmail,helderName,helderBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),helderBirthplace,address,helderLedgerID);
+        Person helder = Person.createPersonWithParents(helderEmail, helderName, helderBirthdateLD, ilda.getPersonID(), manuel.getPersonID(), helderBirthplace, address, helderLedgerID);
 
-//        Arrange person Joana
+        //        Arrange person Joana
         String joanaEmail = "joana@gmail.com";
         String joanaName = "Joana Silva";
         LocalDate joanaBirthdateLD = LocalDate.of(1983, 1, 30);
         String joanaBirthplace = "Vila Nova de Gaia";
         LedgerID joanaLedgerID = LedgerID.createLedgerID();
-        Person joana = Person.createPersonWithoutParents(joanaEmail,joanaName,joanaBirthdateLD,joanaBirthplace,address,joanaLedgerID);
+        Person joana = Person.createPersonWithoutParents(joanaEmail, joanaName, joanaBirthdateLD, joanaBirthplace, address, joanaLedgerID);
 
         //        Add Helder to Paulo list of siblings
         paulo.addSibling(helder.getPersonID());
 
-//        Arrange Group
-
+        //        Arrange Group
         String groupDenomination = "Fontes Friends";
-        LocalDate groupDateOfCreation = LocalDate.of(2020,05,27);
+        LocalDate groupDateOfCreation = LocalDate.of(2020, 05, 27);
         String groupDescription = "All members from Fontes friends";
         LedgerID groupLedgerID = LedgerID.createLedgerID();
 
-        Group fontesFriends = Group.createGroupAsPersonInCharge(groupDenomination,ilda.getPersonID(),groupDescription,groupDateOfCreation,groupLedgerID);
+        Group fontesFriends = Group.createGroupAsPersonInCharge(groupDenomination, ilda.getPersonID(), groupDescription, groupDateOfCreation, groupLedgerID);
         fontesFriends.addPersonInCharge(manuel.getPersonID());
         fontesFriends.addMember(paulo.getPersonID());
         fontesFriends.addMember(helder.getPersonID());
@@ -301,367 +278,49 @@ class CheckGroupsFamilyServiceTest extends AbstractTest {
         listOfGroups.add(fontesFriends);
 
         //        Act
-//          Mock the behaviour of groupRepository
-//        Returning an Optional<Group> pauloFamily
+        //          Mock the behaviour of groupRepository
+        //        Returning an Optional<Group> pauloFamily
         Mockito.when(groupRepository.findAll())
                 .thenReturn(listOfGroups);
 
         //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> ilda
+        //        Returning an Optional<Person> ilda
         Mockito.when(personRepository.findById(ilda.getPersonID()))
                 .thenReturn(Optional.of(ilda));
 
         //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> manuel
+        //        Returning an Optional<Person> manuel
         Mockito.when(personRepository.findById(manuel.getPersonID()))
                 .thenReturn(Optional.of(manuel));
 
         //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> paulo
+        //        Returning an Optional<Person> paulo
         Mockito.when(personRepository.findById(paulo.getPersonID()))
                 .thenReturn(Optional.of(paulo));
 
         //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> helder
+        //        Returning an Optional<Person> helder
         Mockito.when(personRepository.findById(helder.getPersonID()))
                 .thenReturn(Optional.of(helder));
 
         //          Mock the behaviour of personRepository
-//        Returning an Optional<Person> helder
+        //        Returning an Optional<Person> helder
         Mockito.when(personRepository.findById(joana.getPersonID()))
                 .thenReturn(Optional.of(joana));
 
-//        Expected GroupsThatAreFamily
+        //        Expected GroupsThatAreFamily
 
         List<GroupIDDTO> listOfGroupIDDTO = new ArrayList<>();
 
         GroupsThatAreFamilyDTO expectedGroupsThatAreFamily = GroupsThatAreFamilyDTOAssembler.createDTOFromDomainObject(listOfGroupIDDTO);
 
-//      Assert
-
+        //      Assert
         GroupsThatAreFamilyDTO groupsThatAreFamilyDTO = checkGroupsFamilyService.groupsThatAreFamily();
 
-        assertEquals(expectedGroupsThatAreFamily,groupsThatAreFamilyDTO);
+        assertEquals(expectedGroupsThatAreFamily, groupsThatAreFamilyDTO);
     }
-
-    @Test
-    @DisplayName("Test Controller_US04 - GroupsThatAreFamily - getDenomination")
-    void controller_US04_getDenomination() {
-//      Instantiating an us004GroupsThatAreFamilyService with groupRepository and personRepository
-        checkGroupsFamilyService = new CheckGroupsFamilyService(groupRepository,personRepository);
-
-//        Arrange address
-        String street = "Rua do molhe";
-        String doorNumber = "2265";
-        String postCode = "4569";
-        String city = "Póvoa";
-        String country = "Portugal";
-        Address address = Address.createAddress(street,doorNumber,postCode,city,country);
-
-//        Arrange person Manuel
-        String manuelEmail = "manuel@gmail.com";
-        String manuelName = "Manuel Fontes";
-        LocalDate manuelBirthdateLD = LocalDate.of(1964, 1, 16);
-        String manuelBirthplace = "Vila Nova de Gaia";
-        Person manuel = Person.createPerson(manuelEmail,manuelName,manuelBirthdateLD,manuelBirthplace);
-
-//        Arrange person Ilda
-        String ildaEmail = "ilda@gmail.com";
-        String ildaName = "Ilda Fontes";
-        LocalDate ildaBirthdateLD = LocalDate.of(1963, 1, 9);
-        String ildaBirthplace = "Vila Nova de Gaia";
-        Person ilda = Person.createPerson(ildaEmail,ildaName,ildaBirthdateLD,ildaBirthplace);
-
-//        Arrange person Paulo
-        String pauloEmail = "paulo@gmail.com";
-        String pauloName = "Paulo Fontes";
-        LocalDate pauloBirthdateLD = LocalDate.of(1993, 3, 15);
-        String pauloBirthplace = "Vila Nova de Gaia";
-        LedgerID pauloLedgerID = LedgerID.createLedgerID();
-        Person paulo = Person.createPersonWithParents(pauloEmail,pauloName,pauloBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),pauloBirthplace,address,pauloLedgerID);
-
-//        Arrange person Helder
-        String helderEmail = "helder@gmail.com";
-        String helderName = "Helder Fontes";
-        LocalDate helderBirthdateLD = LocalDate.of(1983, 1, 30);
-        String helderBirthplace = "Vila Nova de Gaia";
-        LedgerID helderLedgerID = LedgerID.createLedgerID();
-        Person helder = Person.createPersonWithParents(helderEmail,helderName,helderBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),helderBirthplace,address,helderLedgerID);
-
-//        Add Helder to Paulo list of siblings
-        paulo.addSibling(helder.getPersonID());
-
-//        Arrange Group
-
-        String groupDenomination = "Fontes Family";
-        LocalDate groupDateOfCreation = LocalDate.of(2020,05,27);
-        String groupDescription = "All members from Fontes family";
-        LedgerID groupLedgerID = LedgerID.createLedgerID();
-
-        Group fontesFamily = Group.createGroupAsPersonInCharge(groupDenomination,ilda.getPersonID(),groupDescription,groupDateOfCreation,groupLedgerID);
-        fontesFamily.addPersonInCharge(manuel.getPersonID());
-        fontesFamily.addMember(paulo.getPersonID());
-        fontesFamily.addMember(helder.getPersonID());
-
-        //        Act
-//          Mock the behaviour of groupRepository
-//        Returning an Optional<Group> pauloFamily
-        Mockito.when(groupRepository.findById(fontesFamily.getGroupID()))
-                .thenReturn(Optional.of(fontesFamily));
-
-//        Expected GroupsThatAreFamily
-
-        GroupDTO expetedGroupDTO = GroupDTOAssembler.createDTOFromDomainObject(fontesFamily.getGroupID().getDenomination(),fontesFamily.getDescription(),fontesFamily.getDateOfCreation());
-
-//      Assert
-
-        String fontesFamilyDenomination = fontesFamily.getGroupID().getDenomination().getDenomination();
-
-        GroupDTO groupDTO = checkGroupsFamilyService.getGroupByDenomination(fontesFamilyDenomination);
-
-        assertEquals(expetedGroupDTO,groupDTO);
-    }
-
-    @Test
-    @DisplayName("Test Controller_US04 - GroupsThatAreFamily - getDenomination - Group doesnt exist")
-    void controller_US04_getDenomination_GroupNotExist() {
-//      Instantiating an us004GroupsThatAreFamilyService with groupRepository and personRepository
-        checkGroupsFamilyService = new CheckGroupsFamilyService(groupRepository,personRepository);
-
-//        Arrange address
-        String street = "Rua do molhe";
-        String doorNumber = "2265";
-        String postCode = "4569";
-        String city = "Póvoa";
-        String country = "Portugal";
-        Address address = Address.createAddress(street,doorNumber,postCode,city,country);
-
-//        Arrange person Manuel
-        String manuelEmail = "manuel@gmail.com";
-        String manuelName = "Manuel Fontes";
-        LocalDate manuelBirthdateLD = LocalDate.of(1964, 1, 16);
-        String manuelBirthplace = "Vila Nova de Gaia";
-        Person manuel = Person.createPerson(manuelEmail,manuelName,manuelBirthdateLD,manuelBirthplace);
-
-//        Arrange person Ilda
-        String ildaEmail = "ilda@gmail.com";
-        String ildaName = "Ilda Fontes";
-        LocalDate ildaBirthdateLD = LocalDate.of(1963, 1, 9);
-        String ildaBirthplace = "Vila Nova de Gaia";
-        Person ilda = Person.createPerson(ildaEmail,ildaName,ildaBirthdateLD,ildaBirthplace);
-
-//        Arrange person Paulo
-        String pauloEmail = "paulo@gmail.com";
-        String pauloName = "Paulo Fontes";
-        LocalDate pauloBirthdateLD = LocalDate.of(1993, 3, 15);
-        String pauloBirthplace = "Vila Nova de Gaia";
-        LedgerID pauloLedgerID = LedgerID.createLedgerID();
-        Person paulo = Person.createPersonWithParents(pauloEmail,pauloName,pauloBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),pauloBirthplace,address,pauloLedgerID);
-
-//        Arrange person Helder
-        String helderEmail = "helder@gmail.com";
-        String helderName = "Helder Fontes";
-        LocalDate helderBirthdateLD = LocalDate.of(1983, 1, 30);
-        String helderBirthplace = "Vila Nova de Gaia";
-        LedgerID helderLedgerID = LedgerID.createLedgerID();
-        Person helder = Person.createPersonWithParents(helderEmail,helderName,helderBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),helderBirthplace,address,helderLedgerID);
-
-//        Add Helder to Paulo list of siblings
-        paulo.addSibling(helder.getPersonID());
-
-//        Arrange Group
-
-        String groupDenomination = "Fontes Family";
-        LocalDate groupDateOfCreation = LocalDate.of(2020,05,27);
-        String groupDescription = "All members from Fontes family";
-        LedgerID groupLedgerID = LedgerID.createLedgerID();
-
-        Group fontesFamily = Group.createGroupAsPersonInCharge(groupDenomination,ilda.getPersonID(),groupDescription,groupDateOfCreation,groupLedgerID);
-        fontesFamily.addPersonInCharge(manuel.getPersonID());
-        fontesFamily.addMember(paulo.getPersonID());
-        fontesFamily.addMember(helder.getPersonID());
-
-        //        Act
-//          Mock the behaviour of groupRepository
-//        Returning an Optional<Group> pauloFamily
-        Mockito.when(groupRepository.findById(fontesFamily.getGroupID()))
-                .thenReturn(Optional.empty());
-
-        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> checkGroupsFamilyService.getGroupByDenomination(fontesFamily.getGroupID().getDenomination().getDenomination()));
-
-        //Assert
-        assertEquals(thrown.getMessage(), CheckGroupsFamilyService.GROUP_DOES_NOT_EXIST);
-    }
-
-    @Test
-    @DisplayName("Test Controller_US04 - GroupsThatAreFamily - getAllMembers")
-    void controller_US04_getAllMembers() {
-//      Instantiating an us004GroupsThatAreFamilyService with groupRepository and personRepository
-        checkGroupsFamilyService = new CheckGroupsFamilyService(groupRepository,personRepository);
-
-//        Arrange address
-        String street = "Rua do molhe";
-        String doorNumber = "2265";
-        String postCode = "4569";
-        String city = "Póvoa";
-        String country = "Portugal";
-        Address address = Address.createAddress(street,doorNumber,postCode,city,country);
-
-//        Arrange person Manuel
-        String manuelEmail = "manuel@gmail.com";
-        String manuelName = "Manuel Fontes";
-        LocalDate manuelBirthdateLD = LocalDate.of(1964, 1, 16);
-        String manuelBirthplace = "Vila Nova de Gaia";
-        Person manuel = Person.createPerson(manuelEmail,manuelName,manuelBirthdateLD,manuelBirthplace);
-
-//        Arrange person Ilda
-        String ildaEmail = "ilda@gmail.com";
-        String ildaName = "Ilda Fontes";
-        LocalDate ildaBirthdateLD = LocalDate.of(1963, 1, 9);
-        String ildaBirthplace = "Vila Nova de Gaia";
-        Person ilda = Person.createPerson(ildaEmail,ildaName,ildaBirthdateLD,ildaBirthplace);
-
-//        Arrange person Paulo
-        String pauloEmail = "paulo@gmail.com";
-        String pauloName = "Paulo Fontes";
-        LocalDate pauloBirthdateLD = LocalDate.of(1993, 3, 15);
-        String pauloBirthplace = "Vila Nova de Gaia";
-        LedgerID pauloLedgerID = LedgerID.createLedgerID();
-        Person paulo = Person.createPersonWithParents(pauloEmail,pauloName,pauloBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),pauloBirthplace,address,pauloLedgerID);
-
-//        Arrange person Helder
-        String helderEmail = "helder@gmail.com";
-        String helderName = "Helder Fontes";
-        LocalDate helderBirthdateLD = LocalDate.of(1983, 1, 30);
-        String helderBirthplace = "Vila Nova de Gaia";
-        LedgerID helderLedgerID = LedgerID.createLedgerID();
-        Person helder = Person.createPersonWithParents(helderEmail,helderName,helderBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),helderBirthplace,address,helderLedgerID);
-
-//        Add Helder to Paulo list of siblings
-        paulo.addSibling(helder.getPersonID());
-
-//        Arrange Group
-
-        String groupDenomination = "Fontes Family";
-        LocalDate groupDateOfCreation = LocalDate.of(2020,05,27);
-        String groupDescription = "All members from Fontes family";
-        LedgerID groupLedgerID = LedgerID.createLedgerID();
-
-        Group fontesFamily = Group.createGroupAsPersonInCharge(groupDenomination,ilda.getPersonID(),groupDescription,groupDateOfCreation,groupLedgerID);
-        fontesFamily.addPersonInCharge(manuel.getPersonID());
-        fontesFamily.addMember(paulo.getPersonID());
-        fontesFamily.addMember(helder.getPersonID());
-
-        //        Act
-//          Mock the behaviour of groupRepository
-//        Returning an Optional<Group> pauloFamily
-        Mockito.when(groupRepository.findById(fontesFamily.getGroupID()))
-                .thenReturn(Optional.of(fontesFamily));
-
-//        Expected GroupsMembersDTO
-
-        List<PersonID> listOfPersonsID = new ArrayList<>();
-        listOfPersonsID.add(ilda.getPersonID());
-        listOfPersonsID.add(manuel.getPersonID());
-        listOfPersonsID.add(paulo.getPersonID());
-        listOfPersonsID.add(helder.getPersonID());
-
-        GroupMembersDTO expectedGroupMembersDTO = GroupMembersDTOAssembler.createDTOFromDomainObject(listOfPersonsID);
-
-//      Assert
-
-        String fontesFamilyDenomination = fontesFamily.getGroupID().getDenomination().getDenomination();
-
-        GroupMembersDTO groupMembersDTO = checkGroupsFamilyService.getGroupAllMembers(fontesFamilyDenomination);
-
-        assertEquals(expectedGroupMembersDTO,groupMembersDTO);
-    }
-
-    @Test
-    @DisplayName("Test Controller_US04 - GroupsThatAreFamily - getAllMembers - Group doesnt exist")
-    void controller_US04_getAllMembers_GroupNotExist() {
-//      Instantiating an us004GroupsThatAreFamilyService with groupRepository and personRepository
-        checkGroupsFamilyService = new CheckGroupsFamilyService(groupRepository,personRepository);
-
-//        Arrange address
-        String street = "Rua do molhe";
-        String doorNumber = "2265";
-        String postCode = "4569";
-        String city = "Póvoa";
-        String country = "Portugal";
-        Address address = Address.createAddress(street,doorNumber,postCode,city,country);
-
-//        Arrange person Manuel
-        String manuelEmail = "manuel@gmail.com";
-        String manuelName = "Manuel Fontes";
-        LocalDate manuelBirthdateLD = LocalDate.of(1964, 1, 16);
-        String manuelBirthplace = "Vila Nova de Gaia";
-        Person manuel = Person.createPerson(manuelEmail,manuelName,manuelBirthdateLD,manuelBirthplace);
-
-//        Arrange person Ilda
-        String ildaEmail = "ilda@gmail.com";
-        String ildaName = "Ilda Fontes";
-        LocalDate ildaBirthdateLD = LocalDate.of(1963, 1, 9);
-        String ildaBirthplace = "Vila Nova de Gaia";
-        Person ilda = Person.createPerson(ildaEmail,ildaName,ildaBirthdateLD,ildaBirthplace);
-
-//        Arrange person Paulo
-        String pauloEmail = "paulo@gmail.com";
-        String pauloName = "Paulo Fontes";
-        LocalDate pauloBirthdateLD = LocalDate.of(1993, 3, 15);
-        String pauloBirthplace = "Vila Nova de Gaia";
-        LedgerID pauloLedgerID = LedgerID.createLedgerID();
-        Person paulo = Person.createPersonWithParents(pauloEmail,pauloName,pauloBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),pauloBirthplace,address,pauloLedgerID);
-
-//        Arrange person Helder
-        String helderEmail = "helder@gmail.com";
-        String helderName = "Helder Fontes";
-        LocalDate helderBirthdateLD = LocalDate.of(1983, 1, 30);
-        String helderBirthplace = "Vila Nova de Gaia";
-        LedgerID helderLedgerID = LedgerID.createLedgerID();
-        Person helder = Person.createPersonWithParents(helderEmail,helderName,helderBirthdateLD,ilda.getPersonID(),manuel.getPersonID(),helderBirthplace,address,helderLedgerID);
-
-//        Add Helder to Paulo list of siblings
-        paulo.addSibling(helder.getPersonID());
-
-//        Arrange Group
-
-        String groupDenomination = "Fontes Family";
-        LocalDate groupDateOfCreation = LocalDate.of(2020,05,27);
-        String groupDescription = "All members from Fontes family";
-        LedgerID groupLedgerID = LedgerID.createLedgerID();
-
-        Group fontesFamily = Group.createGroupAsPersonInCharge(groupDenomination,ilda.getPersonID(),groupDescription,groupDateOfCreation,groupLedgerID);
-        fontesFamily.addPersonInCharge(manuel.getPersonID());
-        fontesFamily.addMember(paulo.getPersonID());
-        fontesFamily.addMember(helder.getPersonID());
-
-        //        Act
-//          Mock the behaviour of groupRepository
-//        Returning an Optional<Group> pauloFamily
-        Mockito.when(groupRepository.findById(fontesFamily.getGroupID()))
-                .thenReturn(Optional.of(fontesFamily));
-
-//        Expected GroupsMembersDTO
-
-        List<PersonID> listOfPersonsID = new ArrayList<>();
-        listOfPersonsID.add(ilda.getPersonID());
-        listOfPersonsID.add(manuel.getPersonID());
-        listOfPersonsID.add(paulo.getPersonID());
-        listOfPersonsID.add(helder.getPersonID());
-
-        //        Act
-//          Mock the behaviour of groupRepository
-//        Returning an Optional<Group> pauloFamily
-        Mockito.when(groupRepository.findById(fontesFamily.getGroupID()))
-                .thenReturn(Optional.empty());
-
-        Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> checkGroupsFamilyService.getGroupAllMembers(fontesFamily.getGroupID().getDenomination().getDenomination()));
-
-        //Assert
-        assertEquals(thrown.getMessage(), CheckGroupsFamilyService.GROUP_DOES_NOT_EXIST);
-    }
-
 
 
 }
+
+

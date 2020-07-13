@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SearchAccountRecordsOutDTOTest {
+class PersonSearchAccountRecordsOutDTOTest {
 
     @Test
     @DisplayName("Test SearchAccountRecordsOutDTO constructor and getter")
@@ -45,11 +45,11 @@ class SearchAccountRecordsOutDTOTest {
 
 
         // ACT
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO = new SearchAccountRecordsOutDTO(expectedListTransactionOut);
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO = new PersonSearchAccountRecordsOutDTO(expectedListTransactionOut);
 
 
         // ASSERT
-        assertEquals(expectedListTransactionOut, searchAccountRecordsOutDTO.getTransactions());
+        assertEquals(expectedListTransactionOut, personSearchAccountRecordsOutDTO.getTransactions());
     }
 
     @Test
@@ -59,11 +59,11 @@ class SearchAccountRecordsOutDTOTest {
         ArrayList<TransactionDTOout> expectedListTransactionOut = new ArrayList<>();
 
         // Act
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO = new SearchAccountRecordsOutDTO();
-        searchAccountRecordsOutDTO.setTransactions(expectedListTransactionOut);
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO = new PersonSearchAccountRecordsOutDTO();
+        personSearchAccountRecordsOutDTO.setTransactions(expectedListTransactionOut);
 
         //Assert
-        assertEquals(expectedListTransactionOut, searchAccountRecordsOutDTO.getTransactions());
+        assertEquals(expectedListTransactionOut, personSearchAccountRecordsOutDTO.getTransactions());
     }
 
     @Test
@@ -100,7 +100,7 @@ class SearchAccountRecordsOutDTOTest {
         ArrayList<TransactionDTOout> expectedListTransactionOut1 = new ArrayList<>();
         expectedListTransactionOut1.add(transactionDTOout11);
         expectedListTransactionOut1.add(transactionDTOout21);
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO1 = new SearchAccountRecordsOutDTO(expectedListTransactionOut1);
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO1 = new PersonSearchAccountRecordsOutDTO(expectedListTransactionOut1);
 
 
         // Object 2
@@ -133,12 +133,12 @@ class SearchAccountRecordsOutDTOTest {
         ArrayList<TransactionDTOout> expectedListTransactionOut2 = new ArrayList<>();
         expectedListTransactionOut2.add(transactionDTOout12);
         expectedListTransactionOut2.add(transactionDTOout22);
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO2 = new SearchAccountRecordsOutDTO(expectedListTransactionOut2);
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO2 = new PersonSearchAccountRecordsOutDTO(expectedListTransactionOut2);
 
 
         // ACT
-        boolean resultEquals = searchAccountRecordsOutDTO1.equals(searchAccountRecordsOutDTO2);
-        boolean resultHashCode = (searchAccountRecordsOutDTO1.hashCode() == searchAccountRecordsOutDTO2.hashCode());
+        boolean resultEquals = personSearchAccountRecordsOutDTO1.equals(personSearchAccountRecordsOutDTO2);
+        boolean resultHashCode = (personSearchAccountRecordsOutDTO1.hashCode() == personSearchAccountRecordsOutDTO2.hashCode());
 
 
         //ASSERT
@@ -180,12 +180,12 @@ class SearchAccountRecordsOutDTOTest {
         ArrayList<TransactionDTOout> expectedListTransactionOut1 = new ArrayList<>();
         expectedListTransactionOut1.add(transactionDTOout11);
         expectedListTransactionOut1.add(transactionDTOout21);
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO1 = new SearchAccountRecordsOutDTO(expectedListTransactionOut1);
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO1 = new PersonSearchAccountRecordsOutDTO(expectedListTransactionOut1);
 
 
         // ACT
-        boolean resultEquals = searchAccountRecordsOutDTO1.equals(searchAccountRecordsOutDTO1);
-        boolean resultHashCode = (searchAccountRecordsOutDTO1.hashCode() == searchAccountRecordsOutDTO1.hashCode());
+        boolean resultEquals = personSearchAccountRecordsOutDTO1.equals(personSearchAccountRecordsOutDTO1);
+        boolean resultHashCode = (personSearchAccountRecordsOutDTO1.hashCode() == personSearchAccountRecordsOutDTO1.hashCode());
 
 
         // ASSERT
@@ -227,15 +227,15 @@ class SearchAccountRecordsOutDTOTest {
         ArrayList<TransactionDTOout> expectedListTransactionOut1 = new ArrayList<>();
         expectedListTransactionOut1.add(transactionDTOout11);
         expectedListTransactionOut1.add(transactionDTOout21);
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO1 = new SearchAccountRecordsOutDTO(expectedListTransactionOut1);
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO1 = new PersonSearchAccountRecordsOutDTO(expectedListTransactionOut1);
 
 
         // Object 2
         // DTO out2 - null
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO2 = null;
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO2 = null;
 
         // ACT
-        boolean resultEquals = searchAccountRecordsOutDTO1.equals(searchAccountRecordsOutDTO2);
+        boolean resultEquals = personSearchAccountRecordsOutDTO1.equals(personSearchAccountRecordsOutDTO2);
 
 
         // ASSERT
@@ -276,7 +276,7 @@ class SearchAccountRecordsOutDTOTest {
         ArrayList<TransactionDTOout> expectedListTransactionOut1 = new ArrayList<>();
         expectedListTransactionOut1.add(transactionDTOout11);
         expectedListTransactionOut1.add(transactionDTOout21);
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO1 = new SearchAccountRecordsOutDTO(expectedListTransactionOut1);
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO1 = new PersonSearchAccountRecordsOutDTO(expectedListTransactionOut1);
 
 
         // Object 2 - Different class
@@ -284,8 +284,8 @@ class SearchAccountRecordsOutDTOTest {
 
 
         // ACT
-        boolean resultEquals = searchAccountRecordsOutDTO1.equals(object);
-        boolean resultHashCode = (searchAccountRecordsOutDTO1.hashCode() == object.hashCode());
+        boolean resultEquals = personSearchAccountRecordsOutDTO1.equals(object);
+        boolean resultHashCode = (personSearchAccountRecordsOutDTO1.hashCode() == object.hashCode());
 
 
         // ASSERT
@@ -327,7 +327,7 @@ class SearchAccountRecordsOutDTOTest {
         ArrayList<TransactionDTOout> expectedListTransactionOut1 = new ArrayList<>();
         expectedListTransactionOut1.add(transactionDTOout11);
         expectedListTransactionOut1.add(transactionDTOout21);
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO1 = new SearchAccountRecordsOutDTO(expectedListTransactionOut1);
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO1 = new PersonSearchAccountRecordsOutDTO(expectedListTransactionOut1);
 
 
         // Object 2
@@ -359,12 +359,12 @@ class SearchAccountRecordsOutDTOTest {
         // DTO out2 - Expected delivering list of transactions
         ArrayList<TransactionDTOout> expectedListTransactionOut2 = new ArrayList<>();
         expectedListTransactionOut1.add(transactionDTOout12);
-        SearchAccountRecordsOutDTO searchAccountRecordsOutDTO2 = new SearchAccountRecordsOutDTO(expectedListTransactionOut2);
+        PersonSearchAccountRecordsOutDTO personSearchAccountRecordsOutDTO2 = new PersonSearchAccountRecordsOutDTO(expectedListTransactionOut2);
 
 
         //ACT
-        boolean resultEquals = searchAccountRecordsOutDTO1.equals(searchAccountRecordsOutDTO2);
-        boolean resultHashCode = (searchAccountRecordsOutDTO1.hashCode() == searchAccountRecordsOutDTO2.hashCode());
+        boolean resultEquals = personSearchAccountRecordsOutDTO1.equals(personSearchAccountRecordsOutDTO2);
+        boolean resultHashCode = (personSearchAccountRecordsOutDTO1.hashCode() == personSearchAccountRecordsOutDTO2.hashCode());
 
 
         //ASSERT

@@ -26,6 +26,7 @@ import {
     FETCH_MEMBERS_SUCCESS,
     FETCH_MEMBERS_ERROR,
     UPDATE_MEMBERS,
+    SEARCH_TRANSACTION
 
 } from './Actions'
 
@@ -443,6 +444,14 @@ function reducer(state, action) {
                 categoriesData: [],
                 accountsData: [],
             }
+        //SEARCH_TRANSACTION
+        case SEARCH_TRANSACTION:
+
+            //This function will copy the actual state and change the variable isLogged with true
+            return {
+                ...state,
+                searchTransaction: action.payload.searchTransaction,
+            };
         default:
             return state;
     }

@@ -4,21 +4,13 @@ import com.finance.project.domainLayer.entitiesInterfaces.ValueObject;
 
 import java.util.Objects;
 
-/**
- * The type Birthplace.
- */
+
 public class Birthplace implements ValueObject {
 
     private String birthplace;
 
-    //Constructor
+    // Constructor
 
-    /**
-     * Create birthplace birthplace.
-     *
-     * @param birthplace the birthplace
-     * @return the birthplace
-     */
     public static Birthplace createBirthplace(String birthplace){
         return new Birthplace(birthplace);
     }
@@ -30,25 +22,14 @@ public class Birthplace implements ValueObject {
         this.birthplace = birthplace;
     }
 
-    //get birthplace
+    // Getters
 
-    /**
-     * Gets birthplace.
-     *
-     * @return the birthplace
-     */
     public String getBirthplace() {
         return birthplace;
     }
 
-    //Equals
+    // Equals
 
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,13 +38,8 @@ public class Birthplace implements ValueObject {
         return Objects.equals(birthplace.toUpperCase(), that.birthplace.toUpperCase());
     }
 
-    //Hashcode
+    // hashCode
 
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
     @Override
     public int hashCode() {
         return Objects.hash(birthplace);

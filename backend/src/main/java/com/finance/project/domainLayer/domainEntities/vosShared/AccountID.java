@@ -5,9 +5,7 @@ import com.finance.project.domainLayer.entitiesInterfaces.ValueObject;
 
 import java.util.Objects;
 
-/**
- * create account VO
- */
+
 public class AccountID implements ValueObject {
 
 

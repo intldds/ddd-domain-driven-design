@@ -31,6 +31,7 @@ export const FETCH_MEMBERS_STARTED = 'FETCH_MEMBERS_STARTED';
 export const FETCH_MEMBERS_SUCCESS = 'FETCH_MEMBERS_SUCCESS';
 export const FETCH_MEMBERS_ERROR = 'FETCH_MEMBERS_ERROR';
 export const UPDATE_MEMBERS = 'UPDATE_MEMBERS';
+export const SEARCH_TRANSACTION = 'SEARCH_TRANSACTION';
 
 // This functions will return objects with some information/value within it
 
@@ -283,6 +284,20 @@ export function myGroupsHandleOnClicks() {
 export function myHomePageHandleOnClicks() {
     return {
         type: MY_HOMEPAGE_HANDLE_CLICKS,
+
+    }
+}
+
+
+// SEARCH FORM - TRANSACTIONS
+
+export function searchTransactionForm(boolean) {
+
+    return {
+        type: SEARCH_TRANSACTION,
+        payload: {
+            searchTransaction: boolean
+        }
 
     }
 }

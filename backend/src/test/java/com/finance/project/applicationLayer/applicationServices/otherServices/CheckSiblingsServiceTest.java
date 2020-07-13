@@ -20,10 +20,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/**
- * @author Ala Matos
- */
-
 
 class CheckSiblingsServiceTest extends AbstractTest {
 
@@ -36,55 +32,55 @@ class CheckSiblingsServiceTest extends AbstractTest {
     @DisplayName("Test Controller_US01 - Paulo | Helder | siblings")
     void controller_US01() {
 
-//      Instantiating an us001CheckIfSiblingsService with personRepository as parameter
         checkSiblingsService = new CheckSiblingsService(personRepository);
 
-//        Arrange person Paulo
+        //        Arrange person Paulo
         String pauloEmail = "paulo@gmail.com";
         String pauloName = "Paulo Fontes";
         LocalDate pauloBirthdateLD = LocalDate.of(1993, 3, 15);
         String pauloBirthplace = "Vila Nova de Gaia";
         Person paulo = Person.createPerson(pauloEmail, pauloName, pauloBirthdateLD, pauloBirthplace);
 
-//        Arrange person Helder
+        //        Arrange person Helder
         String helderEmail = "helder@gmail.com";
         String helderName = "Helder Fontes";
         LocalDate helderBirthdateLD = LocalDate.of(1983, 1, 30);
         String helderBirthplace = "Vila Nova de Gaia";
         Person helder = Person.createPerson(helderEmail, helderName, helderBirthdateLD, helderBirthplace);
 
-//        Arrange people ID
+        //        Arrange people ID
         PersonID pauloID = PersonID.createPersonID(pauloEmail);
         PersonID helderID = PersonID.createPersonID(helderEmail);
 
-//        Add Helder to Paulo list of siblings
+        //        Add Helder to Paulo list of siblings
         paulo.addSibling(helderID);
 
-//        Act
-//          Mock the behaviour of personRepository
-//        Returning an Optional<Person> paulo
+        //        Act
+        //          Mock the behaviour of personRepository
+        //        Returning an Optional<Person> paulo
         Mockito.when(personRepository.findById(pauloID))
                 .thenReturn(Optional.of(paulo));
 
-//        Returning an Optional<Person> helder
+        //        Returning an Optional<Person> helder
         Mockito.when(personRepository.findById(helderID))
                 .thenReturn(Optional.of(helder));
 
-//        Expected BooleanDTO
+        //        Expected BooleanDTO
         BooleanDTO expectedBooleanDTO = BooleanDTOAssembler.createDTOFromPrimitiveTypes(true, CheckSiblingsService.SUCCESS);
 
-//        Act DTO
+        //        Act DTO
         checkIfSiblingsDTO = new CheckIfSiblingsDTO(pauloEmail, helderEmail);
 
-//       Expected message
+        //       Expected message
         String message = "Siblings";
 
-//        Assert
+        //        Assert
         BooleanDTO verifyIfSibling = checkSiblingsService.checkIfSiblings(checkIfSiblingsDTO);
 
-//        Assert response
+        //        Assert response
         assertEquals(expectedBooleanDTO, verifyIfSibling);
-//        Assert the message
+
+        //        Assert the message
         assertEquals(message, verifyIfSibling.getMsg());
     }
 
@@ -93,8 +89,6 @@ class CheckSiblingsServiceTest extends AbstractTest {
     @DisplayName("Test Controller_US01 - Paulo | Helder | Not siblings")
     void controller_US01NotSiblings() throws InvalidArgumentsBusinessException {
 
-
-//      Instantiating an us001CheckIfSiblingsService with personRepository as parameter
         checkSiblingsService = new CheckSiblingsService(personRepository);
 
 //        Arrange person Paulo
@@ -141,10 +135,9 @@ class CheckSiblingsServiceTest extends AbstractTest {
 
 
     @Test
-    @DisplayName("Test Controller_US01 - bataguas | bataguas is null")
+    @DisplayName("Test - bataguas | bataguas is null")
     void controller_US01NotSiblingsNullPerson() throws InvalidArgumentsBusinessException {
 
-        //      Instantiating an us001CheckIfSiblingsService with personRepository as parameter
         checkSiblingsService = new CheckSiblingsService(personRepository);
 
 //        Arrange person Paulo

@@ -6,22 +6,13 @@ import com.finance.project.domainLayer.entitiesInterfaces.OwnerID;
 
 import java.util.Objects;
 
-/**
- * The type Category.
- */
+
 public class Category implements Entity {
 
     private final CategoryID categoryID;
 
-    //Constructor
+    // Constructor
 
-    /**
-     * Create category category.
-     *
-     * @param denomination the denomination
-     * @param ownerID      the owner id
-     * @return the category
-     */
     public static Category createCategory(String denomination, OwnerID ownerID) {
         return new Category(denomination, ownerID);
     }
@@ -36,25 +27,15 @@ public class Category implements Entity {
     }
 
 
-    //Get denomination
+    // Getters
 
-    /**
-     * Gets category id.
-     *
-     * @return the category id
-     */
     public CategoryID getCategoryID() {
         return categoryID;
     }
 
-    //Equals
 
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
+    // Equals & hashCode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,18 +45,9 @@ public class Category implements Entity {
         if (!this.categoryID.equals(category.categoryID)) {
             return false;
         }
-
         return true;
     }
 
-
-    //hashcode
-
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
     @Override
     public int hashCode() {
         return Objects.hash(categoryID);

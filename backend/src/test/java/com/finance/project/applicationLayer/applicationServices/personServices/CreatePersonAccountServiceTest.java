@@ -23,11 +23,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-    /*
-    US 06. Como utilizador, quero criar uma conta para mim, atribuindo-lhe uma
-    denominação e uma descrição, para posteriormente poder ser usada nos meus movimentos.
-     */
-
 class CreatePersonAccountServiceTest extends AbstractTest {
 
     @Mock
@@ -42,47 +37,26 @@ class CreatePersonAccountServiceTest extends AbstractTest {
     @BeforeEach
     public void init() {
 
-        // Manuel
+        // Person Manuel
         String manuelEmail = "manuel@gmail.com";
         String manuelName = "Manuel";
         LocalDate manuelBirthdate = LocalDate.of(1999, 2, 20);
         String manuelBirthplace = "Porto";
-        PersonID manuelPersonID = PersonID.createPersonID(manuelEmail);
 
-        // Ilda
-        String ildaEmail = "ilda@gmail.com";
-        PersonID ildaPersonID = PersonID.createPersonID(ildaEmail);
-
-        // Paulo
-        String pauloEmail = "paulo@gmail.com";
-        PersonID pauloPersonID = PersonID.createPersonID(pauloEmail);
-
-        // Helder
-        String helderEmail = "helder@gmail.com";
-        PersonID helderPersonID = PersonID.createPersonID(helderEmail);
-
-
-        // Family Fontes
-        // Accounts ->       Company / Bank Account / Wallet / State / Supermarket / Household Expenses / Streaming Services
-
-
-        // 1. Person Manuel
         this.person = Person.createPerson(manuelEmail, manuelName, manuelBirthdate, manuelBirthplace);
         this.personId = PersonID.createPersonID(manuelEmail);
 
-
         // Add Accounts
 
-        // Salary
+            // Company
         String accountDenomination = "Company";
         AccountID accountID = AccountID.createAccountID(accountDenomination, personId);
         person.addAccount(accountID);
 
-        // Bank Account
+            // Bank Account
         String accountBankDenomination = "Bank Account";
         AccountID accountBankID = AccountID.createAccountID(accountBankDenomination, personId);
         person.addAccount(accountBankID);
-
     }
 
 
@@ -99,7 +73,6 @@ class CreatePersonAccountServiceTest extends AbstractTest {
         String accountDescription = "Tools for equipment";
         String accountDenomination = "Equipment";
 
-
         // To Search
         AccountID accountID = AccountID.createAccountID(accountDenomination, personId);
 
@@ -113,18 +86,15 @@ class CreatePersonAccountServiceTest extends AbstractTest {
         CreatePersonAccountDTO createPersonAccountDTO = CreatePersonAccountDTOAssembler.createDTOFromPrimitiveTypes(personEmail,
                 accountDescription, accountDenomination);
 
-
         // Expected PersonDTO
         PersonDTO expectedPersonDTO = PersonDTOAssembler.createDTOFromDomainObject(person.getEmail(), person.getName(),
                 person.getBirthdate(), person.getBirthplace(), person.getFather(), person.getMother());
-
 
         // Act
         CreatePersonAccountService createPersonAccountService = new CreatePersonAccountService(personRepository,
                 accountRepository);
 
         PersonDTO result = createPersonAccountService.createAccount(createPersonAccountDTO);
-
 
         // Assert
         assertEquals(expectedPersonDTO, result);
@@ -137,7 +107,6 @@ class CreatePersonAccountServiceTest extends AbstractTest {
     @Test
     @DisplayName("test for createPerson() | Account already exists ")
     void createAccount_AccountAlreadyExists() {
-
 
         // Arrange
         String personEmail = "manuel@gmail.com";
@@ -156,7 +125,6 @@ class CreatePersonAccountServiceTest extends AbstractTest {
         // DTO
         CreatePersonAccountDTO createPersonAccountDTO = CreatePersonAccountDTOAssembler.createDTOFromPrimitiveTypes(personEmail,
                 accountDescription, accountDenomination);
-
 
         // Act
         CreatePersonAccountService createPersonAccountService = new CreatePersonAccountService(personRepository, accountRepository);

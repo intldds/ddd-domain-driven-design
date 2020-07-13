@@ -14,23 +14,14 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * The type Ledger.
- */
+
 public class Ledger implements Entity {
 
     private LedgerID ledgerID;
     private List<Transaction> records;
 
-    //Constructor for Ledger
+    // Constructor for Ledger - Person
 
-    //Person
-
-    /**
-     * Create ledger ledger.
-     *
-     * @return the ledger
-     */
     public static Ledger createLedger() {
         return new Ledger();
     }
@@ -45,92 +36,47 @@ public class Ledger implements Entity {
         this.records = new ArrayList<Transaction>();
     }
 
-    //get LedgerID
+    // Getters
 
-    /**
-     * Gets ledger id.
-     *
-     * @return the ledger id
-     */
     public LedgerID getLedgerID() {
         return this.ledgerID;
     }
 
-    //Update transaction
+    // Update transaction
 
-    /**
-     * Update transaction boolean.
-     *
-     * @param categoryID      the category id
-     * @param type            the type
-     * @param description     the description
-     * @param amount          the amount
-     * @param debitAccountID  the debit account id
-     * @param creditAccountID the credit account id
-     * @return the boolean
-     */
     public boolean updateTransaction(int transactionNumber, CategoryID categoryID, String type, String description, double amount, AccountID debitAccountID, AccountID creditAccountID) {
         Transaction newTransaction = Transaction.createTransactionWithSystemDate(categoryID, type, description, amount, debitAccountID, creditAccountID);
         records.set(transactionNumber - 1, newTransaction);
         return true;
     }
 
-    //Create transaction
+    // Create and add transaction
 
-    /**
-     * Create and add transaction boolean.
-     *
-     * @param categoryID      the category id
-     * @param type            the type
-     * @param description     the description
-     * @param amount          the amount
-     * @param debitAccountID  the debit account id
-     * @param creditAccountID the credit account id
-     * @return the boolean
-     */
     public boolean createAndAddTransaction(CategoryID categoryID, String type, String description, double amount, AccountID debitAccountID, AccountID creditAccountID) {
         Transaction newTransaction = Transaction.createTransactionWithSystemDate(categoryID, type, description, amount, debitAccountID, creditAccountID);
         return records.add(newTransaction);
     }
 
-    /**
-     * Create and add transaction with date boolean.
-     *
-     * @param categoryID      the category id
-     * @param type            the type
-     * @param description     the description
-     * @param amount          the amount
-     * @param date            the date
-     * @param debitAccountID  the debit account id
-     * @param creditAccountID the credit account id
-     * @return the boolean
-     */
-//Constructor for Ledger
-    public boolean createAndAddTransactionWithDate(CategoryID categoryID, String type, String description, double amount, LocalDate date, AccountID debitAccountID, AccountID creditAccountID) {
+
+    // Constructor for Ledger with Date
+
+    public boolean createAndAddTransactionWithDate(CategoryID categoryID, String type, String description, double amount,
+                                                   LocalDate date, AccountID debitAccountID, AccountID creditAccountID) {
+
         Transaction newTransaction = Transaction.createTransaction(categoryID, type, description, amount, date, debitAccountID, creditAccountID);
         return records.add(newTransaction);
     }
 
-    //Add transaction to ledger
+    // Add transaction to ledger
 
-    /**
-     * Add transaction.
-     *
-     * @param transaction the transaction
-     */
     public void addTransaction(Transaction transaction) {
         if (transaction != null) {
             this.records.add(transaction);
         }
     }
 
-    //Get Transactions
+    // Get Transactions
 
-    /**
-     * Gets records.
-     *
-     * @return the records
-     */
     public ArrayList<Transaction> getRecords() {
         ArrayList<Transaction> recordsClone = new ArrayList<Transaction>();
 
@@ -149,14 +95,8 @@ public class Ledger implements Entity {
         return records;
     }
 
-    //Check if ledger Has Transaction
+    // Check if ledger Has Transaction
 
-    /**
-     * Ledger has transaction boolean.
-     *
-     * @param createPersonTransactionDTO the create person transaction dto
-     * @return the boolean
-     */
     public boolean ledgerHasTransaction(CreatePersonTransactionDTO createPersonTransactionDTO) {
 
         PersonID personID = PersonID.createPersonID(createPersonTransactionDTO.getEmail());
@@ -177,14 +117,7 @@ public class Ledger implements Entity {
     }
 
 
-    /**
-     * Gets records between two dates.
-     *
-     * @param dateOfBeginning the date of beginning
-     * @param dateOfEnding    the date of ending
-     * @return the records between two dates
-     */
-    //Get list of Transactions between 2 dates
+    // Get list of Transactions between 2 dates
     public List<Transaction> getRecordsBetweenTwoDates(LocalDate dateOfBeginning, LocalDate dateOfEnding) {
         List<Transaction> transactions = new ArrayList<>();
 
@@ -197,15 +130,10 @@ public class Ledger implements Entity {
                 transactions.add(transaction);
             }
         }
-
         return transactions;
     }
 
-    /**
-     * Earliest record date.
-     *
-     * @return the earliest date
-     */
+
     public LocalDate getEarliestTransactionDate() {
         LocalDate earliestDate;
 
@@ -220,11 +148,7 @@ public class Ledger implements Entity {
         return earliestDate;
     }
 
-    /**
-     * Latest record date.
-     *
-     * @return the latest record date
-     */
+
     public LocalDate getLatestTransactionDate() {
         LocalDate latestDate;
 
@@ -239,11 +163,7 @@ public class Ledger implements Entity {
         return latestDate;
     }
 
-    /**
-     * Gets all accounts ID from records, sorted alphabetically by account denomination.
-     *
-     * @return the accounts of records sorted alphabetically
-     */
+
     public List<AccountID> getAccountsOfRecordsSorted() {
 
         List<AccountID> legerDebitAccounts = records.stream().map(Transaction::getDebitAccountID).collect(Collectors.toList());
@@ -262,12 +182,7 @@ public class Ledger implements Entity {
         return ledgerAllAccounts;
     }
 
-    /**
-     * Gets all transactions associated with a given account, sorted by date.
-     *
-     * @param accountID the account id
-     * @return the account transactions
-     */
+
     public List<Transaction> getAccountRecords(AccountID accountID) {
 
         List<Transaction> accountAllTransactions = new ArrayList<>();
@@ -286,12 +201,7 @@ public class Ledger implements Entity {
         return accountAllTransactions;
     }
 
-    /**
-     * Gets the earliest date of the account records.
-     *
-     * @param accountID the account id
-     * @return the account records earliest date
-     */
+
     public LocalDate getAccountRecordsEarliestDate(AccountID accountID) {
 
         try {
@@ -307,12 +217,7 @@ public class Ledger implements Entity {
         return earliestAccountRecordDate;
     }
 
-    /**
-     * Gets the latest date of the account records.
-     *
-     * @param accountID the account id
-     * @return the account records latest date
-     */
+
     public LocalDate getAccountRecordsLatestDate(AccountID accountID) {
 
         try {
@@ -328,18 +233,13 @@ public class Ledger implements Entity {
         return latestAccountRecordDate;
     }
 
-    /**
-     * Retrieves, from the ledger, the transactions for a given account, within a given period (endpoint included)
-     *
-     * @param accountID The ID of the account being searched within the ledger's records
-     * @param startDate The start date of the period being searched
-     * @return the ledger's transactions of a given account, for a given period with its endpoint included
-     */
+
     public List<Transaction> getAccountRecordsAsOfDate(AccountID accountID, LocalDate startDate) {
         List<Transaction> accountTransactions = new ArrayList<>();
 
         for (Transaction transaction : records) {
-            if ((transaction.getDebitAccountID().equals(accountID) || transaction.getCreditAccountID().equals(accountID)) && (transaction.getDate().getDate().isAfter(startDate) || transaction.getDate().equals(com.finance.project.domainLayer.domainEntities.vosShared.Date.createDate(startDate)))) {
+            if ((transaction.getDebitAccountID().equals(accountID) || transaction.getCreditAccountID().equals(accountID)) &&
+                    (transaction.getDate().getDate().isAfter(startDate) || transaction.getDate().equals(com.finance.project.domainLayer.domainEntities.vosShared.Date.createDate(startDate)))) {
                 accountTransactions.add(transaction);
             }
         }
@@ -354,14 +254,7 @@ public class Ledger implements Entity {
         return accountTransactions;
     }
 
-    /**
-     * Retrieves, from the ledger, the transactions for a given account, within a given period (endpoints included)
-     *
-     * @param accountID The ID of the account being searched within the ledger's records
-     * @param startDate The start date of the period being searched
-     * @param endDate   The start date of the period being searched
-     * @return the ledger's transactions of a given account, for a given period with its endpoints included
-     */
+
     public List<Transaction> getAccountRecordsBetweenTwoDates(AccountID accountID, LocalDate startDate, LocalDate endDate) {
         List<Transaction> accountTransactions = new ArrayList<>();
 
@@ -386,24 +279,7 @@ public class Ledger implements Entity {
     }
 
 
-/*
-    //Get Amount of records between 2 dates
-
-    public double getAmountBetweenTwoDates(LocalDate dateOfBeginning, LocalDate dateOfEnding) {
-        ArrayList<Transaction> transactions;
-        double amount = 0;
-
-        transactions = getRecordsBetweenTwoDates(dateOfBeginning,dateOfEnding);
-
-        for(Transaction transaction: transactions){
-            amount = amount + transaction.getAmount();
-        }
-        return amount;
-    }
-
-
-*/
-    //Equals
+    // Equals & hashCode
 
     @Override
     public boolean equals(Object o) {

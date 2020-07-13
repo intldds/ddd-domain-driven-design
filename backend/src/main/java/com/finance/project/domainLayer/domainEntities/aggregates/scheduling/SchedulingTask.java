@@ -11,11 +11,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/**
- * The type Scheduling task.
- */
-class SchedulingTask implements Runnable {
 
+class SchedulingTask implements Runnable {
 
     private Ledger ledger;
     private String transactionType;
@@ -29,21 +26,9 @@ class SchedulingTask implements Runnable {
     private ScheduledExecutorService executor;
 
 
-    /**
-     * Instantiates a new Scheduling task.
-     *
-     * @param executor        the executor
-     * @param ledger          the ledger
-     * @param transactionType the transaction type
-     * @param amount          the amount
-     * @param creditAccountID the credit account id
-     * @param debitAccountID  the debit account id
-     * @param categoryID      the category id
-     * @param description     the description
-     * @param triggerDate     the trigger date
-     * @param periodicity     the periodicity
-     */
-    public SchedulingTask(ScheduledExecutorService executor, Ledger ledger, String transactionType, double amount, AccountID creditAccountID, AccountID debitAccountID, CategoryID categoryID, String description, LocalDate triggerDate, String periodicity) {
+    public SchedulingTask(ScheduledExecutorService executor, Ledger ledger, String transactionType, double amount, AccountID creditAccountID,
+                          AccountID debitAccountID, CategoryID categoryID, String description, LocalDate triggerDate, String periodicity) {
+
         this.ledger = ledger;
         this.transactionType = transactionType;
         this.amount = amount;
@@ -57,9 +42,8 @@ class SchedulingTask implements Runnable {
 
     }
 
-    /**
-     * Run.
-     */
+    // Run
+
     public void run() {
         this.ledger.createAndAddTransaction(categoryID, transactionType, description, amount, creditAccountID, debitAccountID);
 
@@ -108,7 +92,6 @@ class SchedulingTask implements Runnable {
 
         return (int) time;
     }
-
 
 
 }

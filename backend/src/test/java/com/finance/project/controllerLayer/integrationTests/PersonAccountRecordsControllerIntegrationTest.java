@@ -25,67 +25,8 @@ public class PersonAccountRecordsControllerIntegrationTest extends AbstractTest 
     }
 
 
-    /*
-    //SUCCESS - search with search parameters: account name + start dat + end date
-    @Test
-    @DisplayName("Integration test for searching a person records, for an account, within 2 dates - Success (200 OK)")
-    void searchPersonRecords_success() throws Exception {
+    // One search parameter empty
 
-        //ARRANGE
-        //Person to search
-        final String personEmail = "elsa@gmail.com";
-
-        //Account to search - Wallet
-        final String accountDenomination = "Wallet";
-
-        //Dates to search
-        final String startDateString = "2020-01-10";
-        final String endDateString = "2020-02-10";
-
-        //Uri
-        final String uri = "/persons/" + personEmail + "/ledgers/records?accountName=" + accountDenomination + "&startDate=" + startDateString + "&endDate=" + endDateString;
-
-        //ACT
-        final MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)).andReturn();
-        final int status = mvcResult.getResponse().getStatus();
-        final String content = mvcResult.getResponse().getContentAsString();
-        JSONObject jsonObject = new JSONObject(content);
-
-        //ASSERT
-//        assertEquals(HttpStatus.OK.value(), status);
-        assertTrue(jsonObject.has("transactions"));
-    }
-
-     */
-
-
-    /*
-    //SUCCESS - search without search parameters: account name + start dat + end date
-    @Test
-    @DisplayName("Integration test for for searching a person records - Success (200 OK)")
-    void searchPersonRecords_success_noParameters() throws Exception {
-
-        //ARRANGE
-        //Person to search
-        final String personEmail = "elsa@gmail.com";
-
-        //Uri
-        final String uri = "/persons/" + personEmail + "/ledgers/records";
-
-        //ACT
-        final MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)).andReturn();
-        final int status = mvcResult.getResponse().getStatus();
-        final String content = mvcResult.getResponse().getContentAsString();
-        JSONObject jsonObject = new JSONObject(content);
-
-        //ASSERT
-//        assertEquals(HttpStatus.OK.value(), status);
-        assertTrue(jsonObject.has("transactions"));
-    }
-
-     */
-
-    //One search parameter empty
     @Test
     @DisplayName("Integration test for searching a person records, for an account, within 2 dates - Empty account name (404 Not Found)")
     void searchPersonRecords_emptyAccountName() throws Exception {
@@ -110,7 +51,6 @@ public class PersonAccountRecordsControllerIntegrationTest extends AbstractTest 
         JSONObject jsonObject = new JSONObject(content);
 
         //ASSERT
-//        assertEquals(HttpStatus.NOT_FOUND.value(), status);
         assertTrue(jsonObject.has("errors"));
     }
 
@@ -138,9 +78,9 @@ public class PersonAccountRecordsControllerIntegrationTest extends AbstractTest 
         JSONObject jsonObject = new JSONObject(content);
 
         //ASSERT
-//        assertEquals(HttpStatus.NOT_FOUND.value(), status);
         assertTrue(jsonObject.has("errors"));
     }
+
 
     @Test
     @DisplayName("Integration test for searching a person records, for an account, within 2 dates - Empty end date (404 Not Found)")
@@ -166,11 +106,12 @@ public class PersonAccountRecordsControllerIntegrationTest extends AbstractTest 
         JSONObject jsonObject = new JSONObject(content);
 
         //ASSERT
-//        assertEquals(HttpStatus.NOT_FOUND.value(), status);
         assertTrue(jsonObject.has("errors"));
     }
 
+
     //Unprocessable entities
+
     @Test
     @DisplayName("Integration test for searching a person records, for an account, within 2 dates - Person does not exist (422 Unprocessable Entity)")
     void searchPersonRecords_personDoesntExist() throws Exception {
@@ -229,6 +170,7 @@ public class PersonAccountRecordsControllerIntegrationTest extends AbstractTest 
         assertTrue(jsonObject.has("errors"));
     }
 
+
     @Test
     @DisplayName("Integration test for searching a person records, for an account, within 2 dates - Incorrect date order (422 Unprocessable Entity)")
     void searchPersonRecords_incorrectDateOrder() throws Exception {
@@ -258,6 +200,7 @@ public class PersonAccountRecordsControllerIntegrationTest extends AbstractTest 
         assertTrue(jsonObject.has("errors"));
     }
 
+
     //Search out of ledger range
     @Test
     @DisplayName("Integration test for searching a person records, for an account, within 2 dates - Search range after ledger records (404 Not Found)")
@@ -284,9 +227,9 @@ public class PersonAccountRecordsControllerIntegrationTest extends AbstractTest 
         JSONObject jsonObject = new JSONObject(content);
 
         //ASSERT
-//        assertEquals(HttpStatus.NOT_FOUND.value(), status);
         assertTrue(jsonObject.has("errors"));
     }
+
 
     @Test
     @DisplayName("Integration test for searching a person records, for an account, within 2 dates - Search range prior to ledger records (404 Not Found)")
@@ -313,9 +256,9 @@ public class PersonAccountRecordsControllerIntegrationTest extends AbstractTest 
         JSONObject jsonObject = new JSONObject(content);
 
         //ASSERT
-//        assertEquals(HttpStatus.NOT_FOUND.value(), status);
         assertTrue(jsonObject.has("errors"));
     }
+
 
     @Test
     @DisplayName("Integration test for searching a person records, for an account, within 2 dates - No transactions for the account (404 Not Found)")
@@ -342,7 +285,6 @@ public class PersonAccountRecordsControllerIntegrationTest extends AbstractTest 
         JSONObject jsonObject = new JSONObject(content);
 
         //ASSERT
-//        assertEquals(HttpStatus.NOT_FOUND.value(), status);
         assertTrue(jsonObject.has("errors"));
     }
 }

@@ -1,11 +1,13 @@
 package com.finance.project.dtos.dtos;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.util.Objects;
 
 /**
  * The type Transaction dt oout.
  */
-public class TransactionDTOout {
+public class TransactionDTOout extends RepresentationModel<TransactionDTOout> {
     private String category;
     private String type;
     private String description;
@@ -193,3 +195,4 @@ public class TransactionDTOout {
         return Objects.hash(category, type, description, amount, date, debitAccount, creditAccount);
     }
 }
+

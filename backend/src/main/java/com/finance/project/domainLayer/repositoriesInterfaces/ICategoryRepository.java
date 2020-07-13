@@ -7,15 +7,11 @@ import com.finance.project.domainLayer.domainEntities.vosShared.CategoryID;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The interface Category repository.
- */
+
 @Repository
 public interface ICategoryRepository {
 
-    //----------------------- NOVO ----------------------//
-
-    Category save(Category category );
+    Category save(Category category);
 
     Optional<Category> findById(String id, String denomination);
 

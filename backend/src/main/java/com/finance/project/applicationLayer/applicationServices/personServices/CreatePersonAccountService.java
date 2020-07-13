@@ -16,7 +16,6 @@ import com.finance.project.domainLayer.domainEntities.aggregates.person.Person;
 import java.util.Optional;
 
 
-
 @Service
 public class CreatePersonAccountService {
 
@@ -41,26 +40,11 @@ public class CreatePersonAccountService {
     public final static String PERSON_DOES_NOT_EXIST = "Person does not exist in the system";
 
 
-    /**
-     * US006: As a person, I want to create an account, assigning it:
-     * - a description
-     * - a denomination
-     *
-     * @param personRepository  Repository that stores all Person objects
-     * @param accountRepository Repository that stores all Account objects
-     */
-
     public CreatePersonAccountService(IPersonRepository personRepository, IAccountRepository accountRepository) {
         this.personRepository = personRepository;
         this.accountRepository = accountRepository;
     }
 
-    /**
-     * Create person account boolean dto.
-     *
-     * @param createPersonAccountDTO the create person account dto
-     * @return BooleanDTOAssembler.createDTOFromPrimitiveTypes(result, msg) boolean dto
-     */
 
     public PersonDTO createAccount(CreatePersonAccountDTO createPersonAccountDTO) {
 
@@ -77,22 +61,25 @@ public class CreatePersonAccountService {
         } else {
             person = opPerson.get();
 
-            // Create Account
             AccountID accountID = AccountID.createAccountID(createPersonAccountDTO.getDenomination(), personID);
             boolean accountExists = accountRepository.existsById(accountID);
 
             if (accountExists) {
-
                 throw new InvalidArgumentsBusinessException(ACCOUNT_ALREADY_EXIST);
 
             } else {
-
                 person.addAccount(accountID);
                 personRepository.addAndSaveAccount(person, createPersonAccountDTO.getDescription());
             }
         }
+        PersonDTO personDTO = PersonDTOAssembler.createDTOFromDomainObject(
+                person.getPersonID().getEmail(),
+                person.getName(),
+                person.getBirthdate(),
+                person.getBirthplace(),
+                person.getMother(),
+                person.getFather());
 
-        return PersonDTOAssembler.createDTOFromDomainObject(person.getPersonID().getEmail(), person.getName(),
-                person.getBirthdate(), person.getBirthplace(), person.getMother(), person.getFather());
+        return personDTO;
     }
 }

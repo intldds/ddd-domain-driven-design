@@ -1,9 +1,5 @@
 package com.finance.project.applicationLayer.applicationServices.personServices;
 
-/*
-    US005 Como utilizador, quero adicionar uma categoria à minha lista de categorias,
-    para depois a poder atribuir a um movimento.
-*/
 
 import com.finance.project.controllerLayer.integrationTests.AbstractTest;
 import com.finance.project.domainLayer.domainEntities.aggregates.person.Person;
@@ -37,15 +33,13 @@ class CreatePersonCategoryServiceTest extends AbstractTest {
     private ICategoryRepository categoryRepository;
 
     private CreatePersonCategoryService createPersonCategoryService;
-
     private Person person;
-
     private PersonID personID;
 
     @BeforeEach
     public void init() {
 
-        // Ilda
+        // Person Ilda
         String ildaEmail = "ilda@gmail.com";
         String ildaName = "Ilda";
         LocalDate ildaBirthdate = LocalDate.of(1999, 2, 20);
@@ -54,41 +48,17 @@ class CreatePersonCategoryServiceTest extends AbstractTest {
         this.person = Person.createPerson(ildaEmail, ildaName, ildaBirthdate, ildaBirthplace);
         this.personID = PersonID.createPersonID(ildaEmail);
 
-        // Categories:
-        // Salary / Draw Money / IRS / Food / Water Bill / Netflix
+        // Categories
 
         // Salary
         String salaryDenomination = "Salary";
         CategoryID salaryID = CategoryID.createCategoryID(salaryDenomination, personID);
         person.addCategory(salaryID);
-
-        // Draw Money
-        String drawMoneyDenomination = "Draw Money";
-        CategoryID drawMoneyID = CategoryID.createCategoryID(drawMoneyDenomination, personID);
-        person.addCategory(drawMoneyID);
-
-        // IRS
-        String irsDenomination = "IRS";
-        CategoryID irsID = CategoryID.createCategoryID(irsDenomination, personID);
-        person.addCategory(irsID);
-
-        // Food
-        String foodDenomination = "Food";
-        CategoryID foodID = CategoryID.createCategoryID(foodDenomination, personID);
-        person.addCategory(foodID);
-
-        // Water Bill
-        String waterBillDenomination = "Water Bill";
-        CategoryID waterBillID = CategoryID.createCategoryID(waterBillDenomination, personID);
-        person.addCategory(waterBillID);
-
-        // Netflix
-        String netflixDenomination = "Netflix";
-        CategoryID netflixID = CategoryID.createCategoryID(netflixDenomination, personID);
-        person.addCategory(netflixID);
     }
 
     // Tests
+
+    // Success
 
     @Test
     @DisplayName("Test for createCategory() | Success")
@@ -128,37 +98,43 @@ class CreatePersonCategoryServiceTest extends AbstractTest {
         assertEquals(true, person.checkIfPersonHasCategory(categoryID));
     }
 
+
+    // Category already added in BeforeEach
+
     @Test
     @DisplayName("Test For createCategory() | Fail | Category Already Exists")
     void createCategory_Fail_CategoryAlreadyExists() {
 
-        //Arrange
+        // Arrange
         String email = "ilda@gmail.com";
         String denomination = "Salary";
 
-        //To Search
+        // To Search
         CategoryID categoryID = CategoryID.createCategoryID(denomination, personID);
 
-        //Returning an Optional<Person> Person
+        // Returning an Optional<Person> Person
         Mockito.when(personRepository.findById(personID)).thenReturn(Optional.of(person));
 
-        //Returning False
+        // Returning False
         Mockito.when(categoryRepository.existsById(categoryID)).thenReturn(true);
 
-        //DTO
+        // DTO
         CreatePersonCategoryDTO createPersonCategoryDTO = CreatePersonCategoryDTOAssembler.createDTOFromPrimitiveTypes(email, denomination);
 
-        //Service
+        // Service
         createPersonCategoryService = new CreatePersonCategoryService(
                 personRepository, categoryRepository);
 
-        //Act
+        // Act
         Throwable thrown = assertThrows(InvalidArgumentsBusinessException.class, () ->
                 createPersonCategoryService.createCategory(createPersonCategoryDTO));
 
         //Assert
         assertEquals(thrown.getMessage(), CreatePersonCategoryService.CATEGORY_ALREADY_EXIST);
     }
+
+
+    // Person does not exist - not created in BeforeEach()
 
     @Test
     @DisplayName("Test For createCategory() | Fail | Person Does Not Exist")

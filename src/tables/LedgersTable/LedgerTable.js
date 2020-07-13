@@ -15,11 +15,16 @@ class LedgerTable extends Component {
         const data = this.props.data;
 
         return (
-
-                <Table className="Tables">
-                    <LedgerTableHeader headers={headers}/>
+            // <div id="LedgerTableDiv">
+            <Table className="Tables">
+                {/*<div id="LedgerHeader">*/}
+                <LedgerTableHeader headers={headers}/>
+                {/*</div>*/}
+                <div id="LedgerTableBody">
                     <LedgerTableBody data = {data}/>
-                </Table>
+                </div>
+            </Table>
+
         );
     }
 }

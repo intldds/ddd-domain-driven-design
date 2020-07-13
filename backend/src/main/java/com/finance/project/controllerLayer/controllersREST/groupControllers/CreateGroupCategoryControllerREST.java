@@ -21,9 +21,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class CreateGroupCategoryControllerREST {
 
     @Autowired
-    private CreateGroupCategoryService service;
-
-    //US005.1 Como responsável de grupo, quero criar categoria e associá-la ao grupo.
+    private CreateGroupCategoryService createGroupCategoryService;
 
     @PostMapping("/persons/{personEmail}/groups/{groupDenomination}/categories")
     public ResponseEntity<Object> createGroupCategory(@RequestBody NewGroupCategoryInfoDTO info,
@@ -32,7 +30,7 @@ public class CreateGroupCategoryControllerREST {
 
         CreateGroupCategoryDTO createGroupCategoryDTO = CreateGroupCategoryDTOAssembler.createDTOFromPrimitiveTypes(personEmail, groupDenomination, info.getCategoryDenomination());
 
-        GroupDTO result = service.createCategoryAsPeopleInCharge(createGroupCategoryDTO);
+        GroupDTO result = createGroupCategoryService.createCategoryAsPeopleInCharge(createGroupCategoryDTO);
 
         Link link_to_admins = linkTo(methodOn(CreateGroupControllerREST.class).getGroupAdmins(groupDenomination)).withRel("admins");
         Link link_to_members = linkTo(methodOn(CreateGroupControllerREST.class).getGroupMembers(groupDenomination)).withRel("members");

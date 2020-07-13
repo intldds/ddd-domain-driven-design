@@ -22,14 +22,10 @@ public class AddPersonToGroupService {
 
     @Autowired
     private final IPersonRepository personRepository;
-
     @Autowired
     private final IGroupRepository groupRepository;
 
-    /**
-     * The constant SUCCESS.
-     */
-//Return messages
+
     /**
      * The constant PERSON_DOES_NOT_EXIST.
      */
@@ -43,24 +39,13 @@ public class AddPersonToGroupService {
      */
     public static final String PERSON_ALREADY_EXIST_IN_THE_GROUP = "Person is already member";
 
-    /**
-     * Instantiates a new Us 003 add person to group service.
-     *
-     * @param personRepository the person repository
-     * @param groupRepository  the group repository
-     */
+
     public AddPersonToGroupService(IPersonRepository personRepository, IGroupRepository groupRepository) {
         this.personRepository = personRepository;
         this.groupRepository = groupRepository;
     }
 
 
-    /**
-     * Add person to group boolean dto.
-     *
-     * @param addPersonToGroupDTO the add person to group dto
-     * @return the boolean dto
-     */
     @Transactional
     public GroupDTO addPersonToGroup(AddPersonToGroupDTO addPersonToGroupDTO) {
 
@@ -71,7 +56,6 @@ public class AddPersonToGroupService {
         boolean personExist = personRepository.exists(memberID);
 
         if (!personExist) {
-
             throw new InvalidArgumentsBusinessException(PERSON_DOES_NOT_EXIST);
 
         } else {
@@ -79,8 +63,7 @@ public class AddPersonToGroupService {
 
             Optional<Group> opGroup = groupRepository.findById(groupID);
 
-            if (!opGroup.isPresent() ) {
-
+            if (!opGroup.isPresent()) {
                 throw new NotFoundArgumentsBusinessException(GROUP_DOES_NOT_EXIST);
 
             } else {
@@ -95,10 +78,13 @@ public class AddPersonToGroupService {
                     group.addMember(memberID);
                     groupRepository.addAndSaveMember(group, memberID);
                 }
-
             }
-            return GroupDTOAssembler.createDTOFromDomainObject(group.getGroupID().getDenomination(), group.getDescription(), group.getDateOfCreation());
-        }
+            GroupDTO groupDTO = GroupDTOAssembler.createDTOFromDomainObject(
+                    group.getGroupID().getDenomination(),
+                    group.getDescription(),
+                    group.getDateOfCreation());
 
+            return groupDTO;
+        }
     }
 }

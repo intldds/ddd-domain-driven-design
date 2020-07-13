@@ -47,30 +47,22 @@ class CreateGroupServiceTest extends AbstractTest {
     private IAccountRepository accountRepository;
 
     private CreateGroupService createGroupService;
-
     private Person personMaria;
-
     private Person personManuel;
-
     private Group schoolFriends;
-
     private Ledger schoolFriendsLedger;
-
     private LedgerID schoolFriendsLedgerID;
-
     private Account accountFood;
-
     private Account accountSalary;
-
     private Category categoryFastFood;
 
 
-    //Data in memory
+    // Data in memory
 
     @BeforeEach
     public void init() {
 
-        //PERSON MARIA
+        // PERSON MARIA
 
         String mariaEmail = "maria@gmail.com";
         PersonID mariaID = PersonID.createPersonID(mariaEmail);
@@ -93,7 +85,7 @@ class CreateGroupServiceTest extends AbstractTest {
         personRepository.save(personMaria);
         ledgerRepository.save(mariaLedger);
 
-        //PERSON MANUEL
+        // PERSON MANUEL
 
         String manuelEmail = "manuel@gmail.com";
         PersonID manuelID = PersonID.createPersonID(manuelEmail);
@@ -116,7 +108,7 @@ class CreateGroupServiceTest extends AbstractTest {
         ledgerRepository.save(manuelLedger);
 
 
-        //GROUP SCHOOL FRIENDS
+        // GROUP SCHOOL FRIENDS
 
         String schoolFriendsDenomination = "School Friends";
         String schoolFriendsDescription = "Best friends from School";
@@ -130,7 +122,7 @@ class CreateGroupServiceTest extends AbstractTest {
         groupRepository.save(schoolFriends);
         ledgerRepository.save(schoolFriendsLedger);
 
-        //Account Food
+        // Account Food
 
         String accountDescription = "Things you eat";
         String accountDenomination = "Food";
@@ -138,7 +130,7 @@ class CreateGroupServiceTest extends AbstractTest {
         accountRepository.save(accountFood);
         schoolFriends.addAccount(accountFood.getAccountID());
 
-        //Account Salary
+        // Account Salary
 
         String accountDescriptionSalary = "Money from company";
         String accountDenominationSalary = "Salary";
@@ -146,22 +138,21 @@ class CreateGroupServiceTest extends AbstractTest {
         accountRepository.save(accountSalary);
         schoolFriends.addAccount(accountSalary.getAccountID());
 
-        //Category Fast Food
+        // Category Fast Food
 
         String denominationFastFood = "Fast Food";
         categoryFastFood = Category.createCategory(denominationFastFood, schoolFriendsID);
         categoryRepository.save(categoryFastFood);
         schoolFriends.addCategory(categoryFastFood.getCategoryID());
 
-        //Transaction
+        // Transaction
 
         CategoryID categoryID = categoryFastFood.getCategoryID();
         AccountID accountIDFood = accountFood.getAccountID();
         AccountID accountIDSalary = accountSalary.getAccountID();
         schoolFriendsLedger.createAndAddTransactionWithDate(categoryID, "debit", "Test Transaction", 100, LocalDate.now(), accountIDFood, accountIDSalary);
 
-
-        //GROUP HIGH SCHOOL FRIENDS
+        // GROUP HIGH SCHOOL FRIENDS
 
         String highSchoolFriendsDenomination = "High School Friends";
         String highSchoolFriendsDescription = "Best friends from High School";
@@ -173,7 +164,6 @@ class CreateGroupServiceTest extends AbstractTest {
         highSchoolFriends.addMember(mariaID);
         groupRepository.save(highSchoolFriends);
         ledgerRepository.save(highSchoolFriendsLedger);
-
     }
 
 
@@ -182,7 +172,6 @@ class CreateGroupServiceTest extends AbstractTest {
     @Test
     @DisplayName("As a person (user), I want to create a group and become its Person In Charge || Happy path")
     public void createGroupAsPersonInCharge_HappyPath() {
-
 
         // Arrange
 
@@ -459,7 +448,6 @@ class CreateGroupServiceTest extends AbstractTest {
 
     // getGroupMembers
 
-
     @Test
     @DisplayName("getGroupMembers | Success | Happy Path")
     public void getGroupMembers_HappyPath() {
@@ -515,20 +503,15 @@ class CreateGroupServiceTest extends AbstractTest {
         GroupID expectedGroupID = GroupID.createGroupID(denomination);
 
         // Group repository must return an Optional Empty
-
         Mockito.when(groupRepository.findById(expectedGroupID)).thenReturn(Optional.empty());
 
         // Service
-
         createGroupService = new CreateGroupService(personRepository, groupRepository, ledgerRepository, accountRepository);
 
         // Act
-
         Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> createGroupService.getGroupMembers(denomination));
 
-
         // Assert
-
         assertEquals(thrown.getMessage(), CreateGroupService.GROUP_DOES_NOT_EXISTS);
     }
 
@@ -613,12 +596,10 @@ class CreateGroupServiceTest extends AbstractTest {
         createGroupService = new CreateGroupService(personRepository, groupRepository, ledgerRepository, accountRepository);
 
         // Act expected object
-
         Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> createGroupService.getGroupAccounts(denomination));
 
 
         // Assert
-
         assertEquals(thrown.getMessage(), CreateGroupService.GROUP_DOES_NOT_EXISTS);
     }
 
@@ -628,7 +609,6 @@ class CreateGroupServiceTest extends AbstractTest {
     public void getGroupCategories_HappyPath() {
 
         // Arrange
-
         String denomination = "School Friends";
 
         CategoryID categoryFastFoodID = categoryFastFood.getCategoryID();
@@ -734,32 +714,27 @@ class CreateGroupServiceTest extends AbstractTest {
         TransactionsDTO result = createGroupService.getGroupLedger(denomination);
 
         // Assert
-
         assertEquals(expectedTransactionsDTO, result);
     }
+
 
     @Test
     @DisplayName("getGroupLedger | Fail | Group Does Not Exist")
     public void getGroupLedger_GroupDoesNotExist() {
 
         // Arrange
-
         String denomination = "Friends";
 
         // To search
-
         GroupID expectedGroupID = GroupID.createGroupID(denomination);
 
         // Group repository must return an Optional Empty
-
         Mockito.when(groupRepository.findById(expectedGroupID)).thenReturn(Optional.empty());
 
         // Service
-
         createGroupService = new CreateGroupService(personRepository, groupRepository, ledgerRepository, accountRepository);
 
         // Act
-
         Throwable thrown = assertThrows(NotFoundArgumentsBusinessException.class, () -> createGroupService.getGroupLedger(denomination));
 
 

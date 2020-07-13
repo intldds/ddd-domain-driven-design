@@ -24,16 +24,11 @@ public class CreatePersonAccountControllerREST {
     @Autowired
     private CreatePersonAccountService service;
 
-    /*
-    US 006. Como utilizador, quero criar uma conta para mim, atribuindo-lhe uma
-    denominação e uma descrição, para posteriormente poder ser usada nos meus movimentos.
-     */
-
-
     @PostMapping("/persons/{personEmail}/accounts")
     public ResponseEntity<Object> createPersonAccount(@RequestBody NewPersonAccountInfoDTO info, @PathVariable final String personEmail) {
 
-        CreatePersonAccountDTO createPersonAccountDTO = CreatePersonAccountDTOAssembler.createDTOFromPrimitiveTypes(personEmail, info.getDescription(), info.getDenomination());
+        CreatePersonAccountDTO createPersonAccountDTO = CreatePersonAccountDTOAssembler.
+                createDTOFromPrimitiveTypes(personEmail, info.getDescription(), info.getDenomination());
 
         PersonDTO result = service.createAccount(createPersonAccountDTO);
 

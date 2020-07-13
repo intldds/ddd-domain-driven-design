@@ -24,21 +24,15 @@ public class CreatePersonCategoryService {
     @Autowired
     private ICategoryRepository categoryRepository;
 
-    /**
-     * Instantiates a new Us 005 create person category service.
-     *
-     * @param personRepository   the person repository
-     * @param categoryRepository the category repository
-     */
+
     public CreatePersonCategoryService(IPersonRepository personRepository, ICategoryRepository categoryRepository) {
         this.personRepository = personRepository;
         this.categoryRepository = categoryRepository;
     }
 
-    /**
-     * The constant SUCCESS.
-     */
-//Return messages
+
+    // Return messages
+
     public final static String SUCCESS = "Category created and added";
     /**
      * The constant CATEGORY_ALREADY_EXIST.
@@ -48,13 +42,6 @@ public class CreatePersonCategoryService {
      * The constant PERSON_DOES_NOT_EXIST.
      */
     public final static String PERSON_DOES_NOT_EXIST = "Person does not exist";
-
-    /**
-     * Create category as people in charge boolean dto.
-     *
-     * @param createPersonCategoryDTO the create group category dto
-     * @return the boolean dto
-     */
 
 
     public PersonDTO createCategory(CreatePersonCategoryDTO createPersonCategoryDTO) {
@@ -80,7 +67,6 @@ public class CreatePersonCategoryService {
             } else {
                 person.addCategory(categoryID);
                 personRepository.addAndSaveCategory(person);
-
             }
         }
         return PersonDTOAssembler.createDTOFromDomainObject(

@@ -110,7 +110,8 @@ class GroupTransactionsWithinPeriodServiceTest extends AbstractTest {
         ledger.addTransaction(edpBillFebruary);
     }
 
-    //TESTS
+
+    // TESTS
 
     @Test
     @DisplayName("Test for service method getGroupTransactionsWithinPeriod() - Success")

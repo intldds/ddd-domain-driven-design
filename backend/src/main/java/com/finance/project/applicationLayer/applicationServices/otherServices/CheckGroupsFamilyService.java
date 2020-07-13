@@ -29,16 +29,9 @@ public class CheckGroupsFamilyService {
 
     @Autowired
     private final IGroupRepository groupRepository;
-
     @Autowired
     private final IPersonRepository personRepository;
 
-    /**
-     * Instantiates a new Us 004 groups that are family service.
-     *
-     * @param groupRepository  the group repository
-     * @param personRepository the person repository
-     */
 
     /**
      * The constant GROUP_DOES_NOT_EXIST.
@@ -51,11 +44,6 @@ public class CheckGroupsFamilyService {
         this.personRepository = personRepository;
     }
 
-    /**
-     * Groups that are family groups that are family dto.
-     *
-     * @return the groups that are family dto
-     */
     public GroupsThatAreFamilyDTO groupsThatAreFamily() {
         List<Group> listGroups = this.groupRepository.findAll();
         List<GroupIDDTO> listToReturn = new ArrayList<>();
@@ -66,8 +54,12 @@ public class CheckGroupsFamilyService {
                 listToReturn.add(GroupIDDTOAssembler.createDTOFromDomainObject(groupID));
             }
         }
-        return GroupsThatAreFamilyDTOAssembler.createDTOFromDomainObject(listToReturn);
+        GroupsThatAreFamilyDTO groupsThatAreFamilyDTO = GroupsThatAreFamilyDTOAssembler.createDTOFromDomainObject(listToReturn);
+        return groupsThatAreFamilyDTO;
     }
+
+
+    // Check if a group is Family
 
     private GroupID isFamily(Group group) {
         List<PersonID> allMembers = group.getAllMembers();
@@ -82,17 +74,18 @@ public class CheckGroupsFamilyService {
                     boolean isFather = allMembers.get(i).equals(personA.getFather());
                     boolean isMother = allMembers.get(i).equals(personA.getMother());
                     if ((i != j) && isFather || isMother) {
-                        //Find father
+
+                        // Find father
                         if (!allMembersAux.contains(allMembers.get(i)) && isFather && !father) {
                             allMembersAux.add(allMembers.get(i));
                             father = true;
                         }
-                        //Find mother
+                        // Find mother
                         if (!allMembersAux.contains(allMembers.get(i)) && isMother && !mother) {
                             allMembersAux.add(allMembers.get(i));
                             mother = true;
                         }
-                        //Add the children in case of find a father or a mother
+                        // Add the children in case of find a father or a mother
                         if (!allMembersAux.contains(allMembers.get(j))) {
                             allMembersAux.add(allMembers.get(j));
                         }
@@ -100,11 +93,12 @@ public class CheckGroupsFamilyService {
                 }
             }
         }
-        //Return null if father or mother is null
+
+        // Return null if father or mother is null
         if (!mother || !father) {
             return null;
         }
-        //Compare the List's
+        // Compare the List's
         for (PersonID personID : allMembers) {
             if (!allMembersAux.contains(personID)) {
                 return null;
@@ -113,12 +107,15 @@ public class CheckGroupsFamilyService {
         return group.getGroupID();
     }
 
+
+    // Getters
+
     @Transactional
     public GroupDTO getGroupByDenomination(String denomination) {
         Group group;
         GroupID groupID = GroupID.createGroupID(denomination);
         Optional<Group> opGroup = groupRepository.findById(groupID);
-        if (!opGroup.isPresent() ) {
+        if (!opGroup.isPresent()) {
 
             throw new NotFoundArgumentsBusinessException(GROUP_DOES_NOT_EXIST);
 
@@ -135,16 +132,14 @@ public class CheckGroupsFamilyService {
         Group group;
         GroupID groupID = GroupID.createGroupID(denomination);
         Optional<Group> opGroup = groupRepository.findById(groupID);
-        if (!opGroup.isPresent() ) {
+        if (!opGroup.isPresent()) {
 
             throw new NotFoundArgumentsBusinessException(GROUP_DOES_NOT_EXIST);
 
         } else {
             group = opGroup.get();
-
         }
         List<PersonID> allMembers = group.getAllMembers();
-
 
         return GroupMembersDTOAssembler.createDTOFromDomainObject(allMembers);
     }

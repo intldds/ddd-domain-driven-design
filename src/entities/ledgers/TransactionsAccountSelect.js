@@ -7,7 +7,7 @@ import {
 } from "../../context/Actions";
 import Button from "react-bootstrap/Button";
 
-const TransactionAccountSelect = () => {
+const TransactionAccountSelect = (props) => {
 
     useEffect(() => {
         if (isLogged == true) {
@@ -71,7 +71,14 @@ const TransactionAccountSelect = () => {
 
         const user = userID.toLowerCase();
 
-        const url = `/persons/`+ user +`/ledgers/records?accountName=${accountDenomination}&startDate=${startDate}&endDate=${endDate}`;
+        const href = props.url.split("?");
+        const parameters = href[1].split("&")
+
+        //accountName -> parameters[0]
+        //startDate -> parameters[1]
+        //endDate -> parameters[2]
+
+        const url = href[0] + `?` + parameters[0] + `${accountDenomination}&` + parameters[1] + `${startDate}&` + parameters[2] + `${endDate}`;
 
         console.log(url)
 
@@ -105,8 +112,8 @@ const TransactionAccountSelect = () => {
                 </select>
                 <label id="label" htmlFor="fname"><b> Insert StartDate: </b></label>
                 <input  type="date" value={startDate}
-                       placeholder={'Please enter start date'}
-                       onChange={(event) => setStartDate(event.target.value)}/>
+                        placeholder={'Please enter start date'}
+                        onChange={(event) => setStartDate(event.target.value)}/>
                 <label id="label" htmlFor="fname"><b> Insert EndDate: </b></label>
                 <input type="date" value={endDate}
                        placeholder={'Please enter end date'}

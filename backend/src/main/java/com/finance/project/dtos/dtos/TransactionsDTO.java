@@ -14,7 +14,6 @@ public class TransactionsDTO extends RepresentationModel<TransactionsDTO> {
     }
 
     public TransactionsDTO() {
-
     }
 
     public List<TransactionDTOout> getTransactions() {

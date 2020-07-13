@@ -39,7 +39,6 @@ public class CreatePersonService {
     /**
      * The constant SUCCESS.
      */
-//Return messages
     public final static String SUCCESS = "Account created and added";
     /**
      * The constant ADDRESS_ALREADY_EXIST.
@@ -91,22 +90,13 @@ public class CreatePersonService {
     public final static String TRANSACTION_ALREADY_EXIST = "Transaction already exist";
 
 
-    /**
-     * Instantiates a new create person service.
-     *
-     * @param personRepository   the person repository
-     * @param ledgerRepository   the ledger repository
-     * @param categoryRepository the Category repository
-     * @param accountRepository  the Account repository
-     */
-
-
     public CreatePersonService(IPersonRepository personRepository, ILedgerRepository ledgerRepository, ICategoryRepository categoryRepository, IAccountRepository accountRepository) {
         this.personRepository = personRepository;
         this.ledgerRepository = ledgerRepository;
         this.categoryRepository = categoryRepository;
         this.accountRepository = accountRepository;
     }
+
 
     public PersonDTO createPerson(CreatePersonDTO createPersonDTO) {
         PersonID personID = PersonID.createPersonID(createPersonDTO.getEmail());
@@ -121,10 +111,20 @@ public class CreatePersonService {
             Person newPerson = Person.createPerson(createPersonDTO.getEmail(), createPersonDTO.getName(), createPersonDTO.getBirthdate(), createPersonDTO.getBirthplace());
             Person newSavedPerson = personRepository.save(newPerson);
 
-            return PersonDTOAssembler.createDTOFromDomainObject(newSavedPerson.getPersonID().getEmail(), newSavedPerson.getName(), newSavedPerson.getBirthdate(), newSavedPerson.getBirthplace(), newSavedPerson.getFather(), newSavedPerson.getMother());
+            PersonDTO personDTO = PersonDTOAssembler.createDTOFromDomainObject(
+                    newSavedPerson.getPersonID().getEmail(),
+                    newSavedPerson.getName(),
+                    newSavedPerson.getBirthdate(),
+                    newSavedPerson.getBirthplace(),
+                    newSavedPerson.getFather(),
+                    newSavedPerson.getMother());
+
+            return personDTO;
         }
     }
 
+
+    // Getters
 
     public PersonDTO getPersonByEmail(PersonEmailDTO personEmailDTO) {
         PersonID personID = PersonID.createPersonID(personEmailDTO.getEmail());
@@ -274,11 +274,19 @@ public class CreatePersonService {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        Person newPerson = Person.createPerson(createPersonDTO.getEmail(), createPersonDTO.getName(), LocalDate.parse(createPersonDTO.getBirthdate().toString()), createPersonDTO.getBirthplace());
+        Person newPerson = Person.createPerson
+                (createPersonDTO.getEmail(),
+                        createPersonDTO.getName(),
+                        LocalDate.parse(createPersonDTO.getBirthdate().toString()),
+                        createPersonDTO.getBirthplace());
 
         Person newPersonSaved = personRepository.save(newPerson);
 
-        CreatePersonDTO personDTO = CreatePersonDTOAssembler.createDTOFromPrimitiveTypes(newPersonSaved.getEmail().getEmail(), newPersonSaved.getName().getName(), newPersonSaved.getBirthdate().getBirthdate().format(formatter), newPersonSaved.getBirthplace().getBirthplace());
+        CreatePersonDTO personDTO = CreatePersonDTOAssembler.createDTOFromPrimitiveTypes
+                (newPersonSaved.getEmail().getEmail(),
+                        newPersonSaved.getName().getName(),
+                        newPersonSaved.getBirthdate().getBirthdate().format(formatter),
+                        newPersonSaved.getBirthplace().getBirthplace());
 
         return personDTO;
     }

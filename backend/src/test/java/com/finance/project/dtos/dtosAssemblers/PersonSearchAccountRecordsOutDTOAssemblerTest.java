@@ -6,7 +6,7 @@ import com.finance.project.domainLayer.domainEntities.vosShared.CategoryID;
 import com.finance.project.domainLayer.domainEntities.vosShared.PersonID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import com.finance.project.dtos.dtos.SearchAccountRecordsOutDTO;
+import com.finance.project.dtos.dtos.PersonSearchAccountRecordsOutDTO;
 import com.finance.project.dtos.dtos.TransactionDTOout;
 
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SearchAccountRecordsOutDTOAssemblerTest {
+class PersonSearchAccountRecordsOutDTOAssemblerTest {
 
     @Test
     @DisplayName("Test accountTransactionsOutDTO() method")
@@ -64,12 +64,12 @@ class SearchAccountRecordsOutDTOAssemblerTest {
         ArrayList<TransactionDTOout> expectedListTransactionOut = new ArrayList<>();
         expectedListTransactionOut.add(transactionDTOout1);
         expectedListTransactionOut.add(transactionDTOout2);
-        SearchAccountRecordsOutDTO expectedSearchAccountRecordsOutDTO = new SearchAccountRecordsOutDTO(expectedListTransactionOut);
+        PersonSearchAccountRecordsOutDTO expectedPersonSearchAccountRecordsOutDTO = new PersonSearchAccountRecordsOutDTO(expectedListTransactionOut);
 
         // ACT
-        SearchAccountRecordsOutDTO actualResult = SearchAccountRecordsOutDTOAssembler.accountTransactionsOutDTO(expectedTransactions);
+        PersonSearchAccountRecordsOutDTO actualResult = SearchAccountRecordsOutDTOAssembler.accountTransactionsOutDTO(expectedTransactions);
 
         // ASSERT
-        assertEquals(expectedSearchAccountRecordsOutDTO, actualResult);
+        assertEquals(expectedPersonSearchAccountRecordsOutDTO, actualResult);
     }
 }

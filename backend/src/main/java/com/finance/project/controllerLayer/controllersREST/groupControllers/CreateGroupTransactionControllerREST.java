@@ -20,7 +20,6 @@ public class CreateGroupTransactionControllerREST {
     @Autowired
     private CreateGroupTransactionService service;
 
-    //US008.1 Como membro de grupo, quero criar um movimento , atribuindo-lhe um valor, a data (atual, por omissão), uma descrição, uma categoria, uma conta de crédito e outra de débito.
 
     @PostMapping("/persons/{personEmail}/groups/{groupDenomination}/ledgers/records")
     public ResponseEntity<Object> createGroupTransaction(@RequestBody NewGroupTransactionInfoDTO info,

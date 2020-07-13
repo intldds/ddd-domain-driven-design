@@ -5,25 +5,8 @@ body, html {
 }
 
 code {
-  font-family: Lucida Console; /*Monaco5, monospace;*/
+  font-family: Lucida Console;
 }
-
-
-/*button {*/
-/*  right: 0;*/
-/*  border: 0;*/
-/*  border-radius: 18px;*/
-/*  color: dimgray;*/
-/*  font-family: sans-serif, "Roboto Condensed";*/
-/*  font-size: 23px;*/
-/*  font-weight: 500;*/
-/*  justify-content: center;*/
-/*  margin-top: 20px;*/
-/*  outline: none;*/
-/*  padding: 5px;*/
-/*  text-transform: uppercase;*/
-/*  width: 20%;*/
-/*}*/
 
 ul {
   margin: 0;
@@ -37,57 +20,42 @@ li {
   margin-bottom: .5rem
 }
 
-
 table {
-  /*border-collapse: collapse;*/
-  /*border-spacing: 1.5px;*/
-  /*margin: 1.5px;*/
-  /*padding: 1.5px;*/
-  /*border: 2px;*/
-  /*font-family: sans-serif, 'Helvetica Neue';*/
-  /*vertical-align: baseline;*/
-  /*margin: 40px;*/
-  /*line-height: 200%;*/
-  /*width: 15%*/
   border: none;
 }
 
 thead {
   font-size: x-large;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  /*border-collapse: collapse;*/
-  /*border: 3px solid #ddd;*/
   border: none;
   width: 100%;
   text-align: left ;
 }
 
 tbody {
-
   font-family: arial, sans-serif;
   padding-top: 12px;
   padding-bottom: 12px;
   color: black;
   text-align: left ;
-
 }
+
 .homeNavBar li {
   padding:10px;
   display: inline;
 }
 
-
-
 .loginTitle {
   text-align: center;
   padding-bottom: 8px;
-  font-size: 20px;
-  font-family: 'Staatliches', cursive;
+  font-size: 40px;
+  font-family: Calibri, 'Staatliches';
 }
 
 .secTitle {
   padding-bottom: 40px;
 }
+
 #userConfig {
   text-transform: capitalize;
   color: black;
@@ -113,15 +81,12 @@ tbody {
 
 a {
   color: black;
-
 }
 
 .btn-primary{
-
 }
 
 .btn-primary:hover {
-
 }
 
 .navBar {
@@ -130,44 +95,55 @@ a {
 
 
 a:hover {
-
   color: blue;
   text-decoration: none ;
 }
 
 .Tables {
   width: 90%;
+  height: 10%;
   bordered: false;
   margin-left: auto;
   margin-right: auto;
 }
 
+#LedgerTableBody {
+  overflow: auto;
+  height: 300px;
+}
+
+#LedgerBody {
+  text-align: left;
+}
+
+.LedgerTableDiv {
+  overflow: auto;
+  height: 500px;
+  border: 3px solid blue;
+  padding-top: 10%;
+  margin-top: 5%;
+}
+
+#LedgerHeader th{
+  text-align: left;
+  margin: 0;
+  width: 200px;
+}
+
 .Forms {
-  /*position: absolute;*/
-  /*margin-top:15px;*/
   margin-left: 5%;
   margin-right: 5%;
-  /*width: 50%;*/
-  /*border:2px red solid;*/
   display: flex;
-  /*margin:10px;*/
 }
+
 #label{
   margin: 10px;
 }
 
 ::placeholder {
-  font-size: medium;
+  font-size: small;
   color:black;
 }
-
-/*.SelectAppearance{*/
-/*-webkit-appearance:     none;*/
-/*-moz-appearance:        none;*/
-/*-ms-appearance:         none;*/
-/*-o-appearance:          none;*/
-/*appearance: none;*/
-/*}*/
 
 .GroupDenomination {
   font-weight: bold;
@@ -177,35 +153,37 @@ a:hover {
 .GroupDenomination:hover {
   color: #616161;
 }
+
 #FormDiv {
-  /*border: 2px red solid;*/
-  /*display: flex;*/
-  /*flex-wrap: wrap;*/
-  /*position:absolute;*/
 }
+
 #SearchButton {
-  position:absolute;
-  left:52.5%;
-  /*top:10.1em;*/
-  top:161px;
-  /*border: 2px red solid;*/
-  /*display: flex;*/
+  position:relative;
+  left:0.5%;
+  top:0%;
   flex-wrap: wrap;
   height:44px;
   width: 73px;
 }
+
 #ResetButton {
-  position:absolute;
-  left:56.5%;
-  /*top:10.1em;*/
-  top:161px;
-  /*border: 2px red solid;*/
-  /*display: flex;*/
+  position:relative;
+  right: 4.5%;
+  top:20%;
   flex-wrap: wrap;
   height:44px;
-  width: 65px;
+  width: 73px;
 }
+
+.FormDiv {
+  display: flex;
+}
+
 #GroupIdentification {
   display:inline;
 }
 
+.activeNavLink {
+  background-color: cornflowerblue;
+  border-radius: 8px;
+}

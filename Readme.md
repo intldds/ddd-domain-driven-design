@@ -768,8 +768,10 @@ To be completely honest, I didn't read Eric's book in its entirety, even though 
 foundation of the concept of a DDD model. Instead, I've read **"Domain-Driven Design Quickly"**
 by Abel Avram and Floyd Marinescu, which is an excellent summary of Eric's piece.
 
+
 ***
 
-Thank you,
+If you enjoyed this tutorial, feel free to say "hello" to me through my website at 
+[miguelemos.github.io](miguelemos.github.io) - I am happy to discuss any question related to this tutorial
+or anything else that's on your mind!
 
-Miguel

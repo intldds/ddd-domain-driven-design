@@ -1,12 +1,11 @@
 import React, {useContext, useEffect, useState} from "react";
-import axios from 'axios';
 import AppContext from "../../context/AppContext";
 import {
     fetch_ledgers_initiated,
     fetch_ledgers_success,
     fetch_ledgers_error,
     Api,
-    fetchAccountsStarted, fetchAccountsSuccess, fetchAccountsError
+    searchTransactionForm
 } from "../../context/Actions";
 import LedgerTable from "../../tables/LedgersTable/LedgerTable";
 import LedgerForm from "./LedgerForm";
@@ -19,9 +18,11 @@ function EntityLedgers() {
 
     const {state, dispatch} = useContext(AppContext);
 
-    const {isLogged, transactions, userID, groupDenomination, myPage, myGroups} = state;
+    const {isLogged, transactions, userID, groupDenomination, myPage, myGroups, searchTransaction} = state;
     console.log({userID})
     const {isLoading, error} = transactions;
+    const [urlSearchForm, setUrlSearchForm] = useState('');
+    const [urlNewTransForm, setUrlNewTransForm] = useState('');
 
     useEffect(() => {
         if (isLogged == true) {
@@ -45,6 +46,13 @@ function EntityLedgers() {
                 const res = await Api.get(url);
                 const {data} = await res;
                 dispatch(fetch_ledgers_success(data));
+                setUrlNewTransForm(res.data._links.addTransaction.href.toString());
+                if (res.data._links.searchTransaction != null) {
+                    dispatch(searchTransactionForm(true));
+                    setUrlSearchForm(res.data._links.searchTransaction.href.toString());
+                } else {
+                    dispatch(searchTransactionForm(false));
+                }
             } catch (err) {
                 dispatch(fetch_ledgers_error(err.message));
             }
@@ -60,6 +68,13 @@ function EntityLedgers() {
                 const res = await Api.get(url);
                 const {data} = await res;
                 dispatch(fetch_ledgers_success(data));
+                setUrlNewTransForm(res.data._links.addTransaction.href.toString());
+                if (res.data._links.searchTransaction != null) {
+                    dispatch(searchTransactionForm(true));
+                    setUrlSearchForm(res.data._links.searchTransaction.href.toString());
+                } else {
+                    dispatch(searchTransactionForm(false));
+                }
             } catch (err) {
                 dispatch(fetch_ledgers_error(err.message));
             }
@@ -78,10 +93,12 @@ function EntityLedgers() {
         header5: 'Date',
         header6: 'DebitAccount',
         header7: 'CreditAccount',
+        header8: 'Actions'
 
     };
     let navBar;
     let data;
+    let search;
 
     if (!isLogged) {
         return (<h1>Not logged</h1>);
@@ -98,7 +115,6 @@ function EntityLedgers() {
         data = <LedgerTable headers={headers}/>
     }
 
-
     if (myPage && !myGroups) {
         navBar = <MyPage/>;
     }
@@ -107,28 +123,36 @@ function EntityLedgers() {
         navBar = <GroupId/>
     }
 
+
+
     if (myPage && !myGroups) {
+        if (searchTransaction) {
+            search = <TransactionAccountSelect url={urlSearchForm}/>
+        }
         return (
             <div>
                 {navBar}
                 <br/>
-                <TransactionAccountSelect/>
+                {search}
                 <br/>
                 {data}
-                <LedgerForm/>
+                <LedgerForm url={urlNewTransForm}/>
             </div>
         )
     }
 
     if (!myPage && myGroups || !myPage && !myGroups) {
+        if (searchTransaction) {
+            search = <TransactionGroupAccountSelect url={urlSearchForm}/>
+        }
         return (
             <div>
                 {navBar}
                 <br/>
-                <TransactionGroupAccountSelect/>
+                {search}
                 <br/>
                 {data}
-                <LedgerForm/>
+                <LedgerForm url={urlNewTransForm}/>
             </div>
         )
 

@@ -30,7 +30,7 @@ public class GroupTransactionsWithinPeriodService {
     @Autowired
     private final ILedgerRepository ledgerRepository;
 
-    //Return messages
+    // Return messages
 
     /**
      * The constant GROUP_DOES_NOT_EXIST.
@@ -45,39 +45,32 @@ public class GroupTransactionsWithinPeriodService {
      */
     public static final String NO_TRANSACTIONS_TO_REPORT = "Within the given period, there are no transactions to report";
 
-    /**
-     * Instantiates a new Us 012 group transactions within period service.
-     *
-     * @param groupRepository  the group repository
-     * @param ledgerRepository the ledger repository
-     */
+
     public GroupTransactionsWithinPeriodService(IGroupRepository groupRepository, ILedgerRepository ledgerRepository) {
         this.groupRepository = groupRepository;
         this.ledgerRepository = ledgerRepository;
     }
 
-    /**
-     * Gets group transactions within period.
-     *
-     * @param groupTransactionsWithinPeriodDTOin the group transactions within period dto in
-     * @return the group transactions within period
-     */
-    public GroupTransactionsWithinPeriodDTOout getGroupTransactionsWithinPeriod(GroupTransactionsWithinPeriodDTOin groupTransactionsWithinPeriodDTOin) throws NotFoundArgumentsBusinessException {
+
+    public GroupTransactionsWithinPeriodDTOout getGroupTransactionsWithinPeriod(GroupTransactionsWithinPeriodDTOin groupTransactionsWithinPeriodDTOin)
+            throws NotFoundArgumentsBusinessException {
+
         Group group;
         List<Transaction> groupTransactions;
 
         GroupID groupID = GroupID.createGroupID(groupTransactionsWithinPeriodDTOin.getGroupDenomination());
         Optional<Group> optGroup = groupRepository.findById(groupID);
 
-        //if group does not exist, transactions' report will not be created
+        // if group does not exist, transactions' report will not be created
         if (!optGroup.isPresent()) {
             throw new NotFoundArgumentsBusinessException(GROUP_DOES_NOT_EXIST);
 
         } else {
             group = optGroup.get();
 
-            //If person is not member of the group, transactions' report cannot be created
-            //Member of the group means that person may be person in charge, or merely member
+            // If person is not member of the group, transactions' report cannot be created
+            // Member of the group means that person may be person in charge, or merely member
+
             PersonID personID = PersonID.createPersonID(groupTransactionsWithinPeriodDTOin.getPersonEmail());
             boolean isPersonGroupMember = group.isPersonAlreadyMember(personID);
 
@@ -93,10 +86,11 @@ public class GroupTransactionsWithinPeriodService {
                         .filter(groupLedger -> !groupLedger.getRecordsBetweenTwoDates(groupTransactionsWithinPeriodDTOin.getStartDate(), groupTransactionsWithinPeriodDTOin.getEndDate()).isEmpty())
                         .map(groupLedger -> groupLedger.getRecordsBetweenTwoDates(groupTransactionsWithinPeriodDTOin.getStartDate(), groupTransactionsWithinPeriodDTOin.getEndDate()))
                         .orElseThrow(() -> new NotFoundArgumentsBusinessException(NO_TRANSACTIONS_TO_REPORT));
-
-
             }
         }
-        return GroupTransactionsWithinPeriodDTOoutAssembler.getGroupTransactionsWithinPeriodDTOout((ArrayList<Transaction>) groupTransactions);
+        GroupTransactionsWithinPeriodDTOout groupTransactionsWithinPeriodDTOout =
+                GroupTransactionsWithinPeriodDTOoutAssembler.getGroupTransactionsWithinPeriodDTOout((ArrayList<Transaction>) groupTransactions);
+
+        return  groupTransactionsWithinPeriodDTOout;
     }
 }

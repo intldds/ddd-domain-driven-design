@@ -22,9 +22,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author Ala Matos
- */
+
 class ScheduleRepositoryTest {
 
     @Test
@@ -148,7 +146,7 @@ class ScheduleRepositoryTest {
                 wolverineAccountID, hulkCategoryID, firstDescription, triggerDate, firstPeriodicity);
         ScheduleID scheduleID = ScheduleID.createScheduleID(firstDescription, triggerDate, firstPeriodicity, firstTransactionType);
 
-        boolean saveResult= firstScheduleRepo.saveScheduling(firstScheduling);
+        boolean saveResult = firstScheduleRepo.saveScheduling(firstScheduling);
 
 
         //Act expected
@@ -284,7 +282,6 @@ class ScheduleRepositoryTest {
 
         firstScheduleRepo.saveScheduling(firstScheduling);
         firstScheduleRepo.saveScheduling(theSameScheduling);
-
 
 
         //Act expected
@@ -557,7 +554,7 @@ class ScheduleRepositoryTest {
         boolean result = firstScheduleRepo.checkIfScheduleIDExists(firstScheduleID);
 
         //Assert
-        assertEquals(true,result );
+        assertEquals(true, result);
         /*assertEquals(expectedSchedulings, firstScheduleRepo.getSchedulings());
         assertTrue(firstScheduleRepo.checkIfScheduleIDExists(someScheduleID));
 
@@ -800,262 +797,4 @@ class ScheduleRepositoryTest {
         assertFalse(result);
     }
 
-//    @Test
-//    @DisplayName("Test the equals method - different type of repository")
-//    void testEqualsDifferentTypeOfRepositoryObject() {
-//        //Day Unit 200ms
-//        //Monday - Tuesday - Wednesday - Thursday - Friday - x - x - Monday - Tuesday - Wednesday = 8
-//
-//        //Arrange Ledger
-//        Ledger ledger = Ledger.createLedger();
-//
-//        //Arrange TransactionType
-//        String firstTransactionType = "Food";
-//
-//        //Arrange Amount
-//        Double firstAmount = 20.2;
-//
-//        //Arrange AccountID Nr.1
-//
-//        String credAccountDenomination = "EmployerSA";
-//        PersonID hulkID = PersonID.createPersonID("hulk@marvel.com");
-//        AccountID hulkAccountID = AccountID.createAccountID(credAccountDenomination, hulkID);
-//
-//        //Arrange AccountID Nr.2
-//
-//        String debAccountDenomination = "Allowance Money";
-//        PersonID wolverineID = PersonID.createPersonID("wolverine@marvel.com");
-//        AccountID wolverineAccountID = AccountID.createAccountID(debAccountDenomination, wolverineID);
-//
-//        //Arrange CategoryID
-//        CategoryID hulkCategoryID = CategoryID.createCategoryID("Allowance", hulkID);
-//
-//        //Arrange Description
-//        String firstDescription = "groceries";
-//
-//        String secondDescription = "cinema";
-//
-//        //Arrange Periodicity
-//        String firstPeriodicity = "Working Days";
-//
-//        //Arrange Triggers/Timers
-//        LocalDate triggerDate = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY));
-//        long timeToSleep = (ChronoUnit.DAYS.between(LocalDate.now(), triggerDate) * 200) + 1900;
-//
-//        //Arrange ThreadPool
-//        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-//
-//        // Act
-//        IScheduleRepository firstScheduleRepo = ScheduleRepository.createScheduleRepository();
-//        Scheduling firstScheduling = Scheduling.createScheduling(executor, ledger, firstTransactionType, firstAmount, hulkAccountID,
-//                wolverineAccountID, hulkCategoryID, firstDescription, triggerDate, firstPeriodicity);
-//        IPersonRepository anotherRepository = PersonRepository.createPersonRepository();
-//        firstScheduleRepo.saveScheduling(firstScheduling);
-//
-//        //Assert
-//        assertNotEquals(anotherRepository, firstScheduleRepo);
-//    }
-
-    @Test
-    @DisplayName("Test the equals method - different scheduling Repository size")
-    void testEquals_differentSize() {
-        //Day Unit 200ms
-        //Monday - Tuesday - Wednesday - Thursday - Friday - x - x - Monday - Tuesday - Wednesday = 8
-
-        //Arrange Ledger
-        Ledger ledger = Ledger.createLedger();
-
-        //Arrange TransactionType
-        String firstTransactionType = "Food";
-
-        //Arrange Amount
-        Double firstAmount = 20.2;
-
-        //Arrange AccountID Nr.1
-
-        String credAccountDenomination = "EmployerSA";
-        PersonID hulkID = PersonID.createPersonID("hulk@marvel.com");
-        AccountID hulkAccountID = AccountID.createAccountID(credAccountDenomination, hulkID);
-
-        //Arrange AccountID Nr.2
-
-        String debAccountDenomination = "Allowance Money";
-        PersonID wolverineID = PersonID.createPersonID("wolverine@marvel.com");
-        AccountID wolverineAccountID = AccountID.createAccountID(debAccountDenomination, wolverineID);
-
-        //Arrange CategoryID
-        CategoryID hulkCategoryID = CategoryID.createCategoryID("Allowance", hulkID);
-
-        //Arrange Description
-        String firstDescription = "groceries";
-
-        String secondDescription = "cinema";
-
-        //Arrange Periodicity
-        String firstPeriodicity = "Working Days";
-
-        //Arrange Triggers/Timers
-        LocalDate triggerDate = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY));
-        long timeToSleep = (ChronoUnit.DAYS.between(LocalDate.now(), triggerDate) * 200) + 1900;
-
-        //Arrange ThreadPool
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-
-        // Act
-        IScheduleRepository firstScheduleRepo = ScheduleRepository.createScheduleRepository();
-        Scheduling firstScheduling = Scheduling.createScheduling(executor, ledger, firstTransactionType, firstAmount, hulkAccountID,
-                wolverineAccountID, hulkCategoryID, firstDescription, triggerDate, firstPeriodicity);
-        IScheduleRepository expectedScheduleRepo = ScheduleRepository.createScheduleRepository();
-        Scheduling secondScheduling = Scheduling.createScheduling(executor, ledger, firstTransactionType, firstAmount, hulkAccountID,
-                wolverineAccountID, hulkCategoryID, secondDescription, triggerDate, firstPeriodicity);
-
-        firstScheduleRepo.saveScheduling(firstScheduling);
-        firstScheduleRepo.saveScheduling(secondScheduling);
-        expectedScheduleRepo.saveScheduling(secondScheduling);
-        //Assert
-        assertNotEquals(expectedScheduleRepo, firstScheduleRepo);
-    }
-
-    @Test
-    @DisplayName("Test the equals method - Scheduling doesn't exist in the scheduling Repository")
-    void testEquals_schedulingInexistent() {
-        //Day Unit 200ms
-        //Monday - Tuesday - Wednesday - Thursday - Friday - x - x - Monday - Tuesday - Wednesday = 8
-
-        //Arrange Ledger
-        Ledger ledger = Ledger.createLedger();
-
-        //Arrange TransactionType
-        String firstTransactionType = "Food";
-
-        //Arrange Amount
-        Double firstAmount = 20.2;
-
-        //Arrange AccountID Nr.1
-
-        String credAccountDenomination = "EmployerSA";
-        PersonID hulkID = PersonID.createPersonID("hulk@marvel.com");
-        AccountID hulkAccountID = AccountID.createAccountID(credAccountDenomination, hulkID);
-
-        //Arrange AccountID Nr.2
-
-        String debAccountDenomination = "Allowance Money";
-        PersonID wolverineID = PersonID.createPersonID("wolverine@marvel.com");
-        AccountID wolverineAccountID = AccountID.createAccountID(debAccountDenomination, wolverineID);
-
-        //Arrange CategoryID
-        CategoryID hulkCategoryID = CategoryID.createCategoryID("Allowance", hulkID);
-
-        //Arrange Description
-        String firstDescription = "groceries";
-
-        String secondDescription = "cinema";
-
-        //Arrange Periodicity
-        String firstPeriodicity = "Working Days";
-
-        //Arrange Triggers/Timers
-        LocalDate triggerDate = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY));
-        long timeToSleep = (ChronoUnit.DAYS.between(LocalDate.now(), triggerDate) * 200) + 1900;
-
-        //Arrange ThreadPool
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-
-        // Act
-        IScheduleRepository firstScheduleRepo = ScheduleRepository.createScheduleRepository();
-        Scheduling firstScheduling = Scheduling.createScheduling(executor, ledger, firstTransactionType, firstAmount, hulkAccountID,
-                wolverineAccountID, hulkCategoryID, firstDescription, triggerDate, firstPeriodicity);
-        IScheduleRepository expectedScheduleRepo = ScheduleRepository.createScheduleRepository();
-        Scheduling secondScheduling = Scheduling.createScheduling(executor, ledger, firstTransactionType, firstAmount, hulkAccountID,
-                wolverineAccountID, hulkCategoryID, secondDescription, triggerDate, firstPeriodicity);
-
-        firstScheduleRepo.saveScheduling(firstScheduling);
-        expectedScheduleRepo.saveScheduling(secondScheduling);
-        //Assert
-        assertNotEquals(expectedScheduleRepo, firstScheduleRepo);
-    }
-
-    @Test
-    @DisplayName("Test the hashcode - Happy case")
-    void testHashCode() {
-        //Arrange
-
-        // Act
-        IScheduleRepository firstScheduleRepo = ScheduleRepository.createScheduleRepository();
-        IScheduleRepository expectedScheduleRepo = ScheduleRepository.createScheduleRepository();
-
-
-        boolean result = firstScheduleRepo.hashCode()==expectedScheduleRepo.hashCode();
-
-        //Assert
-        assertTrue(result);
-        assertTrue(firstScheduleRepo.hashCode()==firstScheduleRepo.hashCode());
-        assertTrue(firstScheduleRepo.hashCode()==expectedScheduleRepo.hashCode());
-        assertEquals(expectedScheduleRepo.hashCode(), firstScheduleRepo.hashCode());
-    }
-
-    @Test
-    @DisplayName("Test the hashcode - Sad case")
-    void testDifferentHashCode() {
-
-        //Day Unit 200ms
-        //Monday - Tuesday - Wednesday - Thursday - Friday - x - x - Monday - Tuesday - Wednesday = 8
-
-        //Arrange Ledger
-        Ledger ledger = Ledger.createLedger();
-
-        //Arrange TransactionType
-        String firstTransactionType = "Food";
-
-        //Arrange Amount
-        Double firstAmount = 20.2;
-
-        //Arrange AccountID Nr.1
-
-        String credAccountDenomination = "EmployerSA";
-        PersonID hulkID = PersonID.createPersonID("hulk@marvel.com");
-        AccountID hulkAccountID = AccountID.createAccountID(credAccountDenomination, hulkID);
-
-        //Arrange AccountID Nr.2
-
-        String debAccountDenomination = "Allowance Money";
-        PersonID wolverineID = PersonID.createPersonID("wolverine@marvel.com");
-        AccountID wolverineAccountID = AccountID.createAccountID(debAccountDenomination, wolverineID);
-
-        //Arrange CategoryID
-        CategoryID hulkCategoryID = CategoryID.createCategoryID("Allowance", hulkID);
-
-        //Arrange Description
-        String firstDescription = "groceries";
-
-        String secondDescription = "cinema";
-
-        //Arrange Periodicity
-        String firstPeriodicity = "Working Days";
-
-        //Arrange Triggers/Timers
-        LocalDate triggerDate = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY));
-        long timeToSleep = (ChronoUnit.DAYS.between(LocalDate.now(), triggerDate) * 200) + 1900;
-
-        //Arrange ThreadPool
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-
-        // Act
-        IScheduleRepository firstScheduleRepo = ScheduleRepository.createScheduleRepository();
-        Scheduling firstScheduling = Scheduling.createScheduling(executor, ledger, firstTransactionType, firstAmount, hulkAccountID,
-                wolverineAccountID, hulkCategoryID, firstDescription, triggerDate, firstPeriodicity);
-        IScheduleRepository expectedScheduleRepo = ScheduleRepository.createScheduleRepository();
-        Scheduling secondScheduling = Scheduling.createScheduling(executor, ledger, firstTransactionType, firstAmount, hulkAccountID,
-                wolverineAccountID, hulkCategoryID, secondDescription, triggerDate, firstPeriodicity);
-
-        firstScheduleRepo.saveScheduling(firstScheduling);
-        expectedScheduleRepo.saveScheduling(secondScheduling);
-        boolean teste = firstScheduleRepo.hashCode()==expectedScheduleRepo.hashCode();
-
-        //Assert
-
-
-        assertFalse(teste);
-        assertNotEquals(firstScheduleRepo.hashCode(), expectedScheduleRepo.hashCode());
-    }
 }

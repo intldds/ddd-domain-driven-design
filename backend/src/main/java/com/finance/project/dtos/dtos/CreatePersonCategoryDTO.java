@@ -2,51 +2,31 @@ package com.finance.project.dtos.dtos;
 
 import java.util.Objects;
 
-/**
- * The type Create person category dto.
- */
+
 public class CreatePersonCategoryDTO {
 
     private final String email;
     private final String denomination;    // Category denomination
 
-    /**
-     * Instantiates a new Create person category dto.
-     *
-     * @param email        the email
-     * @param denomination the denomination
-     */
-    public CreatePersonCategoryDTO(String email, String denomination){
+    public CreatePersonCategoryDTO(String email, String denomination) {
         this.email = email;
         this.denomination = denomination;
     }
 
-    /**
-     * Gets email.
-     *
-     * @return the email
-     */
+
+    // Getters
+
     public String getEmail() {
         return email;
     }
 
-    /**
-     * Gets denomination.
-     *
-     * @return the denomination
-     */
     public String getDenomination() {
         return denomination;
     }
 
-    // Equals and hashCode methods
 
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
+    // Equals and hashCode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,14 +36,9 @@ public class CreatePersonCategoryDTO {
                 Objects.equals(denomination, createPersonCategoryDTO.denomination);
     }
 
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
     @Override
     public int hashCode() {
         return Objects.hash(email, denomination);
     }
-    
+
 }

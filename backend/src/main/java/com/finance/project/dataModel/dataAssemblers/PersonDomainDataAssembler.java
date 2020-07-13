@@ -44,7 +44,7 @@ public class PersonDomainDataAssembler {
 
             PersonJpa repoPersonJpa = optPersonJpa.get();
 
-            //Se não tem endereço
+            // No address
             if (repoPersonJpa.getAddress() == null && person.getAddress() != null) {
 
                 AddressJpa addressJpa = new AddressJpa(person.getAddress().getStreet(), person.getAddress().getDoorNumber(), person.getAddress().getPostCode(), person.getAddress().getCity(), person.getAddress().getCountry());
@@ -52,7 +52,7 @@ public class PersonDomainDataAssembler {
                 personJpa.setAddress(addressJpa);
             }
 
-            //Se já tem endereço
+            // With address
             if (repoPersonJpa.getAddress() != null) {
 
                 Optional<AddressJpa> optAddressJpa = addressJpaRepository.findById(repoPersonJpa.getAddress().getId());

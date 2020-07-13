@@ -40,7 +40,6 @@ public class CreateGroupService {
     /**
      * The constant SUCCESS.
      */
-    //Return messages
     public final static String SUCCESS = "Group created";
     /**
      * The constant PERSON_DOES_NOT_EXIST.
@@ -56,28 +55,15 @@ public class CreateGroupService {
     public final static String GROUP_DOES_NOT_EXISTS = "Group does not exist";
 
 
-    //US002.1 Como utilizador, quero criar grupo, tornando-me administrador de grupo.
-
-    /**
-     * Instantiates a new Us 002 1 create group service.
-     *
-     * @param personRepository the person repository
-     * @param groupRepository  the group repository
-     * @param ledgerRepository the ledger repository
-     */
-    public CreateGroupService(IPersonRepository personRepository, IGroupRepository groupRepository, ILedgerRepository ledgerRepository, IAccountRepository accountRepository) {
+    public CreateGroupService(IPersonRepository personRepository, IGroupRepository groupRepository,
+                              ILedgerRepository ledgerRepository, IAccountRepository accountRepository) {
         this.personRepository = personRepository;
         this.groupRepository = groupRepository;
         this.ledgerRepository = ledgerRepository;
         this.accountRepository = accountRepository;
     }
 
-    /**
-     * Create group as person in charge boolean dto.
-     *
-     * @param createGroupDTO the create group dto
-     * @return the boolean dto
-     */
+
     public GroupDTO createGroupAsPersonInCharge(CreateGroupDTO createGroupDTO) {
         PersonID personID = PersonID.createPersonID(createGroupDTO.getEmail());
         Optional<Person> opPerson = personRepository.findById(personID);
@@ -97,22 +83,24 @@ public class CreateGroupService {
 
                 Group newGroupSaved = groupRepository.save(newGroup);
 
-                groupDTO = GroupDTOAssembler.createDTOFromDomainObject(newGroupSaved.getGroupID().getDenomination(), newGroupSaved.getDescription(), newGroup.getDateOfCreation());
-
+                groupDTO = GroupDTOAssembler.createDTOFromDomainObject(
+                        newGroupSaved.getGroupID().getDenomination(),
+                        newGroupSaved.getDescription(),
+                        newGroup.getDateOfCreation());
 
             } else {
-
                 throw new InvalidArgumentsBusinessException(GROUP_ALREADY_EXISTS);
-
             }
+
         } else {
-
             throw new NotFoundArgumentsBusinessException(PERSON_DOES_NOT_EXIST);
-
         }
 
         return groupDTO;
     }
+
+
+    // Getters
 
     public GroupDTO getGroupByDenomination(String denomination) {
         GroupID groupID = GroupID.createGroupID(denomination);
@@ -247,9 +235,7 @@ public class CreateGroupService {
                 AccountDTO accountDTO = AccountDTOAssembler.createDTOFromPrimitiveTypes(account.getAccountID().getDenomination().getDenomination(), account.getDescription().getDescription());
 
                 accountsDTO.add(accountDTO);
-
             }
-
             return AccountsDTOAssembler.createDTOFromDomainObject(accountsDTO);
         }
     }
@@ -296,7 +282,7 @@ public class CreateGroupService {
     }
 
 
-    //-------------------------------   NOVO   -------------------------------------//
+    //-------------------------------   New   -------------------------------------//
 
     @Transactional
     public GroupDTO createAndSaveGroup(String denomination, String description, PersonID adminId) {
@@ -316,10 +302,10 @@ public class CreateGroupService {
     public boolean addAdminToGroup(GroupID groupID, PersonID adminID) {
 
         Optional<Person> opPerson = personRepository.findById(adminID);
-        if (!opPerson.isPresent()) return false; // it must throw a descriptive exception
+        if (!opPerson.isPresent()) return false;
 
         Optional<Group> opGroup = groupRepository.findById(groupID);
-        if (!opGroup.isPresent()) return false; // it must throw a descriptive exception
+        if (!opGroup.isPresent()) return false;
 
         Group group = opGroup.get();
         boolean success = group.addPersonInCharge(adminID);
@@ -327,17 +313,17 @@ public class CreateGroupService {
             groupRepository.addAndSaveAdmin(group, adminID);
             return true;
         } else
-            return false; // it must throw a descriptive exception
+            return false;
     }
 
     @Transactional
     public boolean addMemberToGroup(GroupID groupID, PersonID memberID) {
 
         Optional<Person> opPerson = personRepository.findById(memberID);
-        if (!opPerson.isPresent()) return false; // it must throw a descriptive exception
+        if (!opPerson.isPresent()) return false;
 
         Optional<Group> opGroup = groupRepository.findById(groupID);
-        if (!opGroup.isPresent()) return false; // it must throw a descriptive exception
+        if (!opGroup.isPresent()) return false;
 
         Group group = opGroup.get();
         boolean success = group.addMember(memberID);
@@ -345,7 +331,7 @@ public class CreateGroupService {
             groupRepository.addAndSaveMember(group, memberID);
             return true;
         } else
-            return false; // it must throw a descriptive exception
+            return false;
     }
 
     @Transactional
@@ -370,10 +356,10 @@ public class CreateGroupService {
     public boolean addAccountToGroup(GroupID id, String denomination, String description) {
 
         Optional<Group> opGroup = groupRepository.findById(id);
-        if (!opGroup.isPresent()) return false; // it must throw a descriptive exception
+        if (!opGroup.isPresent()) return false;
 
         Optional<Account> opAccount = accountRepository.findById(id.getDenomination().getDenomination(), denomination);
-        if (opAccount.isPresent()) return false; // it must throw a descriptive exception
+        if (opAccount.isPresent()) return false;
 
         Group group = opGroup.get();
         boolean success = group.addAccount(AccountID.createAccountID(denomination, id));
@@ -381,28 +367,28 @@ public class CreateGroupService {
             groupRepository.addAndSaveAccount(group, description);
             return true;
         } else
-            return false; // it must throw a descriptive exception
+            return false;
     }
 
     @Transactional
     public boolean addGroupTransaction(GroupID id, CategoryID categoryID, String type, String description, double amount, LocalDate date, AccountID debitAccountID, AccountID creditAccountID) {
 
         Optional<Group> opGroup = groupRepository.findById(id);
-        if (!opGroup.isPresent()) return false; // it must throw a descriptive exception
+        if (!opGroup.isPresent()) return false;
 
         Optional<Category> opCategory = categoryRepository.findById(id.getDenomination().getDenomination(), categoryID.getDenomination().getDenomination());
-        if (!opCategory.isPresent()) return false; // it must throw a descriptive exception
+        if (!opCategory.isPresent()) return false;
 
         Optional<Account> opDebAccount = accountRepository.findById(id.getDenomination().getDenomination(), debitAccountID.getDenomination().getDenomination());
-        if (!opDebAccount.isPresent()) return false; // it must throw a descriptive exception
+        if (!opDebAccount.isPresent()) return false;
 
         Optional<Account> opCredAccount = accountRepository.findById(id.getDenomination().getDenomination(), creditAccountID.getDenomination().getDenomination());
-        if (!opCredAccount.isPresent()) return false; // it must throw a descriptive exception
+        if (!opCredAccount.isPresent()) return false;
 
         Group group = opGroup.get();
 
         Optional<Ledger> opLedger = ledgerRepository.findById(group.getLedgerID());
-        if (!opLedger.isPresent()) return false; // it must throw a descriptive exception
+        if (!opLedger.isPresent()) return false;
 
         Ledger ledger = opLedger.get();
         boolean success = ledger.createAndAddTransactionWithDate(categoryID, type, description, amount, date, debitAccountID, creditAccountID);
@@ -410,6 +396,6 @@ public class CreateGroupService {
             ledgerRepository.addAndSaveTransaction(ledger);
             return true;
         } else
-            return false; // it must throw a descriptive exception
+            return false;
     }
 }

@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The type Person repository.
- */
+
 @Repository
 public class PersonRepository implements IPersonRepository {
 
@@ -27,15 +25,15 @@ public class PersonRepository implements IPersonRepository {
     PersonJpaRepository personJpaRepository;
     @Autowired
     AddressJpaRepository addressJpaRepository;
-
     @Autowired
     PersonDomainDataAssembler personAssembler;
 
-    //Constructor
+
+    // Constructor
     public PersonRepository() {
     }
 
-    //--------------------------------------------------   NOVO   --------------------------------------------------//
+
     @Transactional
     public Person save(Person person) {
         PersonJpa personJpa = personAssembler.toData(person);
@@ -85,10 +83,7 @@ public class PersonRepository implements IPersonRepository {
 
             personJpa.setMother(personJpaMother);
         }
-
-
         personJpaRepository.save(personJpa);
-
         return true;
     }
 
@@ -102,10 +97,7 @@ public class PersonRepository implements IPersonRepository {
 
             personJpa.setFather(personJpaFather);
         }
-
-
         personJpaRepository.save(personJpa);
-
         return true;
     }
 
@@ -117,7 +109,7 @@ public class PersonRepository implements IPersonRepository {
 
         personJpaRepository.save(personJpa);
 
-        return true; // it does not reflect problems that may occur
+        return true;
     }
 
     @Transactional
@@ -134,7 +126,7 @@ public class PersonRepository implements IPersonRepository {
             }
             return siblingsID;
         } else
-            return null; // it should throw a descriptive exception
+            return null;
     }
 
     public boolean addAndSaveCategory(Person person) {
@@ -142,7 +134,7 @@ public class PersonRepository implements IPersonRepository {
 
         personJpaRepository.save(personJpa);
 
-        return true; // it does not reflect problems that may occur
+        return true;
     }
 
     public boolean addAndSaveAccount(Person person, String description) {
@@ -154,7 +146,7 @@ public class PersonRepository implements IPersonRepository {
 
         personJpaRepository.save(personJpa);
 
-        return true; // it does not reflect problems that may occur
+        return true;
     }
 
     public boolean exists(PersonID id) {

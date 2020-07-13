@@ -7,7 +7,7 @@ import {
 } from "../../context/Actions";
 import Button from "react-bootstrap/Button";
 
-const TransactionGroupAccountSelect = () => {
+const TransactionGroupAccountSelect = (props) => {
 
     useEffect(() => {
         if (isLogged == true) {
@@ -69,8 +69,14 @@ const TransactionGroupAccountSelect = () => {
         console.log(endDate);
         console.log(accountDenomination);
 
+        const href = props.url.split("?");
+        const parameters = href[1].split("&")
 
-        const url = `/persons/` + user + `/groups/` + groupDenomination + `/ledgers/records?accountName=${accountDenomination}&startDate=${startDate}&endDate=${endDate}`;
+        //accountName -> parameters[0]
+        //startDate -> parameters[1]
+        //endDate -> parameters[2]
+
+        const url = href[0] + `?` + parameters[0] + `${accountDenomination}&` + parameters[1] + `${startDate}&` + parameters[2] + `${endDate}`;
 
         console.log(url)
 
@@ -93,7 +99,7 @@ const TransactionGroupAccountSelect = () => {
 
     return (
 
-        <div>
+        <div className="FormDiv">
             <form className="Forms" id="form" onSubmit={getGroupTransactionsBetweenTwoDatesFromAnAccount}>
                 <label id="label" htmlFor="fname"><b> Insert Account: </b></label>
                 <select id={"myCategory"}
@@ -111,7 +117,7 @@ const TransactionGroupAccountSelect = () => {
                 <label id="label" htmlFor="fname"><b> Insert EndDate: </b></label>
                 <input type="date" value={endDate}
                        placeholder={'Please enter end date'}
-                        onChange={(event) => setEndDate(event.target.value)}/>
+                       onChange={(event) => setEndDate(event.target.value)}/>
                 <Button id = "SearchButton" variant="outline-primary" type="submit">Search</Button>
             </form>
             <Button id = "ResetButton" variant="outline-primary" type="submit"

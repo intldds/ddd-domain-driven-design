@@ -12,9 +12,7 @@ import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/**
- * The type Scheduling.
- */
+
 public class Scheduling implements Entity {
 
     private Ledger ledger;
@@ -26,28 +24,13 @@ public class Scheduling implements Entity {
     private ScheduledExecutorService executor;
     private DateOfCreation creationDate;
 
-    /**
-     * Constructor of a transaction scheduling with a certain periodicity.
-     *
-     * @param executor        the executor
-     * @param ledger          the ledger
-     * @param transactionType the transaction type
-     * @param amount          the amount
-     * @param creditAccount   the credit account
-     * @param debitAccount    the debit account
-     * @param category        the category
-     * @param description     the description
-     * @param triggerDate     the trigger date
-     * @param periodicity     the periodicity
-     * @return scheduling
-     */
     public static Scheduling createScheduling(ScheduledExecutorService executor, Ledger ledger, String transactionType, double amount,
-                                                         AccountID creditAccount, AccountID debitAccount, CategoryID category, String description,
-                                                         LocalDate triggerDate, String periodicity) {
+                                              AccountID creditAccount, AccountID debitAccount, CategoryID category, String description,
+                                              LocalDate triggerDate, String periodicity) {
         return new Scheduling(executor, ledger, transactionType, amount, creditAccount, debitAccount, category, description, triggerDate, periodicity);
     }
 
-    private Scheduling (ScheduledExecutorService executor, Ledger ledger, String transactionType, double amount, AccountID creditAccount, AccountID debitAccount, CategoryID categoryID, String description, LocalDate triggerDate, String periodicity) {
+    private Scheduling(ScheduledExecutorService executor, Ledger ledger, String transactionType, double amount, AccountID creditAccount, AccountID debitAccount, CategoryID categoryID, String description, LocalDate triggerDate, String periodicity) {
         this.ledger = ledger;
         this.scheduleID = ScheduleID.createScheduleID(description, triggerDate, periodicity, transactionType);
         this.amount = Amount.createAmount(amount);
@@ -57,7 +40,7 @@ public class Scheduling implements Entity {
         this.creationDate = DateOfCreation.createDateOfCreationAutomatic();
         this.executor = executor;
 
-        //Day Unit is 100ms
+        // Day Unit is 100ms
         if (periodicity.equals("Working Days") && ((triggerDate.getDayOfWeek() == DayOfWeek.SATURDAY) || (triggerDate.getDayOfWeek() == DayOfWeek.SUNDAY))) {
             throw new IllegalArgumentException("The chosen day is not a working day");
         }
@@ -76,23 +59,14 @@ public class Scheduling implements Entity {
         return (int) diff;
     }
 
-    /**
-     * Check scheduling id boolean.
-     *
-     * @param scheduleID the schedule id
-     * @return the boolean
-     */
+
     public boolean checkSchedulingID(ScheduleID scheduleID) {
         return this.scheduleID.equals(scheduleID);
     }
 
 
-    /**
-     * Equals boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
+    // Equals and hashCode
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
@@ -132,11 +106,7 @@ public class Scheduling implements Entity {
         }
     }
 
-    /**
-     * Hash code int.
-     *
-     * @return the int
-     */
+
     @Override
     public int hashCode() {
         return Objects.hash(creditAccountID, debitAccountID, categoryID, scheduleID, amount, ledger);
