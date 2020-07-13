@@ -191,7 +191,7 @@ In software engineering, a **software development process** (SDP) is the process
 work into distinct phases to improve design, product management, and project management. It is also 
 known as software development life cycle (SDLC), and it is represented in the picture below.                                                                                                 
 
-![SDP](diagrams/sdp.png)
+![SDP](diagrams/SDP.png)
 
 Most modern development processes can be vaguely described as *Agile*. The term was coined in the year 2001 when the 
 *Agile Manifesto* was formulated. **Agile  is a software development methodology** that 
@@ -220,7 +220,7 @@ I've recently found out a [great article](https://www.ibm.com/developerworks/rat
 entitled "Capturing Architectural Requirements". I thought it was really well written and I will do my best to sum it
 up in the following table.
 
-![furps](diagrams/furps.png)
+![furps](diagrams/FURPS.png)
 
 **The non-functional requirements** are the ones that drive architectural decisions. 
 
@@ -284,7 +284,7 @@ The DM is a visual representation (UML) of the conceptual classes of our busines
 a tool that helps us to understand better the business and it facilitates the communication between
 the Client and the Development team. 
 
-![DM](diagrams/dm.png)
+![DM](diagrams/DM.png)
 
 On this DM, we can clearly establish and verify all the conceptual classes, their associations and their
 attributes.
@@ -329,7 +329,7 @@ and these problems are common to almost every software development project.
 GRASP promotes **modularity, code reuse and maintainability**. The following table explains in detail each
 one of the GRASP principles, which are combined between them:
 
-![grasp](diagrams/grasp.png)
+![grasp](diagrams/GRASP.png)
 
 I've **highlighted** the three principles which I consider to be the most important ones.
 
@@ -340,7 +340,7 @@ I've **highlighted** the three principles which I consider to be the most import
 make it easy for a programmer to develop software that is easy to maintain and extend. They also make it easy for developers 
 to avoid code smells, **easily refactor code**, and are also a part of the **agile or adaptive software development**.
 
-![solid](diagrams/solid.png)
+![solid](diagrams/SOLID.png)
 
 SOLID seem to be a handful at first, but with continuous usage it becomes a part of you and your code which can easily be 
 extended, modified, tested, and refactored without any problems.
@@ -351,7 +351,7 @@ extended, modified, tested, and refactored without any problems.
 As the acronym indicates, STUPID is a set of **bad practices**, mistakes, and anti-patterns that lead to 
 waste of both time and money. Let's analyse these patterns in more detail:
 
-![stupid](diagrams/stupid.png)
+![stupid](diagrams/STUPID.png)
 
 **Singleton** might be a tricky one, as it is used by many intermediate programmers and I believe it can be 
 [useful in some cases](https://stackoverflow.com/questions/228164/on-design-patterns-when-should-i-use-the-singleton). 
@@ -375,7 +375,7 @@ The [Gang of Four](http://www.blackwasp.co.uk/gofpatterns.aspx) (GoF) are the fo
 "Design Patterns: Elements of Reusable Object-Oriented Software" (1994), in which they present twenty-three 
 design patterns. Here's a few of them:
 
-![gof](diagrams/gof.png)
+![gof](diagrams/GoF.png)
 
 All of these principles (and others) are extremely well summed up in the book **"Dive Into Design Patterns" by
 Alexander Shvets**, released in 2018 (which I highly recommend).
@@ -412,7 +412,7 @@ ones should be considered as **Value Objects**.
 
 Even though this can be a *subjective* process, we were able to design the following DDD model / diagram:
 
-![ddd](diagrams/ddd.png)
+![ddd](diagrams/DDD.png)
 
 Domain Events and Factories are two additional DDD concepts that are not approached in this tutorial. An
 **event** is "something that happens" and it was not a required functionality. A Factory is a set of 
