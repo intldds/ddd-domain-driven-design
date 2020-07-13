@@ -375,7 +375,7 @@ The [Gang of Four](http://www.blackwasp.co.uk/gofpatterns.aspx) (GoF) are the fo
 "Design Patterns: Elements of Reusable Object-Oriented Software" (1994), in which they present twenty-three 
 design patterns. Here's a few of them:
 
-![gof](diagrams/GoF.png)
+![gof](diagrams/GOF.png)
 
 All of these principles (and others) are extremely well summed up in the book **"Dive Into Design Patterns" by
 Alexander Shvets**, released in 2018 (which I highly recommend).
@@ -772,6 +772,5 @@ by Abel Avram and Floyd Marinescu, which is an excellent summary of Eric's piece
 ***
 
 If you enjoyed this tutorial, feel free to say "hello" to me through my website at 
-[miguelemos.github.io](miguelemos.github.io) - I am happy to discuss any question related to this tutorial
+[miguelemos.github.io](https://www.miguelemos.github.io) - I am happy to discuss any question related to this tutorial
 or anything else that's on your mind!
-
