@@ -772,5 +772,5 @@ by Abel Avram and Floyd Marinescu, which is an excellent summary of Eric's piece
 ***
 
 If you enjoyed this tutorial, feel free to say "hello" to me through my website at 
-[miguelemos.github.io](https://www.miguelemos.github.io) - I am happy to discuss any question related to this tutorial
+[miguelemos.github.io](http://www.miguelemos.github.io) - I am happy to discuss any question related to this tutorial
 or anything else that's on your mind!
